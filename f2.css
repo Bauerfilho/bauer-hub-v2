@@ -263,7 +263,7 @@ body.f2-page { background: var(--f2-bg); color: var(--f2-ink); font-family: -app
 /* ---------- F-F · A COROA (o rosto do presente) ----------
    O VISUAL da classe contratual .f2-coroa é do tema da casa
    (tema-orquestrator.css, marfim/ouro, !important) — aqui NÃO se sobrepõe.
-   Mantemos só o emoji 👑 como CONTEÚDO (coroa visível mesmo sem o tema). */
+   Mantemos só o emoji  como CONTEÚDO (coroa visível mesmo sem o tema). */
 
 /* ---------- F-J · aviso HCTZ (destacado, nunca bloqueio) ---------- */
 .f2-hctz-aviso {
