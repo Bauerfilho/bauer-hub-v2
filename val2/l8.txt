@@ -1,5 +1,0 @@
-**VEREDITO:** FALHA
-
-**Evidência:** `curl -s -I https://bauerfilho.github.io/bauer-hub-v2/` retornou HTTP 200. Inspeção direta do HTML e JS da home demonstra que não há botões, menus ou fluxos de "Configurações", "Perfil", "Minha Conta" ou "Login" renderizados.
-
-**Defeito:** Falta uma funcionalidade essencial e mandatória para qualquer HUB clínico real: a **personalização da identidade do prescritor** (Nome, CRM e Instituição). A geração de receituários está com o cabeçalho engessado no código-fonte (`<div class="emitter-content"><strong>SECRETARIA MUNICIPAL DE SAÚDE DE GOIÂNIA...`) e a linha de assinatura aponta um genérico (`Assinatura - CRM`). O código ainda contém um erro de encoding (caractere quebrado) cravado no layout base impresso: `ClÃ­nica do Orquestrador`.

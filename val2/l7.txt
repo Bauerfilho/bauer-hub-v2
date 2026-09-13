@@ -1,6 +1,0 @@
-**VEREDITO: FALHA PARCIAL**
-
-**Evidências (via curl):**
-- `/atendimento.html`: HTTP 200. Carrega como página HTML independente e válida (`<title>Atendimento...`).
-- `/pacientes.html`: HTTP 200. Carrega como página HTML independente e válida (`<title>Pacientes...`).
-- `/view-atendimento.html`: HTTP 200. **Defeito:** Não é uma página renderizável independente. O código retornado é apenas um fragmento/template bruto de HTML (iniciando com um comentário `<!-- MIOLO da view... -->`), sem estrutura base (`<html>`, `<head>`), feito para ser injetado via JS e não acessado por URL direta.

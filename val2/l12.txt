@@ -1,4 +1,0 @@
-**VEREDITO:** FALHA (Inacessível)
-**Evidência:** A requisição via `curl -I https://bauerfilho.github.io/bauer-hub-v2/DOCUMENTOS-ORIGINAIS-DA-UNIDADE/` retornou código **HTTP 404 (Not Found)**. O mesmo ocorreu para a versão em letras minúsculas.
-**O que vi:** O corpo da resposta HTML trouxe apenas a página de erro padrão "Page not found &middot; GitHub Pages". Não há indexação de diretório habilitada.
-**Defeito:** A pasta solicitada não está acessível na web pública e a listagem de arquivos é inexistente. Como resultado direto da falha de acesso, **0 documentos** puderam ser visualizados ou contados através do preview. (Se a intenção do hub for manter esses arquivos privados, o comportamento 404 atuou como barreira de segurança, mas falha como catálogo público).

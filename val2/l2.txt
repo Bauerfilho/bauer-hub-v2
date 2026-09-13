@@ -1,3 +1,0 @@
-VEREDITO: FALHA
-Evidência: A execução de `curl -s -w "%{http_code}"` em `https://bauerfilho.github.io/bauer-hub-v2/PREVIA-ORQUESTRATOR-PREENCHIMENTO.html` retornou HTTP 200, expondo o JavaScript.
-Defeito: O auxiliar de preenchimento lateral para a receita não funciona (sofreu bypass). Embora o código declare as lógicas de form/preview em `FORMS.receita` e `FOLHAS.receita` (incluindo input `fMed`), a rota ativa chama a função `setDocReceita()`. Essa função sobrescreve o assistente no painel com um texto estático ("Escreve direto na folha...") e incorpora um iframe com `receituario-simples-sus.html`, inutilizando o orquestrador para este documento.

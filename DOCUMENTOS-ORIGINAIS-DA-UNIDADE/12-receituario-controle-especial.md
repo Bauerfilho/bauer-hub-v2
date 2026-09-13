@@ -5,11 +5,11 @@
 - **Vias:** 1ª VIA FARMÁCIA · 2ª VIA PACIENTE
 - **Hash do PDF original:** cb816f78bdc74091f9ba6ff76314c5a76f3c680e835fe88bb86eff98bd9ddc0d
 
-## IDENTIFICAÇÃO DO EMITENTE (bloco fixo, verbatim)
+## IDENTIFICAÇÃO DO EMITENTE (bloco fixo — verbatim do PDF, com o endereço da unidade removido nesta prévia)
 > SECRETARIA MUNICIPAL DE SAÚDE DE GOIÂNIA
 > Clínica do Orquestrador
 > Ed. Palácio das Campinas Venerando de Freitas Borges
-> Bairro ClÃ­nica do Orquestrador> CEP:   – Goiânia/GO
+> Goiânia/GO
 
 ## Campos a preencher (obrigatórios)
 - PACIENTE

@@ -1,7 +1,0 @@
-**VEREDITO**: FALHA.
-**Evidência concreta**: Na página principal (`https://bauerfilho.github.io/bauer-hub-v2/`), 3 requisições de scripts falham com HTTP 404.
-**Defeitos**:
-- `js/draOrquestrador.js` (Erro 404)
-- `js/dossie-Orquestrador.js` (Erro 404)
-- `js/Orquestrador-extra.js` (Erro 404)
-**Causa provável**: O GitHub Pages é case-sensitive. O HTML está pedindo arquivos com o "O" maiúsculo (ex: `Orquestrador`), o que quebra o carregamento dos scripts.
