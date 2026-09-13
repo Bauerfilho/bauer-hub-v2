@@ -5,7 +5,7 @@
    - boot preguiçoso e fail-closed NA VIEW (erro trava só a view, jamais o hub);
    - navegação SAI por callback window.HubNav (nunca por URL): openTopic / openPatients / openEncounter;
    - tópicos lidos do catálogo soberano do hub (#catalogData) — js/topicos.js NÃO é carregado aqui;
-   - aba "Dossiê da Orquestrador" removida (o dossiê já vive no hub — index-f2.html:258);
+   - aba "Dossiê do Orquestrador" removida (o dossiê já vive no hub — index-f2.html:258);
    - "Repetir esta receita" (data-f2x="repetir") NÃO é wireado aqui: quem trata é o listener
      document-level de js/Orquestrador-extra.js:675-690, já carregado pelo hub — igual ao doador;
    - listeners globais (document/window): NENHUM — todos os listeners são em elementos da view.

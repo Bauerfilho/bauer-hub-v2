@@ -383,7 +383,7 @@ function pegaCid(c,d){ E.cid=`${c} — ${d}`; bCid.value=E.cid; sugCid.style.dis
 function insereFrase(btn){ E.texto=(E.texto?E.texto+' ':'')+btn.parentElement.firstChild.textContent.trim(); const t=document.getElementById('fTexto'); if(t)t.value=E.texto; pinta(); }
 function campo(v,ph){ return v?`<b>${v}</b>`:`<span style="color:#aaa">${ph||''}</span>`; }
 /* ───────── as 5 folhas ───────── */
-const CAB=`<div class="cab"><b>Clínica do Orquestrador</b><small>Clínica do Orquestrador<br>Goiânia/GO - CEP  </small></div>`;
+const CAB=`<div class="cab"><b>Clínica do Orquestrador</b><small>Clínica do Orquestrador<br>Goiânia/GO</small></div>`;
 const HOJE='30/08/2026';
 const FOLHAS={
 receita:()=>{const corpo=E.corpoEdit!=null?E.corpoEdit:`1- Ácido fólico 0,2 mg/mL — uso contínuo.

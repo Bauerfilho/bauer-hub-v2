@@ -604,3 +604,6 @@ body.f2-page { background: var(--f2-bg); color: var(--f2-ink); font-family: -app
   text-underline-offset: 3px; padding: 6px;
 }
 .f2x-esqueci:hover { color: var(--f2-brand-dark); }
+
+/* símbolo do Orquestrador usado inline, no lugar do nome */
+.orq-coroa-inline{display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.18em;margin:0 .08em}

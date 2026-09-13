@@ -2,7 +2,7 @@
    F2b — O BOTÃO DA Orquestrador (frente mais importante)
    ----------------------------------------------------------------------------
    O que faz: dentro de CADA doença do HUB, no TOPO do workspace, monta a seção
-   "Esquemas da Orquestrador": os esquemas PRÓPRIOS dela (selo "Meu esquema")
+   "Esquemas do Orquestrador": os esquemas PRÓPRIOS dela (selo "Meu esquema")
    aparecem primeiro, depois os espelhos dos favoritos ⭐ do guia. Vazia, a
    seção mostra um convite curto + botão grande [＋ Adicionar meu esquema].
    Também monta "Atendimentos nesta doença" (o caminho inverso da F2).
@@ -81,9 +81,9 @@ window.F2 = (() => {
       (visaoAtual === id ? ' class="ativa"' : '') + '>' + rotulo + '</button>';
 
     let html =
-      '<section class="f2-dra" aria-label="Área da Clínica do Orquestrador nesta doença">' +
+      '<section class="f2-dra" aria-label="Área do Orquestrador nesta doença">' +
         '<div class="f2-dra-topo">' +
-          '<h2 class="f2-coroa"><span class="orq-esteto" aria-hidden="true"></span> Clínica do Orquestrador <span class="f2-esq-selo">nesta doença</span></h2>' +
+          '<h2 class="f2-coroa"><span class="orq-esteto" aria-hidden="true"></span> Esquemas do Orquestrador <span class="f2-esq-selo">nesta doença</span></h2>' +
           '<div class="f2-dra-abas" role="tablist" aria-label="Área da Dra. nesta doença">' +
             aba('historico', 'Histórico') + aba('esquemas', 'Meus esquemas') + aba('soap', 'SOAP') +
           '</div>' +
@@ -100,7 +100,7 @@ window.F2 = (() => {
 
   // Adendo 3 (2) — DOSSIÊ POR DOENÇA: os esqueminhas do dossiê dela aparecem
   // dentro da área de esquemas de cada doença relacionada, como cartão de
-  // REFERÊNCIA ("Referência da Orquestrador") — NÃO é esquema imprimível do
+  // REFERÊNCIA ("Referência do Orquestrador") — NÃO é esquema imprimível do
   // guia. Mapa pronto do brain em js/dossie-mapa.js (tema → ids de tópicos);
   // tema sem tópico só aparece na página do dossiê. Dados soberanos: leitura
   // direta, sem reescrever uma palavra.
@@ -118,8 +118,8 @@ window.F2 = (() => {
     return temas.map(temaNome => {
       const esq = (window.DOSSIE_Orquestrador.esqueminhas || []).find(e => e.tema === temaNome);
       if (!esq) return '';
-      return '<aside class="f2-ref-dra" aria-label="Referência da Orquestrador — ' + esc(temaNome) + '">' +
-        '<h3><span class="orq-esteto" aria-hidden="true"></span> Referência da Orquestrador <span class="f2-ref-tema">' + esc(temaNome) + '</span></h3>' +
+      return '<aside class="f2-ref-dra" aria-label="Referência do Orquestrador — ' + esc(temaNome) + '">' +
+        '<h3><span class="orq-esteto" aria-hidden="true"></span> Referência do Orquestrador <span class="f2-ref-tema">' + esc(temaNome) + '</span></h3>' +
         '<p class="f2-ref-nota">Referência de como ela costuma conduzir — não é esquema imprimível do guia.</p>' +
         '<ul>' + esq.itens.map(i => {
           const selo = seloUnidadeLocal(i.unidade);
@@ -859,7 +859,7 @@ window.F2 = (() => {
     const folha =
       '<section class="f2-print-sheet">' +
         '<div class="f2-print-head"><h1>' + esc(e.nome) + '</h1>' +
-        '<p>Esquema pessoal da Orquestrador · ' + esc(topicoAtual.titulo) + ' · ' + new Date().toLocaleDateString('pt-BR') + '</p></div>' +
+        '<p>Esquema pessoal do Orquestrador · ' + esc(topicoAtual.titulo) + ' · ' + new Date().toLocaleDateString('pt-BR') + '</p></div>' +
         '<div class="f2-print-texto" style="font-size:11pt;line-height:1.45;white-space:pre-wrap">' + esc(e.texto || '(sem texto)') + '</div>' +
         (e.imagem ? '<p style="margin-top:6pt"><img src="' + esc(e.imagem) + '" style="max-width:170mm;max-height:180mm"></p>' : '') +
         '<div class="f2-print-assinatura"><div class="f2-linha-ass"></div>Assinatura e carimbo</div>' +

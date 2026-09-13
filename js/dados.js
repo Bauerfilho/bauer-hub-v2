@@ -336,7 +336,7 @@ window.F2DB = (() => {
   // ==========================================================================
   // EXPORTAR / IMPORTAR — dois arquivos separados (regra D9):
   //  (a) pacientes+atendimentos = SENSÍVEL (leva aviso no nome e dentro do JSON)
-  //  (b) esquemas da Orquestrador = preferência de médica, não sensível
+  //  (b) esquemas do Orquestrador = preferência de médica, não sensível
   // ==========================================================================
   function dataHoje() { return new Date().toISOString().slice(0, 10); }
 
@@ -420,7 +420,7 @@ window.F2DB = (() => {
   };
 
   // ==========================================================================
-  // SESSÃO (F-D) — login da Orquestrador. É IDENTIDADE E ACOLHIMENTO, não
+  // SESSÃO (F-D) — login do Orquestrador. É IDENTIDADE E ACOLHIMENTO, não
   // segurança: nada aqui criptografa nem bloqueia dado (coerente com a decisão
   // da F2 de não criptografar o histórico). Só liga a personalização dela.
   // ==========================================================================
@@ -439,7 +439,7 @@ window.F2DB = (() => {
       const vigente = (meta.ler().senhaCustom || '').trim() || 'Medicalhub1234';
       const entradaValida = (numero === 'Orquestrator') && String(senha || '') === vigente;
       if (entradaValida) {
-        const d = { crm: numero, nome: 'Clínica do Orquestrador', loginAt: new Date().toISOString() };
+        const d = { crm: numero, nome: 'Orquestrador', loginAt: new Date().toISOString() };
         gravarJSON(K.session, d);
         return d;
       }
@@ -523,8 +523,8 @@ window.F2DB = (() => {
     const local = (meta.ler().rodapeLocal || 'Goiânia - GO').trim() || 'Goiânia - GO';
     const dataExtenso = new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
     return '<div class="' + (classe || 'f2x-rodape-dra') + '">' +
-      '<strong>Clínica do Orquestrador</strong>' +
-      '<span>CRM-GO Orquestrator /  </span>' +
+      '<strong><span class="orq-coroa orq-coroa-inline" aria-label="Orquestrador"></span></strong>' +
+      '<span>CRM-GO Orquestrator</span>' +
       '<span>Médica da Estratégia de Saúde da Família</span>' +
       '<span>' + local + ', ' + dataExtenso + '</span>' +
       '</div>';

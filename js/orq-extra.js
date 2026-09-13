@@ -5,7 +5,7 @@
    F-E Rodapé dela em toda receita e orientação (MutationObserver nos prints) ·
    F-G Histórico com 3 meses (oferta explícita pós-print + repetir + expurgo) ·
    F-H UI do Dossiê (farmácia da unidade + esqueminhas — dados SOBERANOS do
-   brain em js/farmacia.js e js/dossie-Orquestrador.js: só consome, não reescreve) ·
+   brain em js/farmacia.js e js/dossie-orq.js: só consome, não reescreve) ·
    F-I Coroa por esquema (DORMANT-GATED: só acorda se os cards do codex
    existirem — #regimenCards div[data-slot="f2"]; sem eles, zero efeito).
    Padrões herdados do módulo F2: IIFE, fail-closed, zero rede, ubs2026.v1.*.
@@ -66,7 +66,7 @@ window.F2X = (() => {
     const fundo = document.createElement('div');
     fundo.id = 'f2xLogin';
     fundo.innerHTML =
-      '<div class="f2x-login-card" role="dialog" aria-modal="true" aria-label="Entrada da Clínica do Orquestrador">' +
+      '<div class="f2x-login-card" role="dialog" aria-modal="true" aria-label="Entrada do Orquestrador">' +
         '<div class="orq-emblema" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.4" fill="none" stroke="#15181D" stroke-width="2.4"/><rect x="9.1" y="9.1" width="5.8" height="5.8" rx="1" transform="rotate(45 12 12)" fill="#15181D"/></svg></div>' +
         '<div class="orq-wordmark" aria-label="Orquestrator Medical Hub"><svg viewBox="0 0 380 44"><text id="orqTxt" x="190" y="33" text-anchor="middle" style="font-family:Archivo Black,Inter,ui-sans-serif,sans-serif" font-size="27" letter-spacing="4" fill="#15181D">ORQUESTRATOR</text><rect id="orqQ" x="105" y="29.2" width="9.5" height="3.8" rx="1" transform="rotate(40 109.5 31)" fill="#C9A227"/><rect id="orqA" x="244" y="26.8" width="10.5" height="2.9" rx="0.8" fill="#C9A227"/><polygon id="orqR" points="327,33 335,33 335,23.5" fill="#C9A227"/></svg><div class="orq-wordsub"><span class="w">MEDICAL</span><span class="orq-losango"></span><span class="w">HUB</span></div></div>' +
         '<p>Bem-vindo(a) ao seu HUB de receituários.</p>' +
@@ -228,7 +228,7 @@ window.F2X = (() => {
       brand.textContent = nome + ' · 2026';
     }
     const ded = document.querySelector('.orq-dedicatoria');
-    if (ded) ded.innerHTML = '<span class="orq-coroa"></span>' + esc(nome) + ' · Clínica do Orquestrador';
+    if (ded) ded.innerHTML = '<span class="orq-coroa"></span>' + esc(nome);
   }
   function salvarUnidade() {
     const m = DB().meta;
@@ -264,7 +264,7 @@ window.F2X = (() => {
     div.id = 'f2xSaudacao';
     div.innerHTML =
       '<span class="orq-coroa f2x-saudacao-coroa" aria-hidden="true"></span>' +
-      '<div class="f2x-saudacao-texto"><strong>Olá, Clínica do Orquestrador.</strong>' +
+      '<div class="f2x-saudacao-texto"><strong>Olá, <span class="orq-coroa orq-coroa-inline" aria-label="Orquestrador"></span></strong>' +
       '<span>Especialista em Medicina de Família e Comunidade</span>' +
       '<span class="f2x-cidade-linha">Cidade do rodapé: <b>' + esc(cidadeAtual()) + '</b> ' +
       '<button type="button" class="f2x-link" data-f2x="cidade" title="Mudar a cidade do rodapé">alterar</button></span>' +
@@ -543,7 +543,7 @@ window.F2X = (() => {
 
   /* ==========================================================================
      F-H · UI DO DOSSIÊ — a farmácia da unidade + os esqueminhas dela.
-     Dados SOBERANOS (js/farmacia.js, js/dossie-Orquestrador.js): renderiza como
+     Dados SOBERANOS (js/farmacia.js, js/dossie-orq.js): renderiza como
      estão, sem reescrever uma palavra do conteúdo clínico.
      ========================================================================== */
   // Adendo 8 (BRONCA): pendência/cobrança NUNCA na UI dela. Não existe selo
@@ -616,7 +616,7 @@ window.F2X = (() => {
         '<div id="f2xFarmLista"></div>' +
       '</div>' +
       '<div class="f2-card">' +
-        '<h2><span class="orq-esteto" aria-hidden="true"></span> Os esqueminhas dela</h2>' +
+        '<h2><span class="orq-esteto" aria-hidden="true"></span> Os esqueminhas do Orquestrador</h2>' +
         '<div id="f2xEsqLista"></div>' +
       '</div>';
     renderFarmacia('');

@@ -5,7 +5,7 @@
    pelo Bauer apesar de ausente na lista) | 'nao' (rede/compra).
    O dossiê é utilidade de vida médica — nunca pendência ou cobrança na tela dela. */
 window.DOSSIE_Orquestrador = {
-  titulo: 'Dossiê da Orquestrador — preferências e o que a unidade tem',
+  titulo: 'Dossiê do Orquestrador — preferências e o que a unidade tem',
   fonteFarmacia: 'js/farmacia.js (lista real da farmácia, 28/08/2026)',
   avisoGeral: 'Auxiliar de consulta. Quem decide a conduta é a médica.',
   esqueminhas: [

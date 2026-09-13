@@ -306,7 +306,7 @@
     function blankPatient(){state.patient={name:'',address:'',age:'',sex:'',cpf:'',date:''}}
     function field(label,key,editable,cls='flex'){const val=state.patient[key]||'';return `<div class="field-line"><span>${esc(label)}</span><span class="field-value ${cls}" ${editable?'contenteditable="plaintext-only" role="textbox" spellcheck="false"':''} aria-label="${esc(label.replace(':',''))}" data-field="${key}" data-sync="${key}">${esc(val)}</span></div>`}
     function susLockup(){return '<div class="sus-lockup"><span class="sus-symbol"></span><span class="sus-word">SUS</span></div>'}
-    function unitHeader(){return '<div class="unit-header"><div class="unit-name">Clínica do Orquestrador</div><div class="unit-address">Clínica do Orquestrador<br>Goiânia/GO - CEP  </div></div>'}
+    function unitHeader(){return '<div class="unit-header"><div class="unit-name">Clínica do Orquestrador</div><div class="unit-address">Clínica do Orquestrador<br>Goiânia/GO</div></div>'}
     function institutionRow(){return `<div class="institution-row">${susLockup()}<div class="institution-label">Sistema<br>Único<br>de Saúde</div><div class="institution-label">Ministério<br>da Saúde</div><div class="institution-label">Prefeitura<br>Municipal<br>de Goiânia</div><div class="institution-label">Secretaria<br>Municipal<br>de Saúde</div></div>`}
     function currentPrescription(){return state.regimen?(state.drafts.get(state.regimen.id)??state.regimen.prescription??''):''}
     function rxText(editable){return `<div class="rx-body" ${editable?'contenteditable="plaintext-only" role="textbox" spellcheck="false" aria-label="Prescrição editável"':''} data-field="prescription" data-sync="prescription">${esc(currentPrescription())}</div>`}

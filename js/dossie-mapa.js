@@ -4,7 +4,7 @@
    REFERÊNCIA ("não é que ela vá usar exatamente — é referência e um jeito de
    explicar como a plataforma funciona"). Chave = `tema` do DOSSIE_Orquestrador;
    valor = ids de tópicos do catalogData. Tema sem tópico ([]) só aparece na
-   página do dossiê. Rotular na doença: "Referência da Orquestrador". */
+   página do dossiê. Rotular na doença: "Referência do Orquestrador". */
 window.DOSSIE_MAPA = {
   temaParaTopicos: {
     'Dor': ['dorsalgia-discopatia','osteoartrite','fibromialgia','migranea','gota'],
