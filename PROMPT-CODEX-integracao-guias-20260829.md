@@ -51,7 +51,7 @@ A v2 (`documentos-preenchiveis2.html`, 490 linhas, "Guias do paciente", 20 guias
 **Depende de**: — · **Esforço**: S · **Risco**: baixo
 
 - **0.1 Placar de partida do gate.** Rodar `node VERIFICACAO-F2.js` na BASE e guardar a saída. *Aceite binário*: última linha `==== RESUMO: N/N PASSARAM ====` com exit 0 e N anotado (dado do dono: 138 hoje; contagem estática no fonte: 142 `passa(` incluindo a definição — o placar de runtime é o que vale).
-- **0.2 Backups datados.** Para CADA arquivo que a obra toca — `documentos-preenchiveis2.html`, `index-f2.html`, `js/dados.js`, `js/draOrquestrador.js`, `atendimento.html`, `VERIFICACAO-F2.js` — criar `<arquivo>.bak-20260829` ANTES do primeiro edit. *Aceite*: `cmp <arquivo> <arquivo>.bak-20260829` retorna 0 no instante da cópia; os 6 `.bak` existem.
+- **0.2 Backups datados.** Para CADA arquivo que a obra toca — `documentos-preenchiveis2.html`, `index-f2.html`, `js/dados.js`, `js/ClÃ­nica do Orquestrador.js`, `atendimento.html`, `VERIFICACAO-F2.js` — criar `<arquivo>.bak-20260829` ANTES do primeiro edit. *Aceite*: `cmp <arquivo> <arquivo>.bak-20260829` retorna 0 no instante da cópia; os 6 `.bak` existem.
 - **0.3 Doadores selados.** `documentos-preenchiveis.html`, `index-f1.html` e `f1/**` são SÓ-LEITURA nesta obra. *Aceite (repetido na Fase 6)*: zero diff neles ao fim.
 
 ---
@@ -126,7 +126,7 @@ Hoje NÃO existe nenhum link do `index-f2.html` para `documentos-preenchiveis*.h
 | CNS | `patients[].cns` (`:48`; busca `:62`) | EXISTE (bônus) |
 | **CPF** | `patients[].cpf` — **NOVO**, opcional, string | criar |
 | **CIDs do paciente** | `patients[].cids` — **NOVO**, opcional, `[{codigo, rotulo}]`, escolhidos pela médica (sugestões: `js/cids.js` `CIDS_COMPATIVEIS.porTopico`, rotuladas "conferir") | criar |
-| Peso, altura, IMC (auto), circ. abdominal, glicemia, PA (+oximetria) | `consults[].triagem` (`js/dados.js:132-135`, "Adendo 7"); formulário com IMC automático JÁ EXISTE (`js/draOrquestrador.js:352-358` campos, `:438-454` recálculo, `:493-499` gravação) | EXISTE — REUSAR, não duplicar |
+| Peso, altura, IMC (auto), circ. abdominal, glicemia, PA (+oximetria) | `consults[].triagem` (`js/dados.js:132-135`, "Adendo 7"); formulário com IMC automático JÁ EXISTE (`js/ClÃ­nica do Orquestrador.js:352-358` campos, `:438-454` recálculo, `:493-499` gravação) | EXISTE — REUSAR, não duplicar |
 
 **Migração**: nenhuma quebra de formato — campos novos opcionais; `VERSAO = 1` (`js/dados.js:23`) NÃO sobe (a validação de import `:316,:327` checa só `tipo` + arrays, não campos por item). Premissa declarada: export antigo importa no schema novo e vice-versa. *Aceite*: exportar → importar em perfil limpo preserva pacientes com e sem cpf/cids.
 
@@ -134,7 +134,7 @@ Hoje NÃO existe nenhum link do `index-f2.html` para `documentos-preenchiveis*.h
 
 - **5.1 `js/dados.js`**: `patients.criar/atualizar` aceitam `cpf`/`cids`; `patients.buscar` (`:62`) passa a casar também CPF. *Aceite*: criar paciente com cpf, buscar por 4 dígitos do cpf o encontra; paciente antigo sem cpf continua listando.
 - **5.2 Autocomplete enquanto digita** (3 pontos): (a) `atendimento.html` — o `<select id="selPaciente">` (`:29`, populado por `recarregarPacientes :123-125`) ganha input de busca com lista filtrada conforme digita (fonte: `patients.buscar`), mantendo o select como fallback; deep-links `?p=`/`#c=` (`:179-186`) preservados; (b) v2 — `#patientName` (`documentos-preenchiveis2.html:141`) ganha dropdown de sugestões das fichas locais; escolher preenche nome + trava o vínculo `patientId`; (c) workspace do hub — botão "Usar paciente" que preenche a folha via `syncAll` (`index-f2.html:361`; `blankPatient :335` já tem `cpf` no shape da folha — só não persistia). *Aceite (cada ponto)*: digitar 3 letras de um paciente salvo mostra a sugestão; escolher preenche.
-- **5.3 Fim da 1ª consulta = ficha completa**: no salvar do atendimento (fluxo `atendimento.html` + gravação da triagem `js/draOrquestrador.js:493-499`), persistir no PACIENTE: cpf (se preenchido) e os CIDs escolhidos; a triagem continua no consult (já fica). *Aceite*: salvar atendimento com cpf+CID → `ubs2026.v1.patients` contém ambos.
+- **5.3 Fim da 1ª consulta = ficha completa**: no salvar do atendimento (fluxo `atendimento.html` + gravação da triagem `js/ClÃ­nica do Orquestrador.js:493-499`), persistir no PACIENTE: cpf (se preenchido) e os CIDs escolhidos; a triagem continua no consult (já fica). *Aceite*: salvar atendimento com cpf+CID → `ubs2026.v1.patients` contém ambos.
 - **5.4 Autofill nas próximas**: ao escolher paciente, pré-carregar última triagem — `consults.doPaciente(id)[0].triagem` (ordenação recente-primeiro já existe em `js/dados.js`, bloco `doPaciente`) — como valores sugeridos EDITÁVEIS, e os `cids` como chips pré-marcáveis rotulados "sugestões — conferir". Na v2: preenche nome/data; peso etc. NÃO entram nos guias (os guias não têm esses campos — nada de inventar campo; lei do aditivo). *Aceite*: 2º atendimento do mesmo paciente abre com triagem anterior visível como sugestão e editável.
 - **5.5 A promessa muda junto com a verdade**: quando a v2 passar a LER fichas (carregando `js/dados.js` — script local, offline), os textos "Dados somente nesta tela" (`:101`) e o aviso do rodapé do painel (região `:165-167`) mudam para a verdade nova ("Fichas locais neste dispositivo; nada sai daqui"). Guard `window.F2DB &&` — v2 continua 100% funcional se aberto isolado sem o js. *Aceite*: (a) v2 aberta sozinha sem `js/` funciona; (b) nenhum texto promete "não salva" onde agora salva.
 
@@ -158,7 +158,7 @@ Hoje NÃO existe nenhum link do `index-f2.html` para `documentos-preenchiveis*.h
 
 **Premissas declaradas** (secundárias, inferidas e marcadas): (a) `hub-back` da v2 passa a apontar o hub vivo (F.3.4 — confirmar com o dono); (b) campos novos de paciente não exigem bump de `VERSAO` (validação de import não inspeciona campos — medido em `js/dados.js:316,:327`); (c) o placar "138/138" é dado do dono — não re-executei o gate nesta análise (execução cria perfil temp; missão é read-only), a contagem estática é 142 `passa(` no fonte incluindo a definição da função.
 
-**Restrições**: prazo 30/08 (presente da Dra. Orquestrador) — as Fases 1-4 entregam os requisitos 1-5 completos; a Fase 5 é a maior e pode ser fatiada (5.1-5.3 primeiro, 5.4-5.5 depois) sem quebrar nada, pois é toda aditiva.
+**Restrições**: prazo 30/08 (presente da ClÃ­nica do Orquestrador) — as Fases 1-4 entregam os requisitos 1-5 completos; a Fase 5 é a maior e pode ser fatiada (5.1-5.3 primeiro, 5.4-5.5 depois) sem quebrar nada, pois é toda aditiva.
 
 **Riscos e mitigações**: caret destruído pelo re-render (F.1.3 — atualização dirigida, teste de 10 inputs no gate) · `contenteditable` vazando pro papel (F.1.6 — check no portal) · coleção nova quebrando o `selfCheck` fail-closed (F.3.3 — regra dura de commit atômico) · promessa de privacidade mentindo após autofill (F.5.5 — texto muda junto) · regressão no hub vigiado (toda linha no `index-f2.html` é aditiva e o gate roda ao fim de CADA fase, não só no fim da obra).
 

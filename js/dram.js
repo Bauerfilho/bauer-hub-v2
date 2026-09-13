@@ -73,7 +73,7 @@ window.F2 = (() => {
   let visaoAtual = 'esquemas'; // 'esquemas' | 'historico' | 'soap'
 
   function renderizarSecao() {
-    const mount = $('#draOrquestradorMount');
+    const mount = $('#ClÃ­nica do OrquestradorMount');
     if (!mount || !topicoAtual) return;
 
     const aba = (id, rotulo) =>
@@ -83,7 +83,7 @@ window.F2 = (() => {
     let html =
       '<section class="f2-dra" aria-label="Área da Clínica do Orquestrador nesta doença">' +
         '<div class="f2-dra-topo">' +
-          '<h2 class="f2-coroa"><span class="orq-esteto" aria-hidden="true"></span> Dra. Orquestrador <span class="f2-esq-selo">nesta doença</span></h2>' +
+          '<h2 class="f2-coroa"><span class="orq-esteto" aria-hidden="true"></span> ClÃ­nica do Orquestrador <span class="f2-esq-selo">nesta doença</span></h2>' +
           '<div class="f2-dra-abas" role="tablist" aria-label="Área da Dra. nesta doença">' +
             aba('historico', 'Histórico') + aba('esquemas', 'Meus esquemas') + aba('soap', 'SOAP') +
           '</div>' +
@@ -133,7 +133,7 @@ window.F2 = (() => {
 
   // View "Meus esquemas" — o conteúdo original da seção (B1/B2/B3/B4).
   function viewEsquemasHTML() {
-    const dra = DB().draOrquestrador;
+    const dra = DB().ClÃ­nica do Orquestrador;
     const proprios = dra.propriosDoTopico(topicoAtual.id);
     const favoritos = dra.favoritosDoTopico(topicoAtual.id);
     const vazio = proprios.length === 0 && favoritos.length === 0;
@@ -385,7 +385,7 @@ window.F2 = (() => {
 
   // Liga os eventos da view SOAP (renderizada agora).
   function ligarFormSoap() {
-    const mount = $('#draOrquestradorMount');
+    const mount = $('#ClÃ­nica do OrquestradorMount');
     if (!mount) return;
     const selPac = mount.querySelector('#f2SoapPac');
     const buscaPac = mount.querySelector('#f2SoapBuscaPac');
@@ -698,7 +698,7 @@ window.F2 = (() => {
      (só o NOME é obrigatório — ordem do contrato)
      ========================================================================== */
   function abrirFormulario(edicao) {
-    const mount = $('#draOrquestradorMount');
+    const mount = $('#ClÃ­nica do OrquestradorMount');
     if (!mount || !topicoAtual) return;
     const velho = mount.querySelector('.f2-form');
     if (velho) velho.remove(); // fecha um formulário aberto antes
@@ -751,10 +751,10 @@ window.F2 = (() => {
         if (!nome) { erro.textContent = 'Dê um nome ao esquema para salvar.'; return; }
         try {
           if (edicao) {
-            DB().draOrquestrador.atualizarProprio(edicao.id, { nome, texto, tipo });
+            DB().ClÃ­nica do Orquestrador.atualizarProprio(edicao.id, { nome, texto, tipo });
             avisar('Esquema atualizado.');
           } else {
-            DB().draOrquestrador.adicionarProprio(topicoAtual.id, nome, texto, tipo);
+            DB().ClÃ­nica do Orquestrador.adicionarProprio(topicoAtual.id, nome, texto, tipo);
             avisar('Esquema salvo.');
           }
           renderizarSecao();
@@ -786,7 +786,7 @@ window.F2 = (() => {
       if (!topicoAtual || !select.value) return;
       const regimen = (topicoAtual.regimens || []).find(r => r.id === select.value);
       if (!regimen) return;
-      const marcou = DB().draOrquestrador.alternarFavorito(topicoAtual.id, regimen.id, regimen.titulo);
+      const marcou = DB().ClÃ­nica do Orquestrador.alternarFavorito(topicoAtual.id, regimen.id, regimen.titulo);
       avisar(marcou ? 'Marcado como preferido.' : 'Estrela retirada.');
       atualizarEstrela();
       renderizarSecao();
@@ -798,7 +798,7 @@ window.F2 = (() => {
     const btn = $('#f2FavBtn');
     const select = $('#regimenSelect');
     if (!btn || !select) return;
-    const on = topicoAtual && select.value && DB().draOrquestrador.ehFavorito(topicoAtual.id, select.value);
+    const on = topicoAtual && select.value && DB().ClÃ­nica do Orquestrador.ehFavorito(topicoAtual.id, select.value);
     btn.classList.toggle('f2-fav-on', !!on);
     btn.textContent = on ? '⭐ Preferido (clique para tirar)' : '⭐ Marcar este esquema';
   }
@@ -820,7 +820,7 @@ window.F2 = (() => {
   }
 
   function exportarEsquemas() {
-    baixarArquivo(DB().nomeArquivoDraOrquestrador(), DB().exportarDraOrquestrador());
+    baixarArquivo(DB().nomeArquivoClÃ­nica do Orquestrador(), DB().exportarClÃ­nica do Orquestrador());
     avisar('Arquivo de esquemas baixado.');
   }
 
@@ -831,7 +831,7 @@ window.F2 = (() => {
     leitor.onload = () => {
       try {
         const obj = JSON.parse(String(leitor.result));
-        const r = DB().importarDraOrquestrador(obj); // valida ANTES de gravar
+        const r = DB().importarClÃ­nica do Orquestrador(obj); // valida ANTES de gravar
         avisar(DB().plural(r.esquemas, 'esquema') + ' e ' + DB().plural(r.favoritos, 'favorito') + ' importados.');
         renderizarSecao();
         atualizarEstrela();
@@ -854,7 +854,7 @@ window.F2 = (() => {
      ========================================================================== */
   function imprimirEsquema(id) {
     if (!topicoAtual) return;
-    const e = DB().draOrquestrador.propriosDoTopico(topicoAtual.id).find(x => x.id === id);
+    const e = DB().ClÃ­nica do Orquestrador.propriosDoTopico(topicoAtual.id).find(x => x.id === id);
     if (!e) return;
     const folha =
       '<section class="f2-print-sheet">' +
@@ -974,21 +974,21 @@ window.F2 = (() => {
     if (acao === 'adicionar') abrirFormulario(null);
     else if (acao === 'exportar') exportarEsquemas();
     else if (acao === 'importar') {
-      const mount = $('#draOrquestradorMount');
+      const mount = $('#ClÃ­nica do OrquestradorMount');
       const input = mount && mount.querySelector('input[data-f2="arquivo"]');
       if (input) input.click();
     }
     else if (acao === 'imprimir') imprimirEsquema(btn.dataset.id);
     else if (acao === 'editar') {
-      const e = DB().draOrquestrador.propriosDoTopico(topicoAtual.id).find(x => x.id === btn.dataset.id);
+      const e = DB().ClÃ­nica do Orquestrador.propriosDoTopico(topicoAtual.id).find(x => x.id === btn.dataset.id);
       if (e) abrirFormulario(e);
     }
     else if (acao === 'apagar') {
-      const e = DB().draOrquestrador.propriosDoTopico(topicoAtual.id).find(x => x.id === btn.dataset.id);
+      const e = DB().ClÃ­nica do Orquestrador.propriosDoTopico(topicoAtual.id).find(x => x.id === btn.dataset.id);
       if (!e) return;
       confirmar('Apagar este esquema?',
         '"' + e.nome + '" será apagado deste computador. Esta ação não pode ser desfeita.',
-        'Apagar', () => { DB().draOrquestrador.apagarProprio(e.id); avisar('Esquema apagado.'); renderizarSecao(); });
+        'Apagar', () => { DB().ClÃ­nica do Orquestrador.apagarProprio(e.id); avisar('Esquema apagado.'); renderizarSecao(); });
     }
     else if (acao === 'abrir') {
       const select = $('#regimenSelect');
@@ -1000,7 +1000,7 @@ window.F2 = (() => {
     }
     else if (acao === 'desmarcar') {
       if (!topicoAtual) return;
-      DB().draOrquestrador.removerFavorito(topicoAtual.id, btn.dataset.regimen);
+      DB().ClÃ­nica do Orquestrador.removerFavorito(topicoAtual.id, btn.dataset.regimen);
       avisar('Estrela retirada.');
       atualizarEstrela();
       renderizarSecao();

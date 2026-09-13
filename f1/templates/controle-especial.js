@@ -20,8 +20,8 @@
       linhas: [
         'Clínica do Orquestrador',
         'Ed. Palácio das Campinas Venerando de Freitas Borges',
-        'Bairro Park Lozandes – Bloco D – Fones: 3524-1570',
-        'CEP: 74.884-900 – Goiânia/GO'
+        'Bairro ClÃ­nica do Orquestrador',
+        'CEP:   – Goiânia/GO'
       ]
     },
     camposObrigatorios: ['paciente', 'endereco', 'prescricao'],
