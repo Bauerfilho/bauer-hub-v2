@@ -33,7 +33,7 @@
       <header class="form-header" data-printable>
         <div class="unit-line">
           <strong>Clínica do Orquestrador</strong>
-          <span>Clínica do Orquestrador; ClÃ­nica do Orquestrador<br>Goiânia/GO - CEP  </span>
+          <span>Clínica do Orquestrador<br>Goiânia/GO - CEP  </span>
         </div>
         <div class="institution-line" aria-label="Sistema Único de Saúde e instituições públicas">
           <span class="sus-mark" aria-hidden="true"><i></i><b>SUS</b></span>

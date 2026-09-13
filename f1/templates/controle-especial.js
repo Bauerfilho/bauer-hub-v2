@@ -20,7 +20,7 @@
       linhas: [
         'Clínica do Orquestrador',
         'Ed. Palácio das Campinas Venerando de Freitas Borges',
-        'Bairro ClÃ­nica do Orquestrador',
+        'Bairro Clínica do Orquestrador',
         'CEP:   – Goiânia/GO'
       ]
     },

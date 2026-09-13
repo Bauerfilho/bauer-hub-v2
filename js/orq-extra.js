@@ -191,7 +191,7 @@ window.F2X = (() => {
     const m = DB().meta.ler();
     return {
       nome: (m.unidadeNome || '').trim() || 'Clínica do Orquestrador',
-      end: (m.unidadeEndereco || '').trim() || 'Clínica do Orquestrador; ClÃ­nica do Orquestrador',
+      end: (m.unidadeEndereco || '').trim() || 'Clínica do Orquestrador',
       cid: (m.unidadeCidadeCep || '').trim() || 'Goiânia/GO - CEP  ',
     };
   }
@@ -344,7 +344,7 @@ window.F2X = (() => {
   }
 
   // Ciclo de vida do modo carimbo: vale só na doença da receita reimpressa.
-  // Chamado pelo ClÃ­nica do Orquestrador.js a cada troca de tópico.
+  // Chamado pelo dram.js a cada troca de tópico.
   function limparSeloReimpressao(novoTopicId) {
     const m = DB().meta.ler().reimpressaoCarimbo;
     if (!m) return;
@@ -636,7 +636,7 @@ window.F2X = (() => {
     const slots = document.querySelectorAll('#regimenCards div[data-slot="f2"]');
     if (!slots.length) return false; // dormente: os cards ainda não existem
     // Sequência dura do plano (A4): a estrela migra para os cards — o botão
-    // único do select aposenta AGORA (e o ClÃ­nica do Orquestrador.js não o recria: guard).
+    // único do select aposenta AGORA (e o dram.js não o recria: guard).
     const favAntigo = $('#f2FavBtn');
     if (favAntigo) favAntigo.remove();
     const topico = topicoDoHash();
@@ -644,7 +644,7 @@ window.F2X = (() => {
       if (slot.dataset.f2xArmado) return;
       slot.dataset.f2xArmado = '1';
       const rid = slot.dataset.regimenId || '';
-      const marcado = !!(topico && DB().ClÃ­nica do Orquestrador.ehFavorito(topico.id, rid));
+      const marcado = !!(topico && DB().draOrq.ehFavorito(topico.id, rid));
       slot.innerHTML =
         '<button type="button" class="f2-btn f2-btn-mini f2-coroa" data-f2x="coroar" data-regimen="' + esc(rid) + '" title="Adicionar este esquema na seção da Dra.">Adicionar</button>' +
         '<button type="button" class="f2-btn f2-btn-secundario f2-btn-mini f2x-estrela-btn' + (marcado ? ' f2-fav-on' : '') + '" data-f2x="estrela" data-regimen="' + esc(rid) + '" title="Marcar como preferido">' + (marcado ? '⭐' : '☆') + '</button>';
@@ -658,7 +658,7 @@ window.F2X = (() => {
     const regimen = (topico.regimens || []).find(r => r.id === regimenId);
     if (!regimen) { avisar('Não encontrei este esquema no guia.'); return; }
     const tipo = /special|control/i.test(String(regimen.documentType || '')) ? 'especial' : 'simples';
-    const r = DB().ClÃ­nica do Orquestrador.adicionarOuAtualizarProprio(topico.id, regimen.titulo, regimen.prescription || '', tipo);
+    const r = DB().draOrq.adicionarOuAtualizarProprio(topico.id, regimen.titulo, regimen.prescription || '', tipo);
     avisar(r.atualizado ? 'Já estava na sua seção — texto atualizado.' : 'Adicionado na sua seção — pode editar à vontade.');
     if (window.F2 && window.F2.onTopicOpen) window.F2.onTopicOpen(topico); // seção reflete na hora
   }
@@ -666,7 +666,7 @@ window.F2X = (() => {
     const topico = topicoDoHash();
     if (!topico) return;
     const regimen = (topico.regimens || []).find(r => r.id === regimenId);
-    const on = DB().ClÃ­nica do Orquestrador.alternarFavorito(topico.id, regimenId, regimen ? regimen.titulo : '');
+    const on = DB().draOrq.alternarFavorito(topico.id, regimenId, regimen ? regimen.titulo : '');
     if (btn) { btn.classList.toggle('f2-fav-on', on); btn.textContent = on ? '⭐' : '☆'; }
     if (window.F2 && window.F2.onTopicOpen) window.F2.onTopicOpen(topico);
   }

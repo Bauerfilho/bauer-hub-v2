@@ -16,7 +16,7 @@ window.F2DB = (() => {
   const K = {
     patients: 'ubs2026.v1.patients',   // pacientes cadastrados
     consults: 'ubs2026.v1.consults',   // atendimentos (SOAP)
-    ClÃ­nica do Orquestrador: 'ubs2026.v1.ClÃ­nica do Orquestrador', // esquemas preferidos e próprios da Dra.
+    draOrq: 'ubs2026.v1.draOrq', // esquemas preferidos e próprios da Dra.
     meta: 'ubs2026.v1.meta',           // carimbos internos (ex.: última cópia exportada)
     session: 'ubs2026.v1.session',     // sessão do login da Dra. (F-D: identidade, NÃO segurança)
   };
@@ -255,49 +255,49 @@ window.F2DB = (() => {
   //   own:[{id, topicId, nome, texto, imagem?, createdAt, updatedAt}] }
   // "own" já nasce com o campo "imagem" reservado para as fotos futuras (B5).
   // ==========================================================================
-  const ClÃ­nica do Orquestrador = {
+  const draOrq = {
     _ler() {
-      const d = lerJSON(K.ClÃ­nica do Orquestrador, null);
+      const d = lerJSON(K.draOrq, null);
       return (d && Array.isArray(d.favorites) && Array.isArray(d.own))
         ? d : { favorites: [], own: [] };
     },
-    _gravar(d) { gravarJSON(K.ClÃ­nica do Orquestrador, d); },
+    _gravar(d) { gravarJSON(K.draOrq, d); },
 
     // --- Favoritos do guia (espelho ⭐) ---
     favoritosDoTopico(topicId) {
-      return ClÃ­nica do Orquestrador._ler().favorites.filter(f => f.topicId === topicId);
+      return draOrq._ler().favorites.filter(f => f.topicId === topicId);
     },
     ehFavorito(topicId, regimenId) {
-      return ClÃ­nica do Orquestrador._ler().favorites.some(f => f.topicId === topicId && f.regimenId === regimenId);
+      return draOrq._ler().favorites.some(f => f.topicId === topicId && f.regimenId === regimenId);
     },
     // Marca/desmarca em 1 clique. Devolve true se ficou marcado.
     alternarFavorito(topicId, regimenId, titulo) {
-      const d = ClÃ­nica do Orquestrador._ler();
+      const d = draOrq._ler();
       const i = d.favorites.findIndex(f => f.topicId === topicId && f.regimenId === regimenId);
-      if (i >= 0) { d.favorites.splice(i, 1); ClÃ­nica do Orquestrador._gravar(d); return false; }
+      if (i >= 0) { d.favorites.splice(i, 1); draOrq._gravar(d); return false; }
       d.favorites.push({ topicId, regimenId, titulo: titulo || '', createdAt: new Date().toISOString() });
-      ClÃ­nica do Orquestrador._gravar(d);
+      draOrq._gravar(d);
       return true;
     },
     removerFavorito(topicId, regimenId) {
-      const d = ClÃ­nica do Orquestrador._ler();
+      const d = draOrq._ler();
       d.favorites = d.favorites.filter(f => !(f.topicId === topicId && f.regimenId === regimenId));
-      ClÃ­nica do Orquestrador._gravar(d);
+      draOrq._gravar(d);
     },
 
     // --- Esquemas próprios ---
     propriosDoTopico(topicId) {
-      return ClÃ­nica do Orquestrador._ler().own
+      return draOrq._ler().own
         .filter(e => e.topicId === topicId)
         .sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
     },
     adicionarProprio(topicId, nome, texto, tipo) {
       if (!String(nome || '').trim()) throw new Error('Dê um nome ao esquema.');
       const agora = new Date().toISOString();
-      const d = ClÃ­nica do Orquestrador._ler();
+      const d = draOrq._ler();
       const e = { id: novoId('esq'), topicId, nome: String(nome).trim(), texto: texto || '', tipo: tipo || 'simples', imagem: '', createdAt: agora, updatedAt: agora };
       d.own.push(e);
-      ClÃ­nica do Orquestrador._gravar(d);
+      draOrq._gravar(d);
       return e;
     },
     // F-I — Coroa por esquema: vira esquema PRÓPRIO com dedup POR NOME no
@@ -306,30 +306,30 @@ window.F2DB = (() => {
     adicionarOuAtualizarProprio(topicId, nome, texto, tipo) {
       const nomeLimpo = String(nome || '').trim();
       if (!nomeLimpo) throw new Error('Dê um nome ao esquema.');
-      const d = ClÃ­nica do Orquestrador._ler();
+      const d = draOrq._ler();
       const alvo = norm(nomeLimpo);
       const existente = d.own.find(e => e.topicId === topicId && norm(e.nome) === alvo);
       if (existente) {
         const i = d.own.findIndex(e => e.id === existente.id);
         d.own[i] = Object.assign({}, existente, { texto: texto || '', tipo: tipo || existente.tipo || 'simples', updatedAt: new Date().toISOString() });
-        ClÃ­nica do Orquestrador._gravar(d);
+        draOrq._gravar(d);
         return { entrada: d.own[i], atualizado: true };
       }
-      const e = ClÃ­nica do Orquestrador.adicionarProprio(topicId, nomeLimpo, texto, tipo);
+      const e = draOrq.adicionarProprio(topicId, nomeLimpo, texto, tipo);
       return { entrada: e, atualizado: false };
     },
     atualizarProprio(id, mudancas) {
-      const d = ClÃ­nica do Orquestrador._ler();
+      const d = draOrq._ler();
       const i = d.own.findIndex(e => e.id === id);
       if (i < 0) return null;
       d.own[i] = Object.assign({}, d.own[i], mudancas, { id, updatedAt: new Date().toISOString() });
-      ClÃ­nica do Orquestrador._gravar(d);
+      draOrq._gravar(d);
       return d.own[i];
     },
     apagarProprio(id) {
-      const d = ClÃ­nica do Orquestrador._ler();
+      const d = draOrq._ler();
       d.own = d.own.filter(e => e.id !== id);
-      ClÃ­nica do Orquestrador._gravar(d);
+      draOrq._gravar(d);
     },
   };
 
@@ -349,15 +349,15 @@ window.F2DB = (() => {
       consults: consults.listar(),
     };
   }
-  function exportarClÃ­nica do Orquestrador() {
+  function exportarDraOrq() {
     return {
-      v: VERSAO, tipo: 'ubs2026-ClÃ­nica do Orquestrador',
+      v: VERSAO, tipo: 'ubs2026-draOrq',
       exportadoEm: new Date().toISOString(),
-      ClÃ­nica do Orquestrador: ClÃ­nica do Orquestrador._ler(),
+      draOrq: draOrq._ler(),
     };
   }
   function nomeArquivoPacientes() { return 'BACKUP-PACIENTES-SENSIVEL-' + dataHoje() + '.json'; }
-  function nomeArquivoClÃ­nica do Orquestrador() { return 'esquemas-dra-Orquestrador-' + dataHoje() + '.json'; }
+  function nomeArquivoDraOrq() { return 'esquemas-dra-Orquestrador-' + dataHoje() + '.json'; }
 
   // Validação ANTES de gravar: se qualquer peça estiver errada, lança erro e
   // NADA é escrito (o chamador mostra a mensagem e o armazenamento segue igual).
@@ -372,9 +372,9 @@ window.F2DB = (() => {
       if (!c || !c.id || !c.patientId) throw new Error('Há um atendimento incompleto no arquivo. Nada foi alterado.');
     }
   }
-  function validarClÃ­nica do Orquestrador(obj) {
-    if (!obj || obj.tipo !== 'ubs2026-ClÃ­nica do Orquestrador' || !obj.ClÃ­nica do Orquestrador ||
-        !Array.isArray(obj.ClÃ­nica do Orquestrador.favorites) || !Array.isArray(obj.ClÃ­nica do Orquestrador.own)) {
+  function validarDraOrq(obj) {
+    if (!obj || obj.tipo !== 'ubs2026-draOrq' || !obj.draOrq ||
+        !Array.isArray(obj.draOrq.favorites) || !Array.isArray(obj.draOrq.own)) {
       throw new Error('Este arquivo não é um backup de esquemas válido. Nada foi alterado.');
     }
   }
@@ -388,10 +388,10 @@ window.F2DB = (() => {
     return { pacientes: obj.patients.length, atendimentos: obj.consults.length };
   }
   // Esquemas da Dra.: MESCLA (o mais recente vence em conflito de id).
-  function importarClÃ­nica do Orquestrador(obj) {
-    validarClÃ­nica do Orquestrador(obj);
-    const atual = ClÃ­nica do Orquestrador._ler();
-    const novo = obj.ClÃ­nica do Orquestrador;
+  function importarDraOrq(obj) {
+    validarDraOrq(obj);
+    const atual = draOrq._ler();
+    const novo = obj.draOrq;
     const porId = new Map();
     for (const e of atual.own) porId.set(e.id, e);
     for (const e of novo.own) {
@@ -405,7 +405,7 @@ window.F2DB = (() => {
       const antigo = favs.get(chaveFav(f));
       if (!antigo || String(f.createdAt || '') >= String(antigo.createdAt || '')) favs.set(chaveFav(f), f);
     }
-    ClÃ­nica do Orquestrador._gravar({ favorites: [...favs.values()], own: [...porId.values()] });
+    draOrq._gravar({ favorites: [...favs.values()], own: [...porId.values()] });
     return { esquemas: novo.own.length, favoritos: novo.favorites.length };
   }
 
@@ -550,8 +550,8 @@ window.F2DB = (() => {
     return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
 
-  return { patients, consults, ClÃ­nica do Orquestrador, meta, sessao, usageBytes, apagarTudo, norm,
+  return { patients, consults, draOrq, meta, sessao, usageBytes, apagarTudo, norm,
            idadeTexto, idadeDetalhada, dataBR, plural, hctzAcimaDe25, rodapeDraHTML,
-           exportarPacientes, exportarClÃ­nica do Orquestrador, importarPacientes, importarClÃ­nica do Orquestrador,
-           validarPacientes, validarClÃ­nica do Orquestrador, nomeArquivoPacientes, nomeArquivoClÃ­nica do Orquestrador, novoId };
+           exportarPacientes, exportarDraOrq, importarPacientes, importarDraOrq,
+           validarPacientes, validarDraOrq, nomeArquivoPacientes, nomeArquivoDraOrq, novoId };
 })();

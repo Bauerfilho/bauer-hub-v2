@@ -1,0 +1,8 @@
+**VEREDITO:** FALHA
+
+**EVIDÊNCIA:** 
+- Acesso via `curl` nas URLs `https://bauerfilho.github.io/bauer-hub-v2/js/farmacia.js` e `.../js/dados.js` confirmou a presença dos arquivos (código HTTP 200 OK).
+- Validação local da sintaxe (`node -c`) aprovou `farmacia.js`, mas reportou erro fatal instantâneo em `dados.js` (`SyntaxError: Invalid or unexpected token`).
+
+**DEFEITO:** 
+A camada `dados.js` sofreu forte corrupção por erro de encoding e provável *Search & Replace* global acidental. O termo literal `ClÃ­nica do Orquestrador` (com erro de charset e contendo espaços) substituiu arbitrariamente identificadores internos e nomes de propriedades na configuração (`ClÃ­nica do Orquestrador: 'ubs2026.v1...`), quebrando inteiramente a sintaxe do JavaScript e inativando a base.
