@@ -1,0 +1,2042 @@
+{
+  "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+  "tipo_ms": "DN",
+  "titulo": "Diretriz Nacional — Tratamento não cirúrgico da osteoartrite de quadril (MS/CONITEC)",
+  "data_versao_pdf": "2024-08-26",
+  "portaria_interna_p6": "Portaria Conjunta SAES/SAPS/SECTICS nº 1, 22/08/2024 (PCDT Dor Crônica) — nao_e_desta_dn",
+  "sha256": "e62b4d3023e696749d8ed56700d54c894cb0d39e24ff69172895af9d5f7fc937",
+  "pages": 72,
+  "teto_chars": 12000,
+  "raiz": "quadril-raiz",
+  "headings_detectados": [
+    [
+      3,
+      "CONTEXTO"
+    ],
+    [
+      5,
+      "APRESENTAÇÃO"
+    ],
+    [
+      6,
+      "DECISÃO"
+    ],
+    [
+      7,
+      "APRESENTAÇÃO"
+    ],
+    [
+      8,
+      "evidências podem ser encontradas nas versões ampliadas utilizadas para esta adaptação"
+    ],
+    [
+      9,
+      "Decisão do principais alternativas não cirúrgicas para pacientes com OA de"
+    ],
+    [
+      14,
+      "ALGORITMO DE TRATAMENTO NÃO CIRÚRGICO DA OA DE QUADRIL"
+    ],
+    [
+      15,
+      "INTRODUÇÃO"
+    ],
+    [
+      16,
+      "OBJETIVOS"
+    ],
+    [
+      26,
+      "DECISÃO DE TRATAMENTO"
+    ],
+    [
+      45,
+      "acompanhamento durante o tratamento conservador?"
+    ],
+    [
+      46,
+      "acompanhamento profissional proativo por mais tempo, com melhoria de informaçõessobre a"
+    ],
+    [
+      52,
+      "REFERÊNCIAS"
+    ],
+    [
+      62,
+      "APENDICE 1"
+    ],
+    [
+      64,
+      "APENDICE 2"
+    ],
+    [
+      70,
+      "APENDICE 3"
+    ]
+  ],
+  "nos": {
+    "quadril-raiz": {
+      "id": "quadril-raiz",
+      "tipo": "documento",
+      "titulo": "Diretriz Nacional — Tratamento não cirúrgico da osteoartrite de quadril (MS/CONITEC)",
+      "parent_id": null,
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "tipo_ms": "DN",
+      "data_versao_pdf": "2024-08-26",
+      "pdf_page_start": 1,
+      "pdf_page_end": 72,
+      "md_paths": [],
+      "chars": 176404,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=1",
+      "filhos": [
+        "quadril-front-matter",
+        "quadril-apresentacao",
+        "quadril-resumo",
+        "quadril-algoritmo",
+        "quadril-introducao",
+        "quadril-metodo-evidencias",
+        "quadril-diagnostico-nao-med",
+        "quadril-cap-medicamentoso",
+        "quadril-acompanhamento",
+        "quadril-referencias",
+        "quadril-instrumentos"
+      ]
+    },
+    "quadril-front-matter": {
+      "id": "quadril-front-matter",
+      "tipo": "capitulo",
+      "titulo": "Front-matter (capa, contexto, portaria)",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 1,
+      "pdf_page_end": 6,
+      "folha_start": null,
+      "folha_end": 5,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-001.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-002.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-003.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-004.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-005.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-006.md"
+      ],
+      "chars": 10754,
+      "abre_como": "capitulo",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=1",
+      "filhos": [
+        "quadril-front-capa",
+        "quadril-front-contexto",
+        "quadril-front-portaria"
+      ],
+      "tipo_bloco": "front-matter"
+    },
+    "quadril-front-capa": {
+      "id": "quadril-front-capa",
+      "tipo": "topico",
+      "titulo": "Capa",
+      "parent_id": "quadril-front-matter",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 1,
+      "pdf_page_end": 2,
+      "folha_start": null,
+      "folha_end": null,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-001.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-002.md"
+      ],
+      "chars": 500,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=1",
+      "filhos": [
+        "quadril-p-001",
+        "quadril-p-002"
+      ]
+    },
+    "quadril-front-contexto": {
+      "id": "quadril-front-contexto",
+      "tipo": "topico",
+      "titulo": "Contexto CONITEC",
+      "parent_id": "quadril-front-matter",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 3,
+      "pdf_page_end": 5,
+      "folha_start": 2,
+      "folha_end": 4,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-003.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-004.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-005.md"
+      ],
+      "chars": 6137,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=3",
+      "filhos": [
+        "quadril-p-003",
+        "quadril-p-004",
+        "quadril-p-005"
+      ]
+    },
+    "quadril-front-portaria": {
+      "id": "quadril-front-portaria",
+      "tipo": "topico",
+      "titulo": "Portaria conjunta 22/08/2024 — PCDT da Dor Crônica (não é esta DN)",
+      "parent_id": "quadril-front-matter",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 6,
+      "pdf_page_end": 6,
+      "folha_start": 5,
+      "folha_end": 5,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-006.md"
+      ],
+      "chars": 4117,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=6",
+      "filhos": [
+        "quadril-p-006"
+      ],
+      "nao_e_desta_dn": true
+    },
+    "quadril-apresentacao": {
+      "id": "quadril-apresentacao",
+      "tipo": "capitulo",
+      "titulo": "Apresentação (OA de quadril)",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 7,
+      "pdf_page_end": 7,
+      "folha_start": 6,
+      "folha_end": 7,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-007.md"
+      ],
+      "chars": 2996,
+      "abre_como": "capitulo",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=7",
+      "filhos": [
+        "quadril-p-007"
+      ]
+    },
+    "quadril-resumo": {
+      "id": "quadril-resumo",
+      "tipo": "capitulo",
+      "titulo": "Resumo / força das recomendações",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 8,
+      "pdf_page_end": 13,
+      "folha_start": 7,
+      "folha_end": 12,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-008.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-009.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-010.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-011.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-012.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-013.md"
+      ],
+      "chars": 15422,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=8",
+      "filhos": [
+        "quadril-p-008",
+        "quadril-p-009",
+        "quadril-p-010",
+        "quadril-p-011",
+        "quadril-p-012",
+        "quadril-p-013"
+      ]
+    },
+    "quadril-algoritmo": {
+      "id": "quadril-algoritmo",
+      "tipo": "capitulo",
+      "titulo": "Algoritmo de tratamento não cirúrgico",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 14,
+      "pdf_page_end": 14,
+      "folha_start": 13,
+      "folha_end": 13,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-014.md"
+      ],
+      "chars": 121,
+      "abre_como": "capitulo",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=14",
+      "filhos": [
+        "quadril-p-014"
+      ]
+    },
+    "quadril-introducao": {
+      "id": "quadril-introducao",
+      "tipo": "capitulo",
+      "titulo": "Introdução / objetivos / escopo",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 15,
+      "pdf_page_end": 21,
+      "folha_start": 14,
+      "folha_end": 20,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-015.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-016.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-017.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-018.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-019.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-020.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-021.md"
+      ],
+      "chars": 17156,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=15",
+      "filhos": [
+        "quadril-p-015",
+        "quadril-p-016",
+        "quadril-p-017",
+        "quadril-p-018",
+        "quadril-p-019",
+        "quadril-p-020",
+        "quadril-p-021"
+      ]
+    },
+    "quadril-metodo-evidencias": {
+      "id": "quadril-metodo-evidencias",
+      "tipo": "capitulo",
+      "titulo": "Método e evidências",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 22,
+      "pdf_page_end": 28,
+      "folha_start": 21,
+      "folha_end": 27,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-022.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-023.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-024.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-025.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-026.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-027.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-028.md"
+      ],
+      "chars": 17740,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=22",
+      "filhos": [
+        "quadril-p-022",
+        "quadril-p-023",
+        "quadril-p-024",
+        "quadril-p-025",
+        "quadril-p-026",
+        "quadril-p-027",
+        "quadril-p-028"
+      ]
+    },
+    "quadril-diagnostico-nao-med": {
+      "id": "quadril-diagnostico-nao-med",
+      "tipo": "capitulo",
+      "titulo": "Diagnóstico e tratamento não medicamentoso",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 29,
+      "pdf_page_end": 34,
+      "folha_start": 28,
+      "folha_end": 33,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-029.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-030.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-031.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-032.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-033.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-034.md"
+      ],
+      "chars": 15786,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=29",
+      "filhos": [
+        "quadril-p-029",
+        "quadril-p-030",
+        "quadril-p-031",
+        "quadril-p-032",
+        "quadril-p-033",
+        "quadril-p-034"
+      ]
+    },
+    "quadril-top-paracetamol": {
+      "id": "quadril-top-paracetamol",
+      "tipo": "topico",
+      "titulo": "Paracetamol / teto de 4 g",
+      "parent_id": "quadril-cap-medicamentoso",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 35,
+      "pdf_page_end": 36,
+      "folha_start": 34,
+      "folha_end": 35,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-035.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-036.md"
+      ],
+      "chars": 5439,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=35",
+      "filhos": [
+        "quadril-p-035",
+        "quadril-p-036"
+      ]
+    },
+    "quadril-top-aine": {
+      "id": "quadril-top-aine",
+      "tipo": "topico",
+      "titulo": "AINE e AAS",
+      "parent_id": "quadril-cap-medicamentoso",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 37,
+      "pdf_page_end": 40,
+      "folha_start": 36,
+      "folha_end": 39,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-037.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-038.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-039.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-040.md"
+      ],
+      "chars": 11135,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=37",
+      "filhos": [
+        "quadril-p-037",
+        "quadril-p-038",
+        "quadril-p-039",
+        "quadril-p-040"
+      ]
+    },
+    "quadril-top-outros-farma": {
+      "id": "quadril-top-outros-farma",
+      "tipo": "topico",
+      "titulo": "Demais fármacos e infiltração",
+      "parent_id": "quadril-cap-medicamentoso",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 41,
+      "pdf_page_end": 44,
+      "folha_start": 40,
+      "folha_end": 43,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-041.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-042.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-043.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-044.md"
+      ],
+      "chars": 11452,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=41",
+      "filhos": [
+        "quadril-p-041",
+        "quadril-p-042",
+        "quadril-p-043",
+        "quadril-p-044"
+      ]
+    },
+    "quadril-top-ah": {
+      "id": "quadril-top-ah",
+      "tipo": "topico",
+      "titulo": "Ácido hialurônico",
+      "parent_id": "quadril-cap-medicamentoso",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 45,
+      "pdf_page_end": 45,
+      "folha_start": 44,
+      "folha_end": 44,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-045.md"
+      ],
+      "chars": 2410,
+      "abre_como": "topico",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=45",
+      "filhos": [
+        "quadril-p-045"
+      ]
+    },
+    "quadril-cap-medicamentoso": {
+      "id": "quadril-cap-medicamentoso",
+      "tipo": "capitulo",
+      "titulo": "Tratamento medicamentoso",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 35,
+      "pdf_page_end": 45,
+      "folha_start": 34,
+      "folha_end": 44,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-035.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-036.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-037.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-038.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-039.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-040.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-041.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-042.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-043.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-044.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-045.md"
+      ],
+      "chars": 30436,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=35",
+      "filhos": [
+        "quadril-top-paracetamol",
+        "quadril-top-aine",
+        "quadril-top-outros-farma",
+        "quadril-top-ah"
+      ]
+    },
+    "quadril-acompanhamento": {
+      "id": "quadril-acompanhamento",
+      "tipo": "capitulo",
+      "titulo": "Acompanhamento",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 46,
+      "pdf_page_end": 51,
+      "folha_start": 44,
+      "folha_end": 50,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-046.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-047.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-048.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-049.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-050.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-051.md"
+      ],
+      "chars": 16801,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=46",
+      "filhos": [
+        "quadril-p-046",
+        "quadril-p-047",
+        "quadril-p-048",
+        "quadril-p-049",
+        "quadril-p-050",
+        "quadril-p-051"
+      ]
+    },
+    "quadril-referencias": {
+      "id": "quadril-referencias",
+      "tipo": "capitulo",
+      "titulo": "Referências",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 52,
+      "pdf_page_end": 69,
+      "folha_start": 51,
+      "folha_end": 68,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-052.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-053.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-054.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-055.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-056.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-057.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-058.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-059.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-060.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-061.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-062.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-063.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-064.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-065.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-066.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-067.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-068.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-069.md"
+      ],
+      "chars": 45223,
+      "abre_como": "bloqueado_estouro",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=52",
+      "filhos": [
+        "quadril-p-052",
+        "quadril-p-053",
+        "quadril-p-054",
+        "quadril-p-055",
+        "quadril-p-056",
+        "quadril-p-057",
+        "quadril-p-058",
+        "quadril-p-059",
+        "quadril-p-060",
+        "quadril-p-061",
+        "quadril-p-062",
+        "quadril-p-063",
+        "quadril-p-064",
+        "quadril-p-065",
+        "quadril-p-066",
+        "quadril-p-067",
+        "quadril-p-068",
+        "quadril-p-069"
+      ]
+    },
+    "quadril-instrumentos": {
+      "id": "quadril-instrumentos",
+      "tipo": "capitulo",
+      "titulo": "Instrumentos / apêndices",
+      "parent_id": "quadril-raiz",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page_start": 70,
+      "pdf_page_end": 72,
+      "folha_start": 69,
+      "folha_end": 71,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-070.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-071.md",
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-072.md"
+      ],
+      "chars": 3969,
+      "abre_como": "capitulo",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=70",
+      "filhos": [
+        "quadril-p-070",
+        "quadril-p-071",
+        "quadril-p-072"
+      ]
+    },
+    "quadril-p-001": {
+      "id": "quadril-p-001",
+      "tipo": "pagina",
+      "titulo": "Página 1",
+      "parent_id": "quadril-front-capa",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 1,
+      "pdf_page_start": 1,
+      "pdf_page_end": 1,
+      "folha_impressa": null,
+      "folha_start": null,
+      "folha_end": null,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-001.md"
+      ],
+      "chars": 2,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=1",
+      "filhos": []
+    },
+    "quadril-p-002": {
+      "id": "quadril-p-002",
+      "tipo": "pagina",
+      "titulo": "Página 2",
+      "parent_id": "quadril-front-capa",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 2,
+      "pdf_page_start": 2,
+      "pdf_page_end": 2,
+      "folha_impressa": null,
+      "folha_start": null,
+      "folha_end": null,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-002.md"
+      ],
+      "chars": 498,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=2",
+      "filhos": []
+    },
+    "quadril-p-003": {
+      "id": "quadril-p-003",
+      "tipo": "pagina",
+      "titulo": "Página 3 (folha 2)",
+      "parent_id": "quadril-front-contexto",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 3,
+      "pdf_page_start": 3,
+      "pdf_page_end": 3,
+      "folha_impressa": 2,
+      "folha_start": 2,
+      "folha_end": 2,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-003.md"
+      ],
+      "chars": 2568,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=3",
+      "filhos": []
+    },
+    "quadril-p-004": {
+      "id": "quadril-p-004",
+      "tipo": "pagina",
+      "titulo": "Página 4 (folha 3)",
+      "parent_id": "quadril-front-contexto",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 4,
+      "pdf_page_start": 4,
+      "pdf_page_end": 4,
+      "folha_impressa": 3,
+      "folha_start": 3,
+      "folha_end": 3,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-004.md"
+      ],
+      "chars": 1916,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=4",
+      "filhos": []
+    },
+    "quadril-p-005": {
+      "id": "quadril-p-005",
+      "tipo": "pagina",
+      "titulo": "Página 5 (folha 4)",
+      "parent_id": "quadril-front-contexto",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 5,
+      "pdf_page_start": 5,
+      "pdf_page_end": 5,
+      "folha_impressa": 4,
+      "folha_start": 4,
+      "folha_end": 4,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-005.md"
+      ],
+      "chars": 1653,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=5",
+      "filhos": []
+    },
+    "quadril-p-006": {
+      "id": "quadril-p-006",
+      "tipo": "pagina",
+      "titulo": "Página 6 (folha 5)",
+      "parent_id": "quadril-front-portaria",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 6,
+      "pdf_page_start": 6,
+      "pdf_page_end": 6,
+      "folha_impressa": 5,
+      "folha_start": 5,
+      "folha_end": 5,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-006.md"
+      ],
+      "chars": 4117,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=6",
+      "filhos": [],
+      "nao_e_desta_dn": true
+    },
+    "quadril-p-007": {
+      "id": "quadril-p-007",
+      "tipo": "pagina",
+      "titulo": "Página 7 (folha 6)",
+      "parent_id": "quadril-apresentacao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 7,
+      "pdf_page_start": 7,
+      "pdf_page_end": 7,
+      "folha_impressa": 6,
+      "folha_start": 6,
+      "folha_end": 6,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-007.md"
+      ],
+      "chars": 2996,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=7",
+      "filhos": []
+    },
+    "quadril-p-008": {
+      "id": "quadril-p-008",
+      "tipo": "pagina",
+      "titulo": "Página 8 (folha 7)",
+      "parent_id": "quadril-resumo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 8,
+      "pdf_page_start": 8,
+      "pdf_page_end": 8,
+      "folha_impressa": 7,
+      "folha_start": 7,
+      "folha_end": 7,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-008.md"
+      ],
+      "chars": 2427,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=8",
+      "filhos": []
+    },
+    "quadril-p-009": {
+      "id": "quadril-p-009",
+      "tipo": "pagina",
+      "titulo": "Página 9 (folha 8)",
+      "parent_id": "quadril-resumo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 9,
+      "pdf_page_start": 9,
+      "pdf_page_end": 9,
+      "folha_impressa": 8,
+      "folha_start": 8,
+      "folha_end": 8,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-009.md"
+      ],
+      "chars": 2516,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=9",
+      "filhos": []
+    },
+    "quadril-p-010": {
+      "id": "quadril-p-010",
+      "tipo": "pagina",
+      "titulo": "Página 10 (folha 9)",
+      "parent_id": "quadril-resumo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 10,
+      "pdf_page_start": 10,
+      "pdf_page_end": 10,
+      "folha_impressa": 9,
+      "folha_start": 9,
+      "folha_end": 9,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-010.md"
+      ],
+      "chars": 2579,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=10",
+      "filhos": []
+    },
+    "quadril-p-011": {
+      "id": "quadril-p-011",
+      "tipo": "pagina",
+      "titulo": "Página 11 (folha 10)",
+      "parent_id": "quadril-resumo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 11,
+      "pdf_page_start": 11,
+      "pdf_page_end": 11,
+      "folha_impressa": 10,
+      "folha_start": 10,
+      "folha_end": 10,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-011.md"
+      ],
+      "chars": 2561,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=11",
+      "filhos": []
+    },
+    "quadril-p-012": {
+      "id": "quadril-p-012",
+      "tipo": "pagina",
+      "titulo": "Página 12 (folha 11)",
+      "parent_id": "quadril-resumo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 12,
+      "pdf_page_start": 12,
+      "pdf_page_end": 12,
+      "folha_impressa": 11,
+      "folha_start": 11,
+      "folha_end": 11,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-012.md"
+      ],
+      "chars": 2779,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=12",
+      "filhos": []
+    },
+    "quadril-p-013": {
+      "id": "quadril-p-013",
+      "tipo": "pagina",
+      "titulo": "Página 13 (folha 12)",
+      "parent_id": "quadril-resumo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 13,
+      "pdf_page_start": 13,
+      "pdf_page_end": 13,
+      "folha_impressa": 12,
+      "folha_start": 12,
+      "folha_end": 12,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-013.md"
+      ],
+      "chars": 2560,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=13",
+      "filhos": []
+    },
+    "quadril-p-014": {
+      "id": "quadril-p-014",
+      "tipo": "pagina",
+      "titulo": "Página 14 (folha 13)",
+      "parent_id": "quadril-algoritmo",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 14,
+      "pdf_page_start": 14,
+      "pdf_page_end": 14,
+      "folha_impressa": 13,
+      "folha_start": 13,
+      "folha_end": 13,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-014.md"
+      ],
+      "chars": 121,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=14",
+      "filhos": []
+    },
+    "quadril-p-015": {
+      "id": "quadril-p-015",
+      "tipo": "pagina",
+      "titulo": "Página 15 (folha 14)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 15,
+      "pdf_page_start": 15,
+      "pdf_page_end": 15,
+      "folha_impressa": 14,
+      "folha_start": 14,
+      "folha_end": 14,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-015.md"
+      ],
+      "chars": 2861,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=15",
+      "filhos": []
+    },
+    "quadril-p-016": {
+      "id": "quadril-p-016",
+      "tipo": "pagina",
+      "titulo": "Página 16 (folha 15)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 16,
+      "pdf_page_start": 16,
+      "pdf_page_end": 16,
+      "folha_impressa": 15,
+      "folha_start": 15,
+      "folha_end": 15,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-016.md"
+      ],
+      "chars": 2470,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=16",
+      "filhos": []
+    },
+    "quadril-p-017": {
+      "id": "quadril-p-017",
+      "tipo": "pagina",
+      "titulo": "Página 17 (folha 16)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 17,
+      "pdf_page_start": 17,
+      "pdf_page_end": 17,
+      "folha_impressa": 16,
+      "folha_start": 16,
+      "folha_end": 16,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-017.md"
+      ],
+      "chars": 1627,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=17",
+      "filhos": []
+    },
+    "quadril-p-018": {
+      "id": "quadril-p-018",
+      "tipo": "pagina",
+      "titulo": "Página 18 (folha 17)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 18,
+      "pdf_page_start": 18,
+      "pdf_page_end": 18,
+      "folha_impressa": 17,
+      "folha_start": 17,
+      "folha_end": 17,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-018.md"
+      ],
+      "chars": 2612,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=18",
+      "filhos": []
+    },
+    "quadril-p-019": {
+      "id": "quadril-p-019",
+      "tipo": "pagina",
+      "titulo": "Página 19 (folha 18)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 19,
+      "pdf_page_start": 19,
+      "pdf_page_end": 19,
+      "folha_impressa": 18,
+      "folha_start": 18,
+      "folha_end": 18,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-019.md"
+      ],
+      "chars": 2395,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=19",
+      "filhos": []
+    },
+    "quadril-p-020": {
+      "id": "quadril-p-020",
+      "tipo": "pagina",
+      "titulo": "Página 20 (folha 19)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 20,
+      "pdf_page_start": 20,
+      "pdf_page_end": 20,
+      "folha_impressa": 19,
+      "folha_start": 19,
+      "folha_end": 19,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-020.md"
+      ],
+      "chars": 2347,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=20",
+      "filhos": []
+    },
+    "quadril-p-021": {
+      "id": "quadril-p-021",
+      "tipo": "pagina",
+      "titulo": "Página 21 (folha 20)",
+      "parent_id": "quadril-introducao",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 21,
+      "pdf_page_start": 21,
+      "pdf_page_end": 21,
+      "folha_impressa": 20,
+      "folha_start": 20,
+      "folha_end": 20,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-021.md"
+      ],
+      "chars": 2844,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=21",
+      "filhos": []
+    },
+    "quadril-p-022": {
+      "id": "quadril-p-022",
+      "tipo": "pagina",
+      "titulo": "Página 22 (folha 21)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 22,
+      "pdf_page_start": 22,
+      "pdf_page_end": 22,
+      "folha_impressa": 21,
+      "folha_start": 21,
+      "folha_end": 21,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-022.md"
+      ],
+      "chars": 2096,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=22",
+      "filhos": []
+    },
+    "quadril-p-023": {
+      "id": "quadril-p-023",
+      "tipo": "pagina",
+      "titulo": "Página 23 (folha 22)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 23,
+      "pdf_page_start": 23,
+      "pdf_page_end": 23,
+      "folha_impressa": 22,
+      "folha_start": 22,
+      "folha_end": 22,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-023.md"
+      ],
+      "chars": 2942,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=23",
+      "filhos": []
+    },
+    "quadril-p-024": {
+      "id": "quadril-p-024",
+      "tipo": "pagina",
+      "titulo": "Página 24 (folha 23)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 24,
+      "pdf_page_start": 24,
+      "pdf_page_end": 24,
+      "folha_impressa": 23,
+      "folha_start": 23,
+      "folha_end": 23,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-024.md"
+      ],
+      "chars": 2478,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=24",
+      "filhos": []
+    },
+    "quadril-p-025": {
+      "id": "quadril-p-025",
+      "tipo": "pagina",
+      "titulo": "Página 25 (folha 24)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 25,
+      "pdf_page_start": 25,
+      "pdf_page_end": 25,
+      "folha_impressa": 24,
+      "folha_start": 24,
+      "folha_end": 24,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-025.md"
+      ],
+      "chars": 2530,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=25",
+      "filhos": []
+    },
+    "quadril-p-026": {
+      "id": "quadril-p-026",
+      "tipo": "pagina",
+      "titulo": "Página 26 (folha 25)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 26,
+      "pdf_page_start": 26,
+      "pdf_page_end": 26,
+      "folha_impressa": 25,
+      "folha_start": 25,
+      "folha_end": 25,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-026.md"
+      ],
+      "chars": 2209,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=26",
+      "filhos": []
+    },
+    "quadril-p-027": {
+      "id": "quadril-p-027",
+      "tipo": "pagina",
+      "titulo": "Página 27 (folha 26)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 27,
+      "pdf_page_start": 27,
+      "pdf_page_end": 27,
+      "folha_impressa": 26,
+      "folha_start": 26,
+      "folha_end": 26,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-027.md"
+      ],
+      "chars": 2850,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=27",
+      "filhos": []
+    },
+    "quadril-p-028": {
+      "id": "quadril-p-028",
+      "tipo": "pagina",
+      "titulo": "Página 28 (folha 27)",
+      "parent_id": "quadril-metodo-evidencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 28,
+      "pdf_page_start": 28,
+      "pdf_page_end": 28,
+      "folha_impressa": 27,
+      "folha_start": 27,
+      "folha_end": 27,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-028.md"
+      ],
+      "chars": 2635,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=28",
+      "filhos": []
+    },
+    "quadril-p-029": {
+      "id": "quadril-p-029",
+      "tipo": "pagina",
+      "titulo": "Página 29 (folha 28)",
+      "parent_id": "quadril-diagnostico-nao-med",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 29,
+      "pdf_page_start": 29,
+      "pdf_page_end": 29,
+      "folha_impressa": 28,
+      "folha_start": 28,
+      "folha_end": 28,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-029.md"
+      ],
+      "chars": 2449,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=29",
+      "filhos": []
+    },
+    "quadril-p-030": {
+      "id": "quadril-p-030",
+      "tipo": "pagina",
+      "titulo": "Página 30 (folha 29)",
+      "parent_id": "quadril-diagnostico-nao-med",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 30,
+      "pdf_page_start": 30,
+      "pdf_page_end": 30,
+      "folha_impressa": 29,
+      "folha_start": 29,
+      "folha_end": 29,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-030.md"
+      ],
+      "chars": 2819,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=30",
+      "filhos": []
+    },
+    "quadril-p-031": {
+      "id": "quadril-p-031",
+      "tipo": "pagina",
+      "titulo": "Página 31 (folha 30)",
+      "parent_id": "quadril-diagnostico-nao-med",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 31,
+      "pdf_page_start": 31,
+      "pdf_page_end": 31,
+      "folha_impressa": 30,
+      "folha_start": 30,
+      "folha_end": 30,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-031.md"
+      ],
+      "chars": 2682,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=31",
+      "filhos": []
+    },
+    "quadril-p-032": {
+      "id": "quadril-p-032",
+      "tipo": "pagina",
+      "titulo": "Página 32 (folha 31)",
+      "parent_id": "quadril-diagnostico-nao-med",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 32,
+      "pdf_page_start": 32,
+      "pdf_page_end": 32,
+      "folha_impressa": 31,
+      "folha_start": 31,
+      "folha_end": 31,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-032.md"
+      ],
+      "chars": 2800,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=32",
+      "filhos": []
+    },
+    "quadril-p-033": {
+      "id": "quadril-p-033",
+      "tipo": "pagina",
+      "titulo": "Página 33 (folha 32)",
+      "parent_id": "quadril-diagnostico-nao-med",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 33,
+      "pdf_page_start": 33,
+      "pdf_page_end": 33,
+      "folha_impressa": 32,
+      "folha_start": 32,
+      "folha_end": 32,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-033.md"
+      ],
+      "chars": 2603,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=33",
+      "filhos": []
+    },
+    "quadril-p-034": {
+      "id": "quadril-p-034",
+      "tipo": "pagina",
+      "titulo": "Página 34 (folha 33)",
+      "parent_id": "quadril-diagnostico-nao-med",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 34,
+      "pdf_page_start": 34,
+      "pdf_page_end": 34,
+      "folha_impressa": 33,
+      "folha_start": 33,
+      "folha_end": 33,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-034.md"
+      ],
+      "chars": 2433,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=34",
+      "filhos": []
+    },
+    "quadril-p-035": {
+      "id": "quadril-p-035",
+      "tipo": "pagina",
+      "titulo": "Página 35 (folha 34)",
+      "parent_id": "quadril-top-paracetamol",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 35,
+      "pdf_page_start": 35,
+      "pdf_page_end": 35,
+      "folha_impressa": 34,
+      "folha_start": 34,
+      "folha_end": 34,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-035.md"
+      ],
+      "chars": 2794,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=35",
+      "filhos": []
+    },
+    "quadril-p-036": {
+      "id": "quadril-p-036",
+      "tipo": "pagina",
+      "titulo": "Página 36 (folha 35)",
+      "parent_id": "quadril-top-paracetamol",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 36,
+      "pdf_page_start": 36,
+      "pdf_page_end": 36,
+      "folha_impressa": 35,
+      "folha_start": 35,
+      "folha_end": 35,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-036.md"
+      ],
+      "chars": 2645,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=36",
+      "filhos": []
+    },
+    "quadril-p-037": {
+      "id": "quadril-p-037",
+      "tipo": "pagina",
+      "titulo": "Página 37 (folha 36)",
+      "parent_id": "quadril-top-aine",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 37,
+      "pdf_page_start": 37,
+      "pdf_page_end": 37,
+      "folha_impressa": 36,
+      "folha_start": 36,
+      "folha_end": 36,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-037.md"
+      ],
+      "chars": 3108,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=37",
+      "filhos": []
+    },
+    "quadril-p-038": {
+      "id": "quadril-p-038",
+      "tipo": "pagina",
+      "titulo": "Página 38 (folha 37)",
+      "parent_id": "quadril-top-aine",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 38,
+      "pdf_page_start": 38,
+      "pdf_page_end": 38,
+      "folha_impressa": 37,
+      "folha_start": 37,
+      "folha_end": 37,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-038.md"
+      ],
+      "chars": 2846,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=38",
+      "filhos": []
+    },
+    "quadril-p-039": {
+      "id": "quadril-p-039",
+      "tipo": "pagina",
+      "titulo": "Página 39 (folha 38)",
+      "parent_id": "quadril-top-aine",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 39,
+      "pdf_page_start": 39,
+      "pdf_page_end": 39,
+      "folha_impressa": 38,
+      "folha_start": 38,
+      "folha_end": 38,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-039.md"
+      ],
+      "chars": 2575,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=39",
+      "filhos": []
+    },
+    "quadril-p-040": {
+      "id": "quadril-p-040",
+      "tipo": "pagina",
+      "titulo": "Página 40 (folha 39)",
+      "parent_id": "quadril-top-aine",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 40,
+      "pdf_page_start": 40,
+      "pdf_page_end": 40,
+      "folha_impressa": 39,
+      "folha_start": 39,
+      "folha_end": 39,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-040.md"
+      ],
+      "chars": 2606,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=40",
+      "filhos": []
+    },
+    "quadril-p-041": {
+      "id": "quadril-p-041",
+      "tipo": "pagina",
+      "titulo": "Página 41 (folha 40)",
+      "parent_id": "quadril-top-outros-farma",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 41,
+      "pdf_page_start": 41,
+      "pdf_page_end": 41,
+      "folha_impressa": 40,
+      "folha_start": 40,
+      "folha_end": 40,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-041.md"
+      ],
+      "chars": 2961,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=41",
+      "filhos": []
+    },
+    "quadril-p-042": {
+      "id": "quadril-p-042",
+      "tipo": "pagina",
+      "titulo": "Página 42 (folha 41)",
+      "parent_id": "quadril-top-outros-farma",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 42,
+      "pdf_page_start": 42,
+      "pdf_page_end": 42,
+      "folha_impressa": 41,
+      "folha_start": 41,
+      "folha_end": 41,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-042.md"
+      ],
+      "chars": 2686,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=42",
+      "filhos": []
+    },
+    "quadril-p-043": {
+      "id": "quadril-p-043",
+      "tipo": "pagina",
+      "titulo": "Página 43 (folha 42)",
+      "parent_id": "quadril-top-outros-farma",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 43,
+      "pdf_page_start": 43,
+      "pdf_page_end": 43,
+      "folha_impressa": 42,
+      "folha_start": 42,
+      "folha_end": 42,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-043.md"
+      ],
+      "chars": 3043,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=43",
+      "filhos": []
+    },
+    "quadril-p-044": {
+      "id": "quadril-p-044",
+      "tipo": "pagina",
+      "titulo": "Página 44 (folha 43)",
+      "parent_id": "quadril-top-outros-farma",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 44,
+      "pdf_page_start": 44,
+      "pdf_page_end": 44,
+      "folha_impressa": 43,
+      "folha_start": 43,
+      "folha_end": 43,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-044.md"
+      ],
+      "chars": 2762,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=44",
+      "filhos": []
+    },
+    "quadril-p-045": {
+      "id": "quadril-p-045",
+      "tipo": "pagina",
+      "titulo": "Página 45 (folha 44)",
+      "parent_id": "quadril-top-ah",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 45,
+      "pdf_page_start": 45,
+      "pdf_page_end": 45,
+      "folha_impressa": 44,
+      "folha_start": 44,
+      "folha_end": 44,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-045.md"
+      ],
+      "chars": 2410,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=45",
+      "filhos": []
+    },
+    "quadril-p-046": {
+      "id": "quadril-p-046",
+      "tipo": "pagina",
+      "titulo": "Página 46 (folha 45)",
+      "parent_id": "quadril-acompanhamento",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 46,
+      "pdf_page_start": 46,
+      "pdf_page_end": 46,
+      "folha_impressa": 45,
+      "folha_start": 45,
+      "folha_end": 45,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-046.md"
+      ],
+      "chars": 2627,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=46",
+      "filhos": []
+    },
+    "quadril-p-047": {
+      "id": "quadril-p-047",
+      "tipo": "pagina",
+      "titulo": "Página 47 (folha 46)",
+      "parent_id": "quadril-acompanhamento",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 47,
+      "pdf_page_start": 47,
+      "pdf_page_end": 47,
+      "folha_impressa": 46,
+      "folha_start": 46,
+      "folha_end": 46,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-047.md"
+      ],
+      "chars": 2819,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=47",
+      "filhos": []
+    },
+    "quadril-p-048": {
+      "id": "quadril-p-048",
+      "tipo": "pagina",
+      "titulo": "Página 48 (folha 47)",
+      "parent_id": "quadril-acompanhamento",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 48,
+      "pdf_page_start": 48,
+      "pdf_page_end": 48,
+      "folha_impressa": 47,
+      "folha_start": 47,
+      "folha_end": 47,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-048.md"
+      ],
+      "chars": 3090,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=48",
+      "filhos": []
+    },
+    "quadril-p-049": {
+      "id": "quadril-p-049",
+      "tipo": "pagina",
+      "titulo": "Página 49 (folha 48)",
+      "parent_id": "quadril-acompanhamento",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 49,
+      "pdf_page_start": 49,
+      "pdf_page_end": 49,
+      "folha_impressa": 48,
+      "folha_start": 48,
+      "folha_end": 48,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-049.md"
+      ],
+      "chars": 2843,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=49",
+      "filhos": []
+    },
+    "quadril-p-050": {
+      "id": "quadril-p-050",
+      "tipo": "pagina",
+      "titulo": "Página 50 (folha 49)",
+      "parent_id": "quadril-acompanhamento",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 50,
+      "pdf_page_start": 50,
+      "pdf_page_end": 50,
+      "folha_impressa": 49,
+      "folha_start": 49,
+      "folha_end": 49,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-050.md"
+      ],
+      "chars": 2901,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=50",
+      "filhos": []
+    },
+    "quadril-p-051": {
+      "id": "quadril-p-051",
+      "tipo": "pagina",
+      "titulo": "Página 51 (folha 50)",
+      "parent_id": "quadril-acompanhamento",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 51,
+      "pdf_page_start": 51,
+      "pdf_page_end": 51,
+      "folha_impressa": 50,
+      "folha_start": 50,
+      "folha_end": 50,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-051.md"
+      ],
+      "chars": 2521,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=51",
+      "filhos": []
+    },
+    "quadril-p-052": {
+      "id": "quadril-p-052",
+      "tipo": "pagina",
+      "titulo": "Página 52 (folha 51)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 52,
+      "pdf_page_start": 52,
+      "pdf_page_end": 52,
+      "folha_impressa": 51,
+      "folha_start": 51,
+      "folha_end": 51,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-052.md"
+      ],
+      "chars": 2660,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=52",
+      "filhos": []
+    },
+    "quadril-p-053": {
+      "id": "quadril-p-053",
+      "tipo": "pagina",
+      "titulo": "Página 53 (folha 52)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 53,
+      "pdf_page_start": 53,
+      "pdf_page_end": 53,
+      "folha_impressa": 52,
+      "folha_start": 52,
+      "folha_end": 52,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-053.md"
+      ],
+      "chars": 2810,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=53",
+      "filhos": []
+    },
+    "quadril-p-054": {
+      "id": "quadril-p-054",
+      "tipo": "pagina",
+      "titulo": "Página 54 (folha 53)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 54,
+      "pdf_page_start": 54,
+      "pdf_page_end": 54,
+      "folha_impressa": 53,
+      "folha_start": 53,
+      "folha_end": 53,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-054.md"
+      ],
+      "chars": 2835,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=54",
+      "filhos": []
+    },
+    "quadril-p-055": {
+      "id": "quadril-p-055",
+      "tipo": "pagina",
+      "titulo": "Página 55 (folha 54)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 55,
+      "pdf_page_start": 55,
+      "pdf_page_end": 55,
+      "folha_impressa": 54,
+      "folha_start": 54,
+      "folha_end": 54,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-055.md"
+      ],
+      "chars": 2791,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=55",
+      "filhos": []
+    },
+    "quadril-p-056": {
+      "id": "quadril-p-056",
+      "tipo": "pagina",
+      "titulo": "Página 56 (folha 55)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 56,
+      "pdf_page_start": 56,
+      "pdf_page_end": 56,
+      "folha_impressa": 55,
+      "folha_start": 55,
+      "folha_end": 55,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-056.md"
+      ],
+      "chars": 2659,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=56",
+      "filhos": []
+    },
+    "quadril-p-057": {
+      "id": "quadril-p-057",
+      "tipo": "pagina",
+      "titulo": "Página 57 (folha 56)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 57,
+      "pdf_page_start": 57,
+      "pdf_page_end": 57,
+      "folha_impressa": 56,
+      "folha_start": 56,
+      "folha_end": 56,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-057.md"
+      ],
+      "chars": 2826,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=57",
+      "filhos": []
+    },
+    "quadril-p-058": {
+      "id": "quadril-p-058",
+      "tipo": "pagina",
+      "titulo": "Página 58 (folha 57)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 58,
+      "pdf_page_start": 58,
+      "pdf_page_end": 58,
+      "folha_impressa": 57,
+      "folha_start": 57,
+      "folha_end": 57,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-058.md"
+      ],
+      "chars": 2814,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=58",
+      "filhos": []
+    },
+    "quadril-p-059": {
+      "id": "quadril-p-059",
+      "tipo": "pagina",
+      "titulo": "Página 59 (folha 58)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 59,
+      "pdf_page_start": 59,
+      "pdf_page_end": 59,
+      "folha_impressa": 58,
+      "folha_start": 58,
+      "folha_end": 58,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-059.md"
+      ],
+      "chars": 2845,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=59",
+      "filhos": []
+    },
+    "quadril-p-060": {
+      "id": "quadril-p-060",
+      "tipo": "pagina",
+      "titulo": "Página 60 (folha 59)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 60,
+      "pdf_page_start": 60,
+      "pdf_page_end": 60,
+      "folha_impressa": 59,
+      "folha_start": 59,
+      "folha_end": 59,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-060.md"
+      ],
+      "chars": 2851,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=60",
+      "filhos": []
+    },
+    "quadril-p-061": {
+      "id": "quadril-p-061",
+      "tipo": "pagina",
+      "titulo": "Página 61 (folha 60)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 61,
+      "pdf_page_start": 61,
+      "pdf_page_end": 61,
+      "folha_impressa": 60,
+      "folha_start": 60,
+      "folha_end": 60,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-061.md"
+      ],
+      "chars": 2819,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=61",
+      "filhos": []
+    },
+    "quadril-p-062": {
+      "id": "quadril-p-062",
+      "tipo": "pagina",
+      "titulo": "Página 62 (folha 61)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 62,
+      "pdf_page_start": 62,
+      "pdf_page_end": 62,
+      "folha_impressa": 61,
+      "folha_start": 61,
+      "folha_end": 61,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-062.md"
+      ],
+      "chars": 2312,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=62",
+      "filhos": []
+    },
+    "quadril-p-063": {
+      "id": "quadril-p-063",
+      "tipo": "pagina",
+      "titulo": "Página 63 (folha 62)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 63,
+      "pdf_page_start": 63,
+      "pdf_page_end": 63,
+      "folha_impressa": 62,
+      "folha_start": 62,
+      "folha_end": 62,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-063.md"
+      ],
+      "chars": 1687,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=63",
+      "filhos": []
+    },
+    "quadril-p-064": {
+      "id": "quadril-p-064",
+      "tipo": "pagina",
+      "titulo": "Página 64 (folha 63)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 64,
+      "pdf_page_start": 64,
+      "pdf_page_end": 64,
+      "folha_impressa": 63,
+      "folha_start": 63,
+      "folha_end": 63,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-064.md"
+      ],
+      "chars": 2390,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=64",
+      "filhos": []
+    },
+    "quadril-p-065": {
+      "id": "quadril-p-065",
+      "tipo": "pagina",
+      "titulo": "Página 65 (folha 64)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 65,
+      "pdf_page_start": 65,
+      "pdf_page_end": 65,
+      "folha_impressa": 64,
+      "folha_start": 64,
+      "folha_end": 64,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-065.md"
+      ],
+      "chars": 2262,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=65",
+      "filhos": []
+    },
+    "quadril-p-066": {
+      "id": "quadril-p-066",
+      "tipo": "pagina",
+      "titulo": "Página 66 (folha 65)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 66,
+      "pdf_page_start": 66,
+      "pdf_page_end": 66,
+      "folha_impressa": 65,
+      "folha_start": 65,
+      "folha_end": 65,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-066.md"
+      ],
+      "chars": 2420,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=66",
+      "filhos": []
+    },
+    "quadril-p-067": {
+      "id": "quadril-p-067",
+      "tipo": "pagina",
+      "titulo": "Página 67 (folha 66)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 67,
+      "pdf_page_start": 67,
+      "pdf_page_end": 67,
+      "folha_impressa": 66,
+      "folha_start": 66,
+      "folha_end": 66,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-067.md"
+      ],
+      "chars": 2444,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=67",
+      "filhos": []
+    },
+    "quadril-p-068": {
+      "id": "quadril-p-068",
+      "tipo": "pagina",
+      "titulo": "Página 68 (folha 67)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 68,
+      "pdf_page_start": 68,
+      "pdf_page_end": 68,
+      "folha_impressa": 67,
+      "folha_start": 67,
+      "folha_end": 67,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-068.md"
+      ],
+      "chars": 1850,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=68",
+      "filhos": []
+    },
+    "quadril-p-069": {
+      "id": "quadril-p-069",
+      "tipo": "pagina",
+      "titulo": "Página 69 (folha 68)",
+      "parent_id": "quadril-referencias",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 69,
+      "pdf_page_start": 69,
+      "pdf_page_end": 69,
+      "folha_impressa": 68,
+      "folha_start": 68,
+      "folha_end": 68,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-069.md"
+      ],
+      "chars": 1948,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=69",
+      "filhos": []
+    },
+    "quadril-p-070": {
+      "id": "quadril-p-070",
+      "tipo": "pagina",
+      "titulo": "Página 70 (folha 69)",
+      "parent_id": "quadril-instrumentos",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 70,
+      "pdf_page_start": 70,
+      "pdf_page_end": 70,
+      "folha_impressa": 69,
+      "folha_start": 69,
+      "folha_end": 69,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-070.md"
+      ],
+      "chars": 1859,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=70",
+      "filhos": []
+    },
+    "quadril-p-071": {
+      "id": "quadril-p-071",
+      "tipo": "pagina",
+      "titulo": "Página 71 (folha 70)",
+      "parent_id": "quadril-instrumentos",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 71,
+      "pdf_page_start": 71,
+      "pdf_page_end": 71,
+      "folha_impressa": 70,
+      "folha_start": 70,
+      "folha_end": 70,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-071.md"
+      ],
+      "chars": 1906,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=71",
+      "filhos": []
+    },
+    "quadril-p-072": {
+      "id": "quadril-p-072",
+      "tipo": "pagina",
+      "titulo": "Página 72 (folha 71)",
+      "parent_id": "quadril-instrumentos",
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "pdf_page": 72,
+      "pdf_page_start": 72,
+      "pdf_page_end": 72,
+      "folha_impressa": 71,
+      "folha_start": 71,
+      "folha_end": 71,
+      "md_paths": [
+        "md-paginado/reumatologia/DN-osteoartrite-quadril/p-072.md"
+      ],
+      "chars": 204,
+      "abre_como": "pagina",
+      "pdf_href": "medical-knolege/fontes-oficiais/reumatologia/DN-osteoartrite-quadril-MS-conitec.pdf#page=72",
+      "filhos": []
+    }
+  }
+}

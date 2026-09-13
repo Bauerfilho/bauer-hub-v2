@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'Archivo Black';src:url('fonts/archivo-black.woff2') format('woff2')}
+body{margin:0;background:#666;display:grid;place-items:center;height:100vh}
+#ico{width:512px;height:512px;border-radius:116px;background:#101112;position:relative;box-shadow:inset 0 0 0 2px rgba(201,162,39,.35)}
+</style></head><body>
+<div id="ico">
+<svg viewBox="0 0 512 512" width="512" height="512">
+  <rect x="11" y="11" width="490" height="490" rx="106" fill="none" stroke="url(#ouro)" stroke-width="13"/>
+  <defs>
+    <linearGradient id="ouro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E7C873"/><stop offset=".5" stop-color="#C9A227"/><stop offset="1" stop-color="#8F6F1F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- FOLHA (esquerda) — miolo em palha, contorno ouro, dobra no canto -->
+  <path d="M100 92 h130 l76 76 v252 a18 18 0 0 1-18 18 H100 a18 18 0 0 1-18-18 V110 a18 18 0 0 1 18-18 z" fill="#F3E9D2"/>
+  <path d="M100 92 h130 l76 76 v252 a18 18 0 0 1-18 18 H100 a18 18 0 0 1-18-18 V110 a18 18 0 0 1 18-18 z"
+        fill="none" stroke="url(#ouro)" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M230 92 v58 a18 18 0 0 0 18 18 h58" fill="none" stroke="url(#ouro)" stroke-width="20" stroke-linejoin="round"/>
+
+  <!-- o sinal do Orquestrator sobre o JC -->
+  <circle cx="133" cy="140" r="15" fill="none" stroke="url(#ouro)" stroke-width="3.8"/>
+  <rect x="128.4" y="135.4" width="9.2" height="9.2" rx="1.6" transform="rotate(45 133 140)" fill="url(#ouro)"/>
+
+  <!-- cabeçalho da folha: a unidade dela -->
+  <text x="108" y="208" font-family="Archivo Black" font-size="38" letter-spacing="1" fill="url(#ouro)">JC</text><text x="174" y="208" font-family="Archivo Black" font-size="38" letter-spacing="1" fill="url(#ouro)">IV</text><rect x="172" y="170" width="56" height="5" rx="2.5" fill="url(#ouro)"/><rect x="172" y="214" width="56" height="5" rx="2.5" fill="url(#ouro)"/>
+
+  <!-- itens numerados 1· 2· 3· -->
+  <text x="122" y="260" font-family="Archivo Black" font-size="36" fill="url(#ouro)">1</text>
+  <circle cx="156" cy="248" r="5" fill="url(#ouro)"/>
+  <text x="174" y="260" font-family="Georgia" font-style="italic" font-size="27" fill="url(#ouro)">Ba.V</text>
+  <text x="122" y="308" font-family="Archivo Black" font-size="36" fill="url(#ouro)">2</text>
+  <circle cx="156" cy="296" r="5" fill="url(#ouro)"/>
+  <text x="174" y="308" font-family="Georgia" font-style="italic" font-size="27" fill="url(#ouro)">Ma.Jr</text>
+  <text x="122" y="356" font-family="Archivo Black" font-size="36" fill="url(#ouro)">3</text>
+  <circle cx="156" cy="344" r="5" fill="url(#ouro)"/>
+  <text x="174" y="356" font-family="Georgia" font-style="italic" font-size="27" fill="url(#ouro)">Vl.Jr</text>
+  <text x="122" y="404" font-family="Archivo Black" font-size="36" fill="url(#ouro)">4</text>
+  <circle cx="156" cy="392" r="5" fill="url(#ouro)"/>
+  <text x="174" y="404" font-family="Georgia" font-style="italic" font-size="27" fill="url(#ouro)">Dourado</text>
+
+  <!-- MINI UBS fofa (alto, direita): telhado, corpo com cruz, portinha -->
+  <g>
+    <path d="M336 130 l66 -44 l66 44 v10 a8 8 0 0 1 -8 8 H344 a8 8 0 0 1 -8 -8 z" fill="url(#ouro)"/>
+    <rect x="348" y="150" width="108" height="72" rx="12" fill="url(#ouro)"/>
+    <rect x="392" y="162" width="20" height="40" rx="5" fill="#101112"/>
+    <rect x="382" y="172" width="40" height="20" rx="5" fill="#101112"/>
+    <rect x="428" y="188" width="16" height="34" rx="6" fill="#101112"/>
+  </g>
+
+  <!-- MÉDICA fofa (abaixo, direita): coque, rosto, franja, jaleco e esteto -->
+  <g>
+    <circle cx="402" cy="268" r="13" fill="url(#ouro)"/>
+    <circle cx="402" cy="302" r="31" fill="url(#ouro)"/>
+    <path d="M371 300 a31 31 0 0 1 62 0 l0 -8 a31 24 0 0 0 -62 0 z" fill="#101112"/>
+    <rect x="360" y="340" width="84" height="112" rx="32" fill="url(#ouro)"/>
+    <path d="M402 340 l-12 16 12 12 12 -12 z" fill="#101112"/>
+    <path d="M386 352 v34 a16 16 0 0 0 32 0 v-34" fill="none" stroke="#101112" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="430" cy="412" r="10" fill="none" stroke="#101112" stroke-width="7"/>
+    <path d="M418 386 q14 6 12 18" fill="none" stroke="#101112" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- carimbo dela: transversal, do C até a dobra — dados EMBARALHADOS + assinatura ESTILIZADA -->
+  <g id="carimboG" transform="translate(64 90) rotate(-58 196 240) translate(196 240) scale(0.85) translate(-196 -240)" opacity="0.95">
+    <text x="128" y="234" font-family="Georgia" font-style="italic" font-size="10" fill="#A9822C">Dra. Marina Casapeo da Uncha</text>
+    <text x="140" y="247" font-family="Georgia" font-size="8.6" letter-spacing="0.4" fill="#A9822C">CRM-GO 74146 · RQE 73247</text>
+    <g fill="none" stroke="#A9822C" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M196 219 v32" stroke-width="1.4"/>
+      <path d="M196 221 c12 -3 15 10 1 12" stroke-width="1.4"/>
+      <path d="M177 251 c3 -21 7 -27 10 -8 c3 17 6 15 9 -7 c3 -19 6 -21 9 -2 c2 13 4 13 7 4 c7 -6 20 -3 38 -13" stroke-width="1.6"/>
+    </g>
+  </g>
+
+
+</svg>
+</div>
+</body></html>

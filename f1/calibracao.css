@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 297mm;
+  height: 210mm;
+  margin: 0;
+  color: #000;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.calibration-sheet {
+  position: relative;
+  width: 297mm;
+  height: 210mm;
+  overflow: hidden;
+}
+
+header {
+  position: absolute;
+  z-index: 5;
+  top: 14mm;
+  left: 50%;
+  width: 124mm;
+  padding: 4mm;
+  background: #fff;
+  border: 0.3mm solid #000;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+header h1 {
+  margin: 1.5mm 0;
+  font-size: 14pt;
+}
+
+header p {
+  margin: 0.8mm 0;
+  font-size: 7.5pt;
+}
+
+.frame {
+  position: absolute;
+  border: 0.3mm solid #000;
+}
+
+.frame span {
+  position: absolute;
+  top: -2.8mm;
+  left: 4mm;
+  padding: 0 1mm;
+  background: #fff;
+  font-size: 6pt;
+  font-weight: 800;
+}
+
+.frame-3 {
+  inset: 3mm;
+  border-style: dotted;
+}
+
+.frame-5 {
+  inset: 5mm;
+  border-style: dashed;
+}
+
+.frame-8 {
+  inset: 8mm;
+  border-width: 0.6mm;
+}
+
+.frame-10 {
+  inset: 10mm;
+  border-style: double;
+}
+
+.measurement-box {
+  position: absolute;
+  z-index: 5;
+  bottom: 18mm;
+  left: 50%;
+  width: 126mm;
+  padding: 4mm;
+  background: #fff;
+  border: 0.3mm solid #000;
+  transform: translateX(-50%);
+}
+
+.measurement-box h2 {
+  margin: 0 0 2mm;
+  font-size: 10pt;
+}
+
+.measurement-box p,
+.measurement-box label {
+  font-size: 7pt;
+}
+
+.measurement-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2mm 4mm;
+}
+
+.measurement-grid span {
+  display: inline-block;
+  width: 15mm;
+  border-bottom: 0.25mm solid #000;
+}
+
+.center-cut {
+  position: absolute;
+  z-index: 2;
+  top: 8mm;
+  bottom: 8mm;
+  left: 148.5mm;
+  border-left: 0.3mm dashed #000;
+}
+
+.center-cut span {
+  position: absolute;
+  top: 50%;
+  left: 1.2mm;
+  font-size: 5.5pt;
+  font-weight: 800;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+}
+
+.sheet-id {
+  position: absolute;
+  right: 11mm;
+  bottom: 10mm;
+  margin: 0;
+  font-size: 5.5pt;
+}
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body,
+  .calibration-sheet {
+    width: 297mm;
+    height: 210mm;
+  }
+}

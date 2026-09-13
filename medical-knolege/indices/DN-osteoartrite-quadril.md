@@ -1,0 +1,100 @@
+# Índice — Diretriz Nacional — Tratamento não cirúrgico da osteoartrite de quadril (MS/CONITEC)
+
+- tipo MS: **DN**
+- data da versão (CreationDate): 2024-08-26
+- páginas: 72
+- sha256: `e62b4d3023e696749d8ed56700d54c894cb0d39e24ff69172895af9d5f7fc937`
+- p.6: Portaria Conjunta SAES/SAPS/SECTICS nº 1, 22/08/2024 (PCDT Dor Crônica) — nao_e_desta_dn
+- teto de abertura: 12000 caracteres
+
+- **quadril-raiz** (documento) Diretriz Nacional — Tratamento não cirúrgico da osteoartrite de quadril (MS/CONITEC) · PDF p.1–72 · 176404 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+  - **quadril-front-matter** (capitulo) Front-matter (capa, contexto, portaria) · PDF p.1–6 · 10754 chars · abre_como=capitulo
+    - **quadril-front-capa** (topico) Capa · PDF p.1–2 · 500 chars · abre_como=topico
+      - **quadril-p-001** (pagina) Página 1 · PDF p.1 · 2 chars · abre_como=pagina
+      - **quadril-p-002** (pagina) Página 2 · PDF p.2 · 498 chars · abre_como=pagina
+    - **quadril-front-contexto** (topico) Contexto CONITEC · PDF p.3–5 · 6137 chars · abre_como=topico
+      - **quadril-p-003** (pagina) Página 3 (folha 2) · PDF p.3 · 2568 chars · abre_como=pagina
+      - **quadril-p-004** (pagina) Página 4 (folha 3) · PDF p.4 · 1916 chars · abre_como=pagina
+      - **quadril-p-005** (pagina) Página 5 (folha 4) · PDF p.5 · 1653 chars · abre_como=pagina
+    - **quadril-front-portaria** (topico) Portaria conjunta 22/08/2024 — PCDT da Dor Crônica (não é esta DN) · PDF p.6 · 4117 chars · abre_como=topico `[nao_e_desta_dn]`
+      - **quadril-p-006** (pagina) Página 6 (folha 5) · PDF p.6 · 4117 chars · abre_como=pagina `[nao_e_desta_dn]`
+  - **quadril-apresentacao** (capitulo) Apresentação (OA de quadril) · PDF p.7 · 2996 chars · abre_como=capitulo
+    - **quadril-p-007** (pagina) Página 7 (folha 6) · PDF p.7 · 2996 chars · abre_como=pagina
+  - **quadril-resumo** (capitulo) Resumo / força das recomendações · PDF p.8–13 · 15422 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-p-008** (pagina) Página 8 (folha 7) · PDF p.8 · 2427 chars · abre_como=pagina
+    - **quadril-p-009** (pagina) Página 9 (folha 8) · PDF p.9 · 2516 chars · abre_como=pagina
+    - **quadril-p-010** (pagina) Página 10 (folha 9) · PDF p.10 · 2579 chars · abre_como=pagina
+    - **quadril-p-011** (pagina) Página 11 (folha 10) · PDF p.11 · 2561 chars · abre_como=pagina
+    - **quadril-p-012** (pagina) Página 12 (folha 11) · PDF p.12 · 2779 chars · abre_como=pagina
+    - **quadril-p-013** (pagina) Página 13 (folha 12) · PDF p.13 · 2560 chars · abre_como=pagina
+  - **quadril-algoritmo** (capitulo) Algoritmo de tratamento não cirúrgico · PDF p.14 · 121 chars · abre_como=capitulo
+    - **quadril-p-014** (pagina) Página 14 (folha 13) · PDF p.14 · 121 chars · abre_como=pagina
+  - **quadril-introducao** (capitulo) Introdução / objetivos / escopo · PDF p.15–21 · 17156 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-p-015** (pagina) Página 15 (folha 14) · PDF p.15 · 2861 chars · abre_como=pagina
+    - **quadril-p-016** (pagina) Página 16 (folha 15) · PDF p.16 · 2470 chars · abre_como=pagina
+    - **quadril-p-017** (pagina) Página 17 (folha 16) · PDF p.17 · 1627 chars · abre_como=pagina
+    - **quadril-p-018** (pagina) Página 18 (folha 17) · PDF p.18 · 2612 chars · abre_como=pagina
+    - **quadril-p-019** (pagina) Página 19 (folha 18) · PDF p.19 · 2395 chars · abre_como=pagina
+    - **quadril-p-020** (pagina) Página 20 (folha 19) · PDF p.20 · 2347 chars · abre_como=pagina
+    - **quadril-p-021** (pagina) Página 21 (folha 20) · PDF p.21 · 2844 chars · abre_como=pagina
+  - **quadril-metodo-evidencias** (capitulo) Método e evidências · PDF p.22–28 · 17740 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-p-022** (pagina) Página 22 (folha 21) · PDF p.22 · 2096 chars · abre_como=pagina
+    - **quadril-p-023** (pagina) Página 23 (folha 22) · PDF p.23 · 2942 chars · abre_como=pagina
+    - **quadril-p-024** (pagina) Página 24 (folha 23) · PDF p.24 · 2478 chars · abre_como=pagina
+    - **quadril-p-025** (pagina) Página 25 (folha 24) · PDF p.25 · 2530 chars · abre_como=pagina
+    - **quadril-p-026** (pagina) Página 26 (folha 25) · PDF p.26 · 2209 chars · abre_como=pagina
+    - **quadril-p-027** (pagina) Página 27 (folha 26) · PDF p.27 · 2850 chars · abre_como=pagina
+    - **quadril-p-028** (pagina) Página 28 (folha 27) · PDF p.28 · 2635 chars · abre_como=pagina
+  - **quadril-diagnostico-nao-med** (capitulo) Diagnóstico e tratamento não medicamentoso · PDF p.29–34 · 15786 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-p-029** (pagina) Página 29 (folha 28) · PDF p.29 · 2449 chars · abre_como=pagina
+    - **quadril-p-030** (pagina) Página 30 (folha 29) · PDF p.30 · 2819 chars · abre_como=pagina
+    - **quadril-p-031** (pagina) Página 31 (folha 30) · PDF p.31 · 2682 chars · abre_como=pagina
+    - **quadril-p-032** (pagina) Página 32 (folha 31) · PDF p.32 · 2800 chars · abre_como=pagina
+    - **quadril-p-033** (pagina) Página 33 (folha 32) · PDF p.33 · 2603 chars · abre_como=pagina
+    - **quadril-p-034** (pagina) Página 34 (folha 33) · PDF p.34 · 2433 chars · abre_como=pagina
+  - **quadril-cap-medicamentoso** (capitulo) Tratamento medicamentoso · PDF p.35–45 · 30436 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-top-paracetamol** (topico) Paracetamol / teto de 4 g · PDF p.35–36 · 5439 chars · abre_como=topico
+      - **quadril-p-035** (pagina) Página 35 (folha 34) · PDF p.35 · 2794 chars · abre_como=pagina
+      - **quadril-p-036** (pagina) Página 36 (folha 35) · PDF p.36 · 2645 chars · abre_como=pagina
+    - **quadril-top-aine** (topico) AINE e AAS · PDF p.37–40 · 11135 chars · abre_como=topico
+      - **quadril-p-037** (pagina) Página 37 (folha 36) · PDF p.37 · 3108 chars · abre_como=pagina
+      - **quadril-p-038** (pagina) Página 38 (folha 37) · PDF p.38 · 2846 chars · abre_como=pagina
+      - **quadril-p-039** (pagina) Página 39 (folha 38) · PDF p.39 · 2575 chars · abre_como=pagina
+      - **quadril-p-040** (pagina) Página 40 (folha 39) · PDF p.40 · 2606 chars · abre_como=pagina
+    - **quadril-top-outros-farma** (topico) Demais fármacos e infiltração · PDF p.41–44 · 11452 chars · abre_como=topico
+      - **quadril-p-041** (pagina) Página 41 (folha 40) · PDF p.41 · 2961 chars · abre_como=pagina
+      - **quadril-p-042** (pagina) Página 42 (folha 41) · PDF p.42 · 2686 chars · abre_como=pagina
+      - **quadril-p-043** (pagina) Página 43 (folha 42) · PDF p.43 · 3043 chars · abre_como=pagina
+      - **quadril-p-044** (pagina) Página 44 (folha 43) · PDF p.44 · 2762 chars · abre_como=pagina
+    - **quadril-top-ah** (topico) Ácido hialurônico · PDF p.45 · 2410 chars · abre_como=topico
+      - **quadril-p-045** (pagina) Página 45 (folha 44) · PDF p.45 · 2410 chars · abre_como=pagina
+  - **quadril-acompanhamento** (capitulo) Acompanhamento · PDF p.46–51 · 16801 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-p-046** (pagina) Página 46 (folha 45) · PDF p.46 · 2627 chars · abre_como=pagina
+    - **quadril-p-047** (pagina) Página 47 (folha 46) · PDF p.47 · 2819 chars · abre_como=pagina
+    - **quadril-p-048** (pagina) Página 48 (folha 47) · PDF p.48 · 3090 chars · abre_como=pagina
+    - **quadril-p-049** (pagina) Página 49 (folha 48) · PDF p.49 · 2843 chars · abre_como=pagina
+    - **quadril-p-050** (pagina) Página 50 (folha 49) · PDF p.50 · 2901 chars · abre_como=pagina
+    - **quadril-p-051** (pagina) Página 51 (folha 50) · PDF p.51 · 2521 chars · abre_como=pagina
+  - **quadril-referencias** (capitulo) Referências · PDF p.52–69 · 45223 chars · abre_como=bloqueado_estouro `[bloqueado_estouro]`
+    - **quadril-p-052** (pagina) Página 52 (folha 51) · PDF p.52 · 2660 chars · abre_como=pagina
+    - **quadril-p-053** (pagina) Página 53 (folha 52) · PDF p.53 · 2810 chars · abre_como=pagina
+    - **quadril-p-054** (pagina) Página 54 (folha 53) · PDF p.54 · 2835 chars · abre_como=pagina
+    - **quadril-p-055** (pagina) Página 55 (folha 54) · PDF p.55 · 2791 chars · abre_como=pagina
+    - **quadril-p-056** (pagina) Página 56 (folha 55) · PDF p.56 · 2659 chars · abre_como=pagina
+    - **quadril-p-057** (pagina) Página 57 (folha 56) · PDF p.57 · 2826 chars · abre_como=pagina
+    - **quadril-p-058** (pagina) Página 58 (folha 57) · PDF p.58 · 2814 chars · abre_como=pagina
+    - **quadril-p-059** (pagina) Página 59 (folha 58) · PDF p.59 · 2845 chars · abre_como=pagina
+    - **quadril-p-060** (pagina) Página 60 (folha 59) · PDF p.60 · 2851 chars · abre_como=pagina
+    - **quadril-p-061** (pagina) Página 61 (folha 60) · PDF p.61 · 2819 chars · abre_como=pagina
+    - **quadril-p-062** (pagina) Página 62 (folha 61) · PDF p.62 · 2312 chars · abre_como=pagina
+    - **quadril-p-063** (pagina) Página 63 (folha 62) · PDF p.63 · 1687 chars · abre_como=pagina
+    - **quadril-p-064** (pagina) Página 64 (folha 63) · PDF p.64 · 2390 chars · abre_como=pagina
+    - **quadril-p-065** (pagina) Página 65 (folha 64) · PDF p.65 · 2262 chars · abre_como=pagina
+    - **quadril-p-066** (pagina) Página 66 (folha 65) · PDF p.66 · 2420 chars · abre_como=pagina
+    - **quadril-p-067** (pagina) Página 67 (folha 66) · PDF p.67 · 2444 chars · abre_como=pagina
+    - **quadril-p-068** (pagina) Página 68 (folha 67) · PDF p.68 · 1850 chars · abre_como=pagina
+    - **quadril-p-069** (pagina) Página 69 (folha 68) · PDF p.69 · 1948 chars · abre_como=pagina
+  - **quadril-instrumentos** (capitulo) Instrumentos / apêndices · PDF p.70–72 · 3969 chars · abre_como=capitulo
+    - **quadril-p-070** (pagina) Página 70 (folha 69) · PDF p.70 · 1859 chars · abre_como=pagina
+    - **quadril-p-071** (pagina) Página 71 (folha 70) · PDF p.71 · 1906 chars · abre_como=pagina
+    - **quadril-p-072** (pagina) Página 72 (folha 71) · PDF p.72 · 204 chars · abre_como=pagina

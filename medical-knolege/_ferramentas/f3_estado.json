@@ -1,0 +1,112 @@
+{
+  "etapas": {
+    "0": true,
+    "1-joelho": true,
+    "2-joelho": true,
+    "3-joelho": true,
+    "4-joelho": true,
+    "liteparse-joelho": true,
+    "1-quadril": true,
+    "2-quadril": true,
+    "3-quadril": true,
+    "4-quadril": true,
+    "liteparse-quadril": true,
+    "5": true,
+    "7": true,
+    "8": true,
+    "6": true
+  },
+  "sample-joelho": [
+    1,
+    6,
+    14,
+    28,
+    31,
+    40,
+    47,
+    51,
+    63,
+    82
+  ],
+  "fail3-joelho": [],
+  "fail4-joelho": [],
+  "liteparse-joelho": {
+    "pages_liteparse": 82,
+    "pages_ok": true,
+    "p1": true,
+    "p14": true,
+    "paginas_com_texto": 81,
+    "autor": "liteparse (auditor, não escreveu MD)"
+  },
+  "sample-quadril": [
+    1,
+    6,
+    14,
+    28,
+    31,
+    40,
+    47,
+    51,
+    63,
+    72
+  ],
+  "fail3-quadril": [],
+  "fail4-quadril": [],
+  "liteparse-quadril": {
+    "pages_liteparse": 72,
+    "pages_ok": true,
+    "p1": true,
+    "p14": true,
+    "paginas_com_texto": 71,
+    "autor": "liteparse (auditor, não escreveu MD)"
+  },
+  "casos7": [
+    {
+      "case": "open_page(joelho,28)",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "case": "open_page(joelho,99)",
+      "pass": true,
+      "detail": "página 99 fora do intervalo 1..82"
+    },
+    {
+      "case": "open_topic medicamentoso bloqueado",
+      "pass": true,
+      "detail": "nó joelho-cap-medicamentoso bloqueado_estouro (47350 chars). filhos: joelho-top-paracetamol=Paracetamol / pergunta medicamentosa, joelho-top-aine=AINE (não seletivo e seletivo), joelho-top-opioide=Opioides fracos e fortes, joelho-top-condroitina=Condroitina e glucosamina, joelho-top-corticoide-ia=Corticosteroide intra-articular, joelho-top-ah=Ácido hialurônico / viscosuplementação"
+    },
+    {
+      "case": "open_chapter raiz > 12000",
+      "pass": true,
+      "detail": "nó joelho-raiz bloqueado_estouro (211502 chars). filhos: joelho-front-matter=Front-matter (capa, ficha, deliberação, portaria), joelho-apresentacao=Apresentação (OA de joelho), joelho-resumo=Resumo das recomendações, joelho-algoritmo=Algoritmo, joelho-introducao=1. Introdução, joelho-objetivos-escopo=2. Objetivos e 3. Escopo, joelho-metodo=4. Método, joelho-evidencias=Evidências: diagnóstico, holística e fisioterapia, joelho-cap-medicamentoso=Tratamento medicamentoso, joelho-acompanhamento=Acompanhamento, joelho-indicacao-cirurgica=Indicação cirúrgica, joelho-referencias=Referências, joelho-instrumentos=Instrumentos (SF-36 / apêndices)"
+    },
+    {
+      "case": "open joelho+quadril",
+      "pass": true,
+      "detail": "recusa: pedido joelho+quadril no mesmo open"
+    }
+  ],
+  "etapa8": {
+    "fail": [],
+    "apage": [],
+    "priv": [],
+    "abs": []
+  },
+  "pack": {
+    "dest": "/Users/bauervieiracesarfilhovieira/Documents/claude-organizada-segura/Hub_Receituarios_UBS_2026/medical-knolege",
+    "joelho": {
+      "existe": true,
+      "sha256": "7814d321542893766bc8fb85e97c87903161eeb309876eaf6a8cf2264ac43e74",
+      "bate": true
+    },
+    "quadril": {
+      "existe": true,
+      "sha256": "e62b4d3023e696749d8ed56700d54c894cb0d39e24ff69172895af9d5f7fc937",
+      "bate": true
+    },
+    "n_md": 154,
+    "abs_paths": 0,
+    "ruvector_copiado": []
+  }
+}

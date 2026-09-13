@@ -1,0 +1,21 @@
+ESQUEMAS-IMG — pasta reservada para as FOTOS dos esquemas da Orquestrador
+========================================================================
+
+Esta pasta está vazia de propósito (28/08/2026).
+
+O dono do Hub fotografou vários esquemas escritos pela Orquestrador. Quando
+as fotos chegarem:
+
+1. Copie os arquivos de imagem (.jpg/.png) para dentro DESTA pasta,
+   ao lado do index.html.
+2. A carga inicial será gerada como um arquivo .json (nome + texto + imagem
+   por esquema).
+3. A Orquestrador importa UMA vez, pelo botão "Importar" da seção
+   "Esquemas da Orquestrador", dentro de qualquer doença do Hub.
+
+Como as imagens são referenciadas por caminho relativo (esquemas-img/...),
+elas funcionam OFFLINE, sem internet, abrindo o index-f2.html direto do
+computador ou de um pendrive.
+
+Se a pasta estiver faltando, o esquema abre sem imagem, com aviso — nunca
+quebra. Não apague esta pasta.

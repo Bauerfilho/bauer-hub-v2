@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pendências da avaliação · 30/08 — Orquestrator</title>
+<style>
+  :root{--ouro:#B08A3E;--ouro-vivo:#C9A227;--ouro-claro:#E5C158;--preto:#15181D;--marfim:#FBF8F2;--ink:#1c2430}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--marfim);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.55}
+  header{background:var(--preto);color:#F4EFE6;padding:30px 30px 24px}
+  header .selo{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px}
+  header .selo svg{width:24px;height:24px}
+  header .selo span{font-size:11px;font-weight:900;letter-spacing:.24em;color:var(--ouro-claro)}
+  header h1{margin:0;font-size:22px;letter-spacing:-.02em}
+  header p{margin:6px 0 0;color:rgba(244,239,230,.7);font-size:13px}
+  main{max-width:900px;margin:auto;padding:24px 28px 60px}
+  .mantido{background:#fff;border:1px solid rgba(176,138,62,.45);border-left:5px solid var(--ouro-vivo);border-radius:14px;padding:18px 22px;margin-bottom:26px}
+  .mantido h2{margin:0 0 10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro)}
+  .mantido li{font-size:13.5px;margin-bottom:7px}
+  .mantido .dele{color:#6b4d00;font-style:italic}
+  .pend{background:#fff;border:1px solid #e6dfd0;border-left:5px solid #b3261e;border-radius:14px;padding:18px 22px;margin-bottom:16px}
+  .pend h3{margin:0 0 6px;font-size:15.5px}
+  .pend .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
+    background:var(--preto);color:var(--ouro-claro);font-size:12px;font-weight:900;margin-right:8px;vertical-align:-4px}
+  .pend p{margin:6px 0;font-size:13px}
+  .pend .ordem{background:#faf6ec;border-radius:9px;padding:9px 14px;font-size:12.5px;margin-top:8px}
+  .pend .ordem strong{color:#6b4d00}
+  .rodape{margin-top:30px;font-size:11px;color:#8a93a3;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#C9A227" stroke-width="2.2"/><rect x="8.4" y="8.4" width="7.2" height="7.2" rx="1" fill="#C9A227" transform="rotate(45 12 12)"/></svg><span>ORQUESTRATOR</span></div>
+  <h1>Pendências da avaliação — 30/08, manhã</h1>
+  <p>A lista cresce conforme tu avalias. Nada é mexido até tu fechares as diretivas.</p>
+</header>
+<main>
+
+  <div class="mantido">
+    <h2>✅ Aprovado por ti — é para MANTER</h2>
+    <ul>
+      <li><strong>O layout do painel Orquestrator (a barra preta) te agradou</strong> — <span class="dele">"se continuarem bem refinada, minimalista com cara de atual, é para manter"</span>. Direção travada: refinado · minimalista · atual.</li>
+      <li><strong>As features que pediste estão lá</strong>: busca inteligente da paciente por nome ou CPF · buscador de CID · anotações · frases favoritas.</li>
+      <li><strong>Os acréscimos ao guia de preenchimento</strong> (Paciente / Campos deste modelo / Medicamentos bloco a bloco) — <span class="dele">"ficaram ótimos, gostei de verdade"</span>.</li>
+      <li><strong>A simplificação da lateral</strong> — <span class="dele">"olha o tanto que tá mais simples na lateral e ela vai entender"</span>.</li>
+    </ul>
+  </div>
+
+  <div class="pend">
+    <h3><span class="num">1</span>Aviso de item fora da farmácia está cru demais</h3>
+    <p>Em Impetigo → Referência da Dra. → card Miíase: a frase <em>"Ivermectina e nitazoxanida não constam na lista da farmácia."</em> aparece em texto corrido no corpo do card, repetindo o que o selo <strong>✗ compra / rede</strong> já comunica.</p>
+    <div class="ordem"><strong>Ordem:</strong> "não precisa avisar ela desse jeito" — o dado clínico fica; a FORMA muda: a informação mora no selo (ou nota discreta), sem frase dura no meio da referência dela.</div>
+  </div>
+
+  <div class="pend">
+    <h3><span class="num">2</span>A FEATURE-COROA: o preenchimento VIVE dentro do Orquestrator — e o botão "Preencher" MORRE</h3>
+    <p><strong>Confirmado por ele com prints (30/08 ~11h20):</strong> o painel "Preencher o guia" MIGRA para dentro do painel preto Orquestrator — e vale para TODO documento: guias, <strong>encaminhamentos, receituário simples, receituário especial, orientações</strong>, institucionais. O painel se adapta ao documento aberto.</p>
+    <p><strong>O botão "Preencher" SOME de todo lugar onde existe</strong> (ele o marcou com ✗ no print). Ponto de entrada ÚNICO: o selo ORQUESTRATOR. Palavra dele: <em>"vai existir apenas orquestrador... é aí que penso embutir a minha IA — é a cereja do bolo, a minha marca no cartão, e deve ficar impecável."</em> → a arquitetura reserva o lugar da IA dele; o acabamento é inegociável.</p>
+    <div class="ordem"><strong>Diretiva:</strong> feature mais complexa da entrega à Dra. — um botão, todas as páginas, todos os documentos, adaptável, impecável.</div>
+  </div>
+
+  <div class="pend">
+    <h3><span class="num">3</span>Documentos da paciente preenchem DENTRO da página dela — e o que salvar entra no HISTÓRICO</h3>
+    <p><em>"Não faz sentido sair da página dela e preencher documento dela em outra página — é tudo integrado."</em> O visualizador de folha que já existe na página de medicamentos prova que dá: qualquer documento visualizado e preenchido ali mesmo, com a história da paciente sempre à vista durante o plano terapêutico.</p>
+    <p><strong>Requisito novo, confirmado:</strong> o que for preenchido/salvo ali <strong>fica no histórico da paciente</strong> — visível nas futuras sessões. O documento preenchido vira parte da ficha, não folha avulsa.</p>
+    <div class="ordem"><strong>Diretiva:</strong> o documento vem até a consulta; a consulta nunca sai da paciente; a ficha acumula o que foi feito.</div>
+  </div>
+
+  <div class="pend" style="border-left-color:var(--ouro)">
+    <h3><span class="num">4</span>⚖️ LEI DO CANON: os documentos da unidade são os EXATOS — nunca redesenhados</h3>
+    <p>Os 18 documentos da unidade foram reproduzidos IDÊNTICOS aos PDFs que ele mesmo colheu lá — só a identificação (CRM etc.) trocada para a Dra. Orquestrador. <strong>Incluindo os mapas glicêmicos e os MRPAs.</strong> Quando o preenchimento migrar para o Orquestrator, o painel CONECTA nos templates canônicos do motor F1 (que já vivem intactos em <code>f1/templates/</code>: controle-glicemico, mrpa, tabela-pa, atestado, esquema-insulina…) — jamais réplica genérica, jamais "melhoria" de layout.</p>
+    <div class="ordem"><strong>Regra:</strong> a folha genérica do sketch é SÓ do sketch. Na obra real: motor F1 renderiza, Orquestrator preenche. O molde é dele; nós servimos o molde.</div>
+  </div>
+
+  <div class="rodape">Pendências vivas — avaliação do dono em curso · 30/08/2026 · o julgamento é dele, a execução é nossa</div>
+</main>
+</body>
+</html>

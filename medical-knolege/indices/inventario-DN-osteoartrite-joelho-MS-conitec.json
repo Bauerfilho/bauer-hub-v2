@@ -1,0 +1,747 @@
+{
+  "doc_id": "DN-osteoartrite-joelho-MS-conitec",
+  "sha256": "7814d321542893766bc8fb85e97c87903161eeb309876eaf6a8cf2264ac43e74",
+  "pages": 82,
+  "linhas": [
+    {
+      "pdf_page": 1,
+      "chars": 1,
+      "folha_impressa": null,
+      "kind": "capa",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 2,
+      "chars": 497,
+      "folha_impressa": null,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 3,
+      "chars": 2569,
+      "folha_impressa": 2,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 4,
+      "chars": 1915,
+      "folha_impressa": 3,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 5,
+      "chars": 1778,
+      "folha_impressa": 4,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 6,
+      "chars": 4118,
+      "folha_impressa": 5,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [
+        "nao_e_desta_dn"
+      ],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 7,
+      "chars": 2904,
+      "folha_impressa": 6,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 8,
+      "chars": 2958,
+      "folha_impressa": 7,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": true
+    },
+    {
+      "pdf_page": 9,
+      "chars": 2628,
+      "folha_impressa": 8,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": true
+    },
+    {
+      "pdf_page": 10,
+      "chars": 3306,
+      "folha_impressa": 9,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": true
+    },
+    {
+      "pdf_page": 11,
+      "chars": 2910,
+      "folha_impressa": 10,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": true
+    },
+    {
+      "pdf_page": 12,
+      "chars": 3245,
+      "folha_impressa": 11,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": true
+    },
+    {
+      "pdf_page": 13,
+      "chars": 1562,
+      "folha_impressa": 12,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": true
+    },
+    {
+      "pdf_page": 14,
+      "chars": 30,
+      "folha_impressa": 13,
+      "kind": "figura",
+      "n_imagens_embutidas": 1,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 15,
+      "chars": 2855,
+      "folha_impressa": 14,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 16,
+      "chars": 3050,
+      "folha_impressa": 15,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 17,
+      "chars": 2486,
+      "folha_impressa": 16,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 18,
+      "chars": 1896,
+      "folha_impressa": 17,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 19,
+      "chars": 2775,
+      "folha_impressa": 18,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 20,
+      "chars": 2385,
+      "folha_impressa": 19,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 21,
+      "chars": 2763,
+      "folha_impressa": 20,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 22,
+      "chars": 2202,
+      "folha_impressa": 21,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 23,
+      "chars": 2261,
+      "folha_impressa": 22,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 24,
+      "chars": 3252,
+      "folha_impressa": 23,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 25,
+      "chars": 2811,
+      "folha_impressa": 24,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 26,
+      "chars": 2835,
+      "folha_impressa": 25,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 27,
+      "chars": 2168,
+      "folha_impressa": 26,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 28,
+      "chars": 2948,
+      "folha_impressa": 27,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 29,
+      "chars": 2925,
+      "folha_impressa": 28,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 30,
+      "chars": 2440,
+      "folha_impressa": 29,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 31,
+      "chars": 3036,
+      "folha_impressa": 30,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 32,
+      "chars": 2659,
+      "folha_impressa": 31,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 33,
+      "chars": 2991,
+      "folha_impressa": 32,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 34,
+      "chars": 2689,
+      "folha_impressa": 33,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 35,
+      "chars": 2786,
+      "folha_impressa": 34,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 36,
+      "chars": 2715,
+      "folha_impressa": 35,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 37,
+      "chars": 2877,
+      "folha_impressa": 36,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 38,
+      "chars": 2753,
+      "folha_impressa": 37,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 39,
+      "chars": 2544,
+      "folha_impressa": 38,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 40,
+      "chars": 3055,
+      "folha_impressa": 39,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 41,
+      "chars": 2871,
+      "folha_impressa": 40,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 42,
+      "chars": 2891,
+      "folha_impressa": 41,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 43,
+      "chars": 2964,
+      "folha_impressa": 42,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 44,
+      "chars": 3201,
+      "folha_impressa": 43,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 45,
+      "chars": 2759,
+      "folha_impressa": 44,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 46,
+      "chars": 2897,
+      "folha_impressa": 45,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 47,
+      "chars": 2979,
+      "folha_impressa": 46,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 48,
+      "chars": 3048,
+      "folha_impressa": 47,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 49,
+      "chars": 2707,
+      "folha_impressa": 48,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 50,
+      "chars": 3030,
+      "folha_impressa": 49,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 51,
+      "chars": 3041,
+      "folha_impressa": 50,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 52,
+      "chars": 3007,
+      "folha_impressa": 51,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 53,
+      "chars": 3194,
+      "folha_impressa": 52,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 54,
+      "chars": 3252,
+      "folha_impressa": 53,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 55,
+      "chars": 2438,
+      "folha_impressa": 54,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 56,
+      "chars": 2632,
+      "folha_impressa": 55,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 57,
+      "chars": 2855,
+      "folha_impressa": 56,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 58,
+      "chars": 2726,
+      "folha_impressa": 57,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 59,
+      "chars": 2818,
+      "folha_impressa": 58,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 60,
+      "chars": 2882,
+      "folha_impressa": 59,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 61,
+      "chars": 1199,
+      "folha_impressa": 60,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 62,
+      "chars": 2882,
+      "folha_impressa": 61,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 63,
+      "chars": 2941,
+      "folha_impressa": 62,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 64,
+      "chars": 2806,
+      "folha_impressa": 63,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 65,
+      "chars": 2710,
+      "folha_impressa": 64,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 66,
+      "chars": 2959,
+      "folha_impressa": 65,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 67,
+      "chars": 2881,
+      "folha_impressa": 66,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 68,
+      "chars": 2805,
+      "folha_impressa": 67,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 69,
+      "chars": 2705,
+      "folha_impressa": 68,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 70,
+      "chars": 3008,
+      "folha_impressa": 69,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 71,
+      "chars": 2987,
+      "folha_impressa": 70,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 72,
+      "chars": 2824,
+      "folha_impressa": 71,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 73,
+      "chars": 2146,
+      "folha_impressa": 72,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 74,
+      "chars": 647,
+      "folha_impressa": 73,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 75,
+      "chars": 2285,
+      "folha_impressa": 74,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 76,
+      "chars": 2266,
+      "folha_impressa": 75,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 77,
+      "chars": 2336,
+      "folha_impressa": 76,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 78,
+      "chars": 2808,
+      "folha_impressa": 77,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 79,
+      "chars": 2363,
+      "folha_impressa": 78,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 80,
+      "chars": 1261,
+      "folha_impressa": 79,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 81,
+      "chars": 2037,
+      "folha_impressa": 80,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    },
+    {
+      "pdf_page": 82,
+      "chars": 1794,
+      "folha_impressa": 81,
+      "kind": "texto",
+      "n_imagens_embutidas": 0,
+      "tags": [],
+      "tabela_candidata": false
+    }
+  ]
+}

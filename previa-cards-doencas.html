@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prévia — Cards de doença · Receituários Orquestrador</title>
+<style>
+  :root{
+    --roxo-a:#4C1D95;--roxo-b:#7C3AED;
+    --rosa-a:#9D174D;--rosa-b:#DB2777;--rosa-c:#F472B6;
+    --azul-a:#1E3A8A;--azul-b:#2563EB;--azul-c:#38BDF8;
+    --ist-a:#14532D;--ist-b:#166534;
+    --ouro:#C9A227;--ouro-claro:#E5C158;
+    --marfim:#FBF8F2;--ink:#15181D;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--marfim);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Arial,sans-serif}
+  .topo{padding:34px 28px 10px;max-width:1280px;margin:auto}
+  .topo h1{font-size:26px;margin:0 0 6px;letter-spacing:-.03em}
+  .topo h1 .orq{color:var(--ouro)}
+  .topo p{margin:0;color:#5b6472;font-size:13.5px;line-height:1.5;max-width:840px}
+  .nota{display:inline-block;margin-top:10px;font-size:11.5px;font-weight:800;color:#7a5a00;background:#fff7d6;border:1px solid #e9d48a;border-radius:999px;padding:6px 12px}
+  section{max-width:1280px;margin:26px auto 40px;padding:0 28px}
+  section>h2{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#8a93a3;border-bottom:1px solid #e5dfd2;padding-bottom:8px}
+  section>h2 b{color:var(--ink)}
+  section>p.legenda{margin:6px 0 18px;font-size:12.5px;color:#5b6472}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+
+  /* ——— anatomia comum dos cards ——— */
+  .card{position:relative;min-height:300px;border-radius:22px;overflow:hidden;cursor:pointer;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:24px 22px 18px;
+    box-shadow:0 18px 44px rgba(21,24,29,.18);transition:transform .18s ease,box-shadow .18s ease;isolation:isolate}
+  .card:hover{transform:translateY(-5px);box-shadow:0 28px 60px rgba(21,24,29,.26)}
+  .card .sombra{position:absolute;inset:0;z-index:0;display:grid;place-items:center;pointer-events:none}
+  .card .sombra svg{width:88%;height:88%;opacity:.14;fill:#fff}
+  .card h3{position:relative;z-index:2;color:#fff;font-size:21px;line-height:1.14;margin:0;letter-spacing:-.02em;text-shadow:0 2px 14px rgba(0,0,0,.28)}
+  .card .sub{position:relative;z-index:2;color:rgba(255,255,255,.82);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px}
+  .card .rodape{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;margin-top:14px}
+  .logo-orq{display:inline-flex;align-items:center;gap:6px;opacity:.95}
+  .logo-orq svg{width:20px;height:20px}
+  .logo-orq span{font-size:8.5px;font-weight:900;letter-spacing:.22em;color:var(--ouro-claro)}
+  .abrir{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:850;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 13px;backdrop-filter:blur(2px)}
+
+  /* MODELO FINAL — a mescla que o dono cravou (30/08 ~02h15): diagonal rica + fio dourado (B)
+     + fita fina no topo + selo-pílula (C) + logo preservada + hover simples */
+  .mF{border:1px solid rgba(201,162,39,.6)}
+  .mF .fita-topo{position:absolute;z-index:2;top:0;left:0;right:0;height:5px}
+  .mF .fita-topo.ouro{background:linear-gradient(90deg,var(--ouro),var(--ouro-claro))}
+  .mF .fita-topo.dupla{background:linear-gradient(90deg,var(--rosa-b),var(--roxo-b))}
+  .mF .selo{position:absolute;z-index:2;top:16px;left:18px;font-size:9.5px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
+    color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 12px}
+  .mF.roxo{background:linear-gradient(118deg,#3B0764 0 30%,var(--roxo-b) 78% 100%)}
+  .mF.rosa-violeta{background:linear-gradient(118deg,#9D174D 0 28%,#7C3AED 82% 100%)}
+  .mF.rosa-coral{background:linear-gradient(118deg,#831843 0 32%,#E11D48 80% 100%)}
+  .mF.azul-esmeralda{background:linear-gradient(118deg,#1E3A8A 0 28%,#10B981 84% 100%)}
+  .mF.azul-ceu{background:linear-gradient(118deg,#172554 0 30%,var(--azul-c) 84% 100%)}
+  .mF.ist{background:linear-gradient(118deg,#052E16 0 32%,#15803D 82% 100%)}
+  .mF .sombra svg{width:82%;height:82%;opacity:.16;transform:translate(14%,4%)}
+
+  /* MODELO A — sombra dominante: cor sólida densíssima, silhueta grande */
+  .mA.roxo{background:var(--roxo-a)}
+  .mA.rosa{background:var(--rosa-a)}
+  .mA.azul{background:var(--azul-a)}
+  .mA.ist{background:var(--ist-a)}
+  .mA .sombra svg{width:105%;height:105%;opacity:.13;transform:translate(12%,6%)}
+
+  /* MODELO B — fita: duas cores se mesclando em diagonal + fio dourado */
+  .mB{border:1px solid rgba(201,162,39,.55)}
+  .mB.roxo{background:linear-gradient(118deg,var(--roxo-a) 0 42%,var(--roxo-b) 68% 100%)}
+  .mB.rosa{background:linear-gradient(118deg,var(--rosa-a) 0 42%,var(--rosa-b) 68% 100%)}
+  .mB.rosa-roxo{background:linear-gradient(118deg,var(--rosa-a) 0 38%,var(--roxo-b) 72% 100%)}
+  .mB.rosa-coral{background:linear-gradient(118deg,var(--rosa-a) 0 40%,#E11D48 72% 100%)}
+  .mB.azul{background:linear-gradient(118deg,var(--azul-a) 0 42%,var(--azul-b) 68% 100%)}
+  .mB.azul-turquesa{background:linear-gradient(118deg,var(--azul-a) 0 38%,#0D9488 74% 100%)}
+  .mB.azul-ceu{background:linear-gradient(118deg,var(--azul-a) 0 40%,var(--azul-c) 78% 100%)}
+  .mB.ist{background:linear-gradient(118deg,#0B3D20 0 42%,var(--ist-b) 68% 100%)}
+  .mB .sombra svg{width:78%;height:78%;opacity:.16;transform:translate(16%,4%)}
+
+  /* MODELO C — duotone profundo: tom sobre tom vertical + selo de categoria */
+  .mC.roxo{background:linear-gradient(180deg,#3B0764,var(--roxo-a) 55%,#5B21B6)}
+  .mC.rosa{background:linear-gradient(180deg,#831843,var(--rosa-a) 55%,#BE185D)}
+  .mC.azul{background:linear-gradient(180deg,#172554,var(--azul-a) 55%,#1D4ED8)}
+  .mC.ist{background:linear-gradient(180deg,#052E16,var(--ist-a) 55%,#15803D)}
+  .mC .sombra{place-items:end center}
+  .mC .sombra svg{width:96%;height:96%;opacity:.18}
+  .mC .selo{position:absolute;z-index:2;top:16px;left:18px;font-size:9.5px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
+    color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 11px}
+  .mC .fita-topo{position:absolute;z-index:2;top:0;left:0;right:0;height:5px}
+  .mC .fita-topo.dupla{background:linear-gradient(90deg,var(--rosa-b),var(--roxo-b))}
+  .mC .fita-topo.ouro{background:linear-gradient(90deg,var(--ouro),var(--ouro-claro))}
+</style>
+</head>
+<body>
+<div class="topo">
+  <h1>Prévia — cards de doença · <span class="orq">Receituários Orquestrador</span></h1>
+  <p>Três modelos para tua avaliação, com doenças reais do catálogo. Em todos: cor densa dominando, imagem como sombra dentro da cor,
+     3 por linha, sem receita escrita, e a tua logo dourada no canto inferior esquerdo. Roxo = obstetrícia/pré-natal · rosa = saúde da mulher ·
+     azul = pediatria · verde escuro = IST. Subdivisões de mulher e pediatria aparecem como fita de duas cores (modelo B) ou selo (modelo C).</p>
+  <span class="nota">Saúde do adulto ficou de fora de propósito — aguarda tua avaliação, como pediste.</span>
+</div>
+
+<!-- ===================== silhuetas (defs compartilhadas) ===================== -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="sil-gestante"><path d="M 194 146 C 186 146, 172 140, 166 130 C 160 118, 166 108, 178 104 C 186 102, 194 103, 202 102 C 208 94, 216 86, 226 86 C 234 86, 240 92, 242 100 C 245 108, 244 114, 240 120 C 237 122, 235 124, 234 126 C 235 128, 248 131, 246 135 C 242 137, 238 138, 236 139 C 238 141, 239 143, 237 145 C 232 146, 234 148, 236 149 C 233 151, 232 153, 234 155 C 238 157, 236 161, 230 163 C 220 165, 212 160, 204 150 C 202 156, 204 168, 206 182 C 208 192, 216 202, 226 212 C 236 222, 234 234, 224 244 C 220 250, 226 258, 236 268 C 254 284, 278 306, 278 334 C 278 360, 260 384, 234 394 C 218 400, 198 402, 174 402 C 154 402, 134 398, 120 390 C 112 380, 108 360, 110 340 C 110 316, 120 290, 134 268 C 144 252, 146 236, 144 220 C 142 200, 150 180, 162 164 C 174 156, 184 150, 194 146 Z M 192 194 C 186 212, 182 230, 184 248 C 192 256, 206 264, 222 272 C 234 277, 244 280, 254 282 C 264 284, 272 286, 274 290 C 270 293, 264 294, 256 291 C 246 288, 238 283, 230 278 C 218 272, 208 262, 200 252 C 192 238, 190 218, 194 200 C 196 196, 194 194, 192 194 Z M 158 190 C 154 208, 152 228, 154 248 C 156 260, 162 270, 170 278 C 166 270, 162 256, 162 242 C 162 224, 164 206, 160 190 Z" fill="#FFFFFF" fill-rule="evenodd"/></g>
+    <g id="sil-crianca"><g fill="#FFFFFF">
+    <path fill-rule="evenodd" d="M 94 76 C 94 64, 106 54, 122 54 C 138 54, 150 64, 156 76 C 160 84, 164 92, 166 98 C 168 100, 174 104, 176 106 C 176 108, 171 109, 168 111 C 170 113, 171 116, 169 118 C 166 120, 163 122, 165 125 C 166 129, 161 134, 155 136 C 147 138, 141 133, 137 126 C 136 134, 140 146, 146 156 C 154 164, 168 176, 182 186 C 198 194, 216 186, 232 176 C 240 171, 244 168, 248 166 C 250 165, 252 168, 250 171 C 244 177, 234 185, 222 193 C 206 203, 190 211, 174 211 C 162 211, 152 203, 146 191 C 140 203, 134 217, 126 231 C 138 229, 154 227, 170 229 C 182 231, 188 239, 188 251 C 188 265, 184 287, 180 309 C 178 321, 180 331, 183 345 C 184 345, 200 345, 208 345 C 208 345, 186 345, 170 345 C 166 345, 168 336, 168 324 C 170 302, 172 278, 166 260 C 148 255, 126 262, 104 274 C 92 286, 86 306, 84 326 C 83 338, 78 345, 70 345 C 58 345, 50 345, 46 345 C 40 345, 36 338, 40 328 C 48 306, 58 280, 68 252 C 78 224, 86 198, 90 174 C 92 156, 90 140, 90 126 C 82 124, 74 116, 74 104 C 74 92, 84 82, 94 76 Z M 94 80 C 88 84, 86 90, 88 96 C 90 100, 94 104, 98 104 C 96 100, 92 96, 91 90 C 90 86, 92 82, 94 80 Z M 136 118 C 132 122, 130 128, 132 134 C 134 140, 138 146, 142 152 C 143 151, 139 144, 136 138 C 134 132, 135 126, 138 120 C 138 118, 136 118, 136 118 Z"/>
+    <path fill-rule="evenodd" d="M 296 98 C 282 98, 270 106, 264 116 C 260 120, 254 123, 250 125 C 248 126, 250 129, 252 130 C 253 132, 251 135, 250 137 C 249 139, 252 141, 253 143 C 255 146, 256 151, 254 156 C 251 160, 248 164, 246 168 C 244 172, 248 180, 252 190 C 256 201, 262 212, 264 224 C 266 236, 265 248, 262 260 C 259 271, 258 286, 260 302 C 262 316, 260 328, 256 334 C 254 345, 246 345, 240 345 C 240 345, 252 345, 262 345 C 265 345, 267 340, 267 335 C 267 318, 269 300, 269 285 C 269 275, 277 270, 285 285 C 285 300, 283 318, 283 335 C 283 340, 279 345, 275 345 C 275 345, 292 345, 305 345 C 309 345, 311 340, 309 335 C 307 320, 309 300, 313 282 C 317 268, 319 252, 315 238 C 312 222, 313 202, 313 182 C 313 168, 316 154, 322 142 C 330 126, 332 112, 324 102 C 316 94, 306 96, 296 98 Z M 284 174 C 288 194, 290 214, 288 234 C 286 240, 284 246, 282 250 C 280 250, 281 244, 283 238 C 285 220, 284 198, 280 178 C 280 174, 283 172, 284 174 Z"/>
+    <path fill-rule="evenodd" d="M 136 160 C 132 182, 140 214, 156 228 C 170 240, 192 236, 214 218 C 228 206, 238 192, 248 180 C 250 178, 248 176, 246 177 C 236 188, 224 201, 210 213 C 190 228, 172 232, 160 223 C 146 210, 138 182, 140 160 C 140 158, 136 158, 136 160 Z"/>
+  </g></g></g></g></g></g></g>
+    <g id="sil-mulher"><path fill="#FFFFFF" fill-rule="evenodd" d="M 340 400 C 310 378, 270 348, 238 318 C 214 290, 202 256, 196 226 C 202 224, 218 221, 228 215 C 238 209, 240 201, 236 193 C 232 187, 225 185, 227 181 C 231 177, 239 173, 238 167 C 234 163, 227 162, 226 159 C 231 155, 240 150, 239 142 C 237 137, 229 136, 227 130 C 233 128, 253 120, 251 111 C 249 105, 235 95, 227 85 C 221 79, 225 67, 223 55 C 221 39, 203 21, 174 13 C 134 5, 81 17, 47 53 C 17 86, 7 146, 13 209 C 19 271, 35 336, 68 400 Z M 213 87 C 219 91, 226 93, 232 91 C 226 94, 219 93, 213 89 Z M 155 400 C 142 355, 134 305, 134 250 C 134 200, 142 165, 150 145 C 154 135, 138 132, 122 148 C 95 175, 78 230, 75 295 C 72 345, 82 385, 92 400 Z M 148 24 C 98 40, 56 86, 42 148 C 28 208, 38 268, 55 322 C 42 268, 34 208, 46 152 C 56 102, 95 56, 148 24 Z"/></g>
+    <g id="sil-maos"><path fill="#FFFFFF" fill-rule="evenodd" d="M 0 385
+  C 20 370 42 342 62 312
+  C 72 295 82 272 90 252
+  C 96 240 102 236 108 240
+  C 114 244 114 254 108 266
+  C 100 284 90 302 85 316
+  C 95 300 108 280 120 268
+  C 126 262 131 264 133 270
+  C 135 276 130 283 120 294
+  C 106 308 92 324 84 336
+  C 94 324 108 308 120 298
+  C 125 294 129 295 130 300
+  C 131 305 126 312 118 320
+  C 104 334 90 348 80 360
+  C 90 350 102 336 114 326
+  C 119 322 122 323 123 328
+  C 124 333 120 339 112 346
+  C 96 364 72 384 42 396
+  C 26 400 10 402 0 400 Z M 400 15
+  C 380 30 358 58 338 88
+  C 328 105 318 128 310 148
+  C 304 160 298 164 292 160
+  C 286 156 286 146 292 134
+  C 300 116 310 98 315 84
+  C 305 100 292 120 280 132
+  C 274 138 269 136 267 130
+  C 265 124 270 117 280 106
+  C 294 92 308 76 316 64
+  C 306 76 292 92 280 102
+  C 275 106 271 105 270 100
+  C 269 95 274 88 282 80
+  C 296 66 310 52 320 40
+  C 310 50 298 64 286 74
+  C 281 78 278 77 277 72
+  C 276 67 280 61 288 54
+  C 304 36 328 16 358 4
+  C 374 0 390 -2 400 0 Z M 200 112
+  C 174 112 154 134 154 162
+  C 154 182 168 204 186 220
+  C 172 238 155 264 138 292
+  C 134 298 138 304 148 302
+  C 158 298 174 276 192 250
+  C 196 246 204 246 208 250
+  C 226 276 242 298 252 302
+  C 262 304 266 298 262 292
+  C 245 264 228 238 214 220
+  C 232 204 246 182 246 162
+  C 246 134 226 112 200 112 Z
+  M 200 128
+  C 212 128 224 140 224 160
+  C 224 174 212 192 200 206
+  C 188 192 176 174 176 160
+  C 176 140 188 128 200 128 Z"/></g>
+    <g id="sil-bebe"><path fill="#FFFFFF" fill-rule="evenodd" d="
+    M 160 50
+    C 182 50, 196 62, 202 75
+    C 205 79, 204 82, 201 84
+    C 207 88, 210 94, 208 99
+    C 205 102, 200 103, 201 107
+    C 202 110, 198 114, 194 117
+    C 188 122, 178 122, 170 116
+    C 166 124, 172 140, 182 160
+    C 192 178, 200 192, 198 200
+    C 204 190, 216 182, 230 182
+    C 246 182, 258 194, 258 210
+    C 258 224, 248 236, 236 240
+    C 244 250, 248 264, 242 276
+    C 236 288, 222 295, 208 296
+    C 234 298, 260 288, 276 270
+    C 285 258, 288 242, 282 230
+    C 276 218, 264 220, 256 232
+    C 264 242, 262 254, 250 264
+    C 242 270, 235 273, 225 276
+    C 245 282, 265 296, 275 312
+    C 285 330, 275 348, 245 355
+    C 205 362, 150 360, 115 348
+    C 85 335, 72 305, 70 265
+    C 68 218, 78 168, 102 125
+    C 112 108, 122 96, 118 85
+    C 110 82, 96 76, 92 62
+    C 86 46, 102 36, 120 38
+    C 134 40, 148 48, 160 50 Z
+
+    M 166 124
+    C 176 146, 186 174, 186 196
+    C 182 214, 170 228, 152 234
+    C 164 226, 174 212, 178 194
+    C 180 174, 172 151, 162 130
+    C 163 127, 165 125, 166 124 Z
+
+    M 125 155
+    C 108 195, 105 240, 118 272
+    C 128 296, 152 312, 185 316
+    C 218 318, 245 308, 260 292
+    C 250 300, 225 308, 195 306
+    C 165 304, 144 290, 134 268
+    C 120 238, 120 196, 134 158
+    C 132 156, 128 155, 125 155 Z
+  "/></g>
+  </defs>
+</svg>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="logo-orquestrator">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="#C9A227" stroke-width="2.4"/>
+      <rect x="8.2" y="8.2" width="7.6" height="7.6" rx="1" fill="#C9A227" transform="rotate(45 12 12)"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ===================== MODELO FINAL — A MESCLA ===================== -->
+<section>
+  <h2><b>★ Modelo FINAL</b> — a mescla que escolheste (diagonal rica + fio dourado + fita fina + selo-pílula)</h2>
+  <p class="legenda">Fita dourada por padrão; dupla rosa⇢roxo nas pontes mulher⇢obstetrícia. Aprovando, aplico na home real do hub.</p>
+  <div class="grid">
+    <div class="card mF roxo"><span class="fita-topo ouro"></span><span class="selo">Pré-natal</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-gestante"/></svg></div>
+      <h3>Pré-natal de rotina</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mF rosa-violeta"><span class="fita-topo dupla"></span><span class="selo">Mulher ⇢ obstetrícia · mama & aleitamento</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-bebe"/></svg></div>
+      <h3>Mastite aguda</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mF azul-esmeralda"><span class="fita-topo ouro"></span><span class="selo">Pediatria · pele</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <h3>Dermatite de fraldas</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mF rosa-coral"><span class="fita-topo dupla"></span><span class="selo">Mulher · infecções ginecológicas</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-mulher"/></svg></div>
+      <h3>Candidíase vulvovaginal</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mF azul-ceu"><span class="fita-topo ouro"></span><span class="selo">Pediatria · respiratório & ouvido</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <h3>Otite média aguda infantil</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mF ist"><span class="fita-topo ouro"></span><span class="selo">IST</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-maos"/></svg></div>
+      <h3>Sífilis</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+  </div>
+</section>
+
+<!-- ===================== MODELO A ===================== -->
+<section>
+  <h2><b>Modelo A</b> — sombra dominante (cor sólida densíssima, silhueta enorme sangrando)</h2>
+  <p class="legenda">A cor é UMA e absoluta; a silhueta atravessa o card como sombra de vitral. O mais sóbrio dos três.</p>
+  <div class="grid">
+    <div class="card mA roxo"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-gestante"/></svg></div>
+      <div class="sub">Pré-natal</div><h3>Pré-natal de rotina</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mA rosa"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-mulher"/></svg></div>
+      <div class="sub">Saúde da mulher · ciclo</div><h3>Anticoncepção</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mA azul"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <div class="sub">Pediatria · puericultura</div><h3>Puericultura</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mA roxo"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-gestante"/></svg></div>
+      <div class="sub">Pré-natal</div><h3>Hipertensão gestacional</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mA ist"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-maos"/></svg></div>
+      <div class="sub">IST</div><h3>Sífilis</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mA rosa"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-bebe"/></svg></div>
+      <div class="sub">Saúde da mulher · mama</div><h3>Mastite aguda</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+  </div>
+</section>
+
+<!-- ===================== MODELO B ===================== -->
+<section>
+  <h2><b>Modelo B</b> — fita de duas cores (subdivisões se mesclando em diagonal + fio dourado na borda)</h2>
+  <p class="legenda">As subdivisões que pediste: mama = rosa⇢roxo (ponte com a obstetrícia) · infecções ginecológicas = rosa⇢coral · respiratório infantil = azul⇢céu · pele infantil = azul⇢turquesa.</p>
+  <div class="grid">
+    <div class="card mB roxo"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-gestante"/></svg></div>
+      <div class="sub">Pré-natal</div><h3>Diabetes na gestação</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mB rosa-coral"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-mulher"/></svg></div>
+      <div class="sub">Mulher · infecções ginecológicas</div><h3>Candidíase vulvovaginal</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mB azul-ceu"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <div class="sub">Pediatria · respiratório & ouvido</div><h3>Otite média aguda infantil</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mB rosa-roxo"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-bebe"/></svg></div>
+      <div class="sub">Mulher ⇢ obstetrícia · mama & aleitamento</div><h3>Candidíase mamária e monilíase do lactente</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mB azul-turquesa"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <div class="sub">Pediatria · pele</div><h3>Dermatite de fraldas</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mB ist"><div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-maos"/></svg></div>
+      <div class="sub">IST</div><h3>Herpes genital</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+  </div>
+</section>
+
+<!-- ===================== MODELO C ===================== -->
+<section>
+  <h2><b>Modelo C</b> — duotone profundo (tom sobre tom vertical, selo de subdivisão, fita fina no topo)</h2>
+  <p class="legenda">A silhueta nasce do chão do card como escultura; a subdivisão vira selo; a fita fina no topo pode ser dupla (rosa⇢roxo) ou dourada.</p>
+  <div class="grid">
+    <div class="card mC roxo"><span class="fita-topo ouro"></span><span class="selo">Pré-natal</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-gestante"/></svg></div>
+      <h3>Infecção urinária na gestante</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mC rosa"><span class="fita-topo dupla"></span><span class="selo">Mulher · rastreio</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-mulher"/></svg></div>
+      <h3>Rastreio de cânceres na mulher</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mC azul"><span class="fita-topo ouro"></span><span class="selo">Pediatria · barriga & parasitas</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <h3>Gastroenterite viral aguda</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mC ist"><span class="fita-topo ouro"></span><span class="selo">IST</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-maos"/></svg></div>
+      <h3>Cancro mole</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mC rosa"><span class="fita-topo dupla"></span><span class="selo">Mulher · ciclo & hormônios</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-mulher"/></svg></div>
+      <h3>Síndrome dos ovários policísticos</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+    <div class="card mC azul"><span class="fita-topo ouro"></span><span class="selo">Pediatria · puericultura</span>
+      <div class="sombra"><svg viewBox="0 0 400 400"><use href="#sil-crianca"/></svg></div>
+      <h3>Puericultura</h3>
+      <div class="rodape"><span class="logo-orq"><svg viewBox="0 0 24 24"><use href="#logo-orquestrator"/></svg><span>ORQUESTRATOR</span></span><span class="abrir">Abrir</span></div></div>
+  </div>
+</section>
+</body>
+</html>

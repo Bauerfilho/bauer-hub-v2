@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRÉVIA · Orquestrator = preenchimento universal — proposta</title>
+<style>
+:root{--ouro:#B08A3E;--ouro-vivo:#C9A227;--ouro-claro:#E5C158;--preto:#15181D;--marfim:#FBF8F2;
+  --verde:#2F6E62;--verde-esc:#22574d;--ink:#1c2430;--borda:#e2ddd0;--cinza:#667085}
+*{box-sizing:border-box}
+body{margin:0;background:var(--marfim);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.45}
+button{font-family:inherit;cursor:pointer}
+.faixa-previa{background:var(--preto);color:var(--ouro-claro);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;text-align:center;padding:6px}
+/* ───── appbar ───── */
+.appbar{display:flex;align-items:center;gap:14px;background:#fff;border-bottom:1px solid var(--borda);padding:12px 22px;position:sticky;top:0;z-index:50}
+.burger{width:40px;height:40px;border:1px solid var(--borda);border-radius:11px;background:#fff;font-size:17px}
+.appbar h1{margin:0;font-size:17px}.appbar .sub{font-size:11.5px;color:var(--cinza)}
+.appbar .dir{margin-left:auto;display:flex;gap:10px;align-items:center}
+.pill{border:1px solid var(--borda);border-radius:11px;background:#fff;padding:9px 14px;font-weight:700;font-size:13px}
+.pill.off{background:#e7f4ef;border-color:#cfe8de;color:#1d5c4c;font-weight:700}
+.pill.off::before{content:'●';color:#2e9970;margin-right:6px;font-size:10px}
+.orq-selo-btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ouro);border-radius:999px;background:#fff;
+  padding:9px 16px;font-size:11px;font-weight:900;letter-spacing:.2em;color:var(--ouro)}
+.orq-selo-btn:hover{box-shadow:0 0 0 2px rgba(201,162,39,.25)}
+.simb{width:16px;height:16px;border:2px solid var(--ouro);border-radius:50%;position:relative;flex:0 0 auto}
+.simb::after{content:'';position:absolute;inset:4px;background:var(--ouro);transform:rotate(45deg);border-radius:1px}
+/* ───── toolbar ───── */
+.toolbar{display:flex;align-items:center;gap:12px;padding:14px 22px;flex-wrap:wrap}
+.tb-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borda);border-radius:12px;background:#fff;padding:10px 16px;font-weight:800;font-size:14px}
+.tb-btn svg{width:19px;height:19px;flex:0 0 auto}
+.tb-tit{margin-left:4px}.tb-tit b{font-size:16px}.tb-tit span{display:block;font-size:11.5px;color:var(--cinza)}
+.tb-sel{margin-left:auto;display:flex;gap:10px;align-items:center}
+select{border:1px solid var(--borda);border-radius:11px;background:#fff;padding:10px 12px;font-weight:700;font-size:13.5px;font-family:inherit}
+.tabs{display:flex;background:#eceae4;border-radius:11px;padding:3px}
+.tabs b{padding:8px 13px;border-radius:9px;font-size:13px;font-weight:800}
+.tabs b.on{background:#fff}
+.tabs b:not(.on){color:#4b5565;font-weight:700}
+/* ───── corpo ───── */
+main{max-width:1500px;margin:auto;padding:4px 22px 60px;transition:margin-right .28s ease}
+body.orq-aberta main{margin-right:404px}
+.card-dra{background:#fff;border:1px solid var(--borda);border-left:5px solid var(--verde);border-radius:16px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card-dra .nome{font-weight:900;color:#7c5b13;font-size:15.5px}
+.tag{background:#e7f4ef;color:#1d5c4c;border-radius:999px;padding:3px 11px;font-size:11.5px;font-weight:800}
+.card-dra .dir{margin-left:auto;display:flex;gap:8px}
+.chip{border:1px solid var(--borda);border-radius:999px;background:#fff;padding:8px 15px;font-weight:800;font-size:13px}
+.chip.on{background:var(--verde);border-color:var(--verde);color:#fff}
+.tray{border:1.5px dashed #d8c9a5;border-radius:13px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:11px;flex-wrap:wrap;font-size:13px}
+.tray .rot{font-weight:900;color:#7c2d2d}
+.btn-verde{background:var(--verde);color:#fff;border:0;border-radius:11px;padding:11px 18px;font-weight:900;font-size:14px}
+.btn-branco{background:#fff;border:1px solid var(--borda);border-radius:11px;padding:11px 15px;font-weight:800}
+.btn-preto{display:inline-flex;align-items:center;gap:8px;background:var(--preto);color:var(--marfim);border:1px solid rgba(201,162,39,.65);border-radius:11px;padding:11px 15px;font-weight:850;font-size:12.5px}
+.btn-preto .simb{border-color:var(--ouro-vivo)}.btn-preto .simb::after{background:var(--ouro-vivo)}
+/* ───── área da folha + ações ───── */
+.zona{display:grid;grid-template-columns:1fr 285px;gap:16px;align-items:start}
+.mesa{background:#edeae2;border:1px solid var(--borda);border-radius:16px;padding:26px;display:flex;justify-content:center;min-height:560px}
+.folha{background:#fff;width:min(680px,100%);box-shadow:0 10px 28px rgba(28,36,48,.14);padding:26px 30px;font-size:12.5px}
+.folha .cab{display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:12px}
+.folha .cab b{font-size:13px}.folha .cab small{font-size:9.5px;color:#333;text-align:right;line-height:1.35}
+.folha h2{text-align:center;font-size:16px;letter-spacing:.08em;margin:10px 0 14px}
+.folha .linha{display:flex;gap:18px;margin:9px 0}
+.folha .campo{flex:1;border-bottom:1px solid #555;min-height:20px;padding:1px 4px}
+.folha .campo b{font-weight:400}
+.folha .rotulo{font-weight:800;white-space:nowrap}
+.folha .corpo{min-height:190px;padding:8px 2px;white-space:pre-wrap}
+.folha .assin{margin-top:34px;border-top:1px solid #555;width:270px;margin-left:auto;text-align:center;font-size:10.5px;padding-top:4px}
+.folha .via{font-size:9.5px;font-weight:900;text-align:right;color:#333}
+.folha .moldura{border:2.5px double var(--ink);padding:14px 16px}
+.folha table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.folha th{background:var(--verde);color:#fff;padding:5px;font-size:10.5px}
+.folha td{border:1px solid #999;padding:7px 6px;color:#666}
+.acoes{display:flex;flex-direction:column;gap:14px}
+.acard{background:#fff;border:1px solid var(--borda);border-radius:15px;padding:15px 17px}
+.acard h4{margin:0 0 10px;font-size:14px}
+.acard .btn-verde{width:100%;margin-bottom:8px}
+.acard .btn-branco{width:100%;margin-bottom:8px}
+.nota-verde{background:#eef6f1;border-radius:11px;padding:11px 13px;font-size:12px;color:#2c4a41}
+/* ───── PAINEL ORQUESTRATOR ───── */
+#orq{position:fixed;top:0;right:0;bottom:0;width:min(392px,94vw);background:#fff;border-left:1px solid var(--borda);
+  box-shadow:-14px 0 34px rgba(21,24,29,.14);transform:translateX(102%);transition:transform .28s ease;z-index:90;display:flex;flex-direction:column}
+body.orq-aberta #orq{transform:none}
+#orq .cab{background:var(--preto);color:var(--marfim);padding:16px 18px;display:flex;align-items:center;gap:10px}
+#orq .cab .simb{border-color:var(--ouro-vivo)}#orq .cab .simb::after{background:var(--ouro-vivo)}
+#orq .cab b{font-size:12px;letter-spacing:.22em;color:var(--ouro-claro)}
+#orq .cab small{display:block;font-size:11px;color:rgba(244,239,230,.72);letter-spacing:0;font-weight:600}
+#orq .fecha{margin-left:auto;background:none;border:0;color:#fff;font-size:17px}
+#orq .rolo{flex:1;overflow:auto;padding:16px 18px 12px}
+#orq .secao{font-size:10.5px;font-weight:900;letter-spacing:.14em;color:#5b5565;margin:16px 0 7px;display:flex;align-items:center;gap:7px}
+#orq .secao:first-child{margin-top:2px}
+#orq .secao .badge{background:#f1e8d2;color:#6b4d00;border-radius:999px;padding:2px 9px;font-size:9.5px;letter-spacing:.04em}
+#orq input[type=text],#orq textarea,#orq select{width:100%;border:1px solid var(--borda);border-radius:10px;padding:10px 11px;font-size:13px;font-family:inherit;background:#fff}
+#orq textarea{resize:vertical}
+#orq label{display:block;font-size:11.5px;font-weight:800;margin:9px 0 4px}
+.docsel{display:flex;flex-wrap:wrap;gap:6px}
+.docsel button{border:1px solid var(--borda);background:#fff;border-radius:999px;padding:7px 12px;font-size:11.5px;font-weight:800}
+.docsel button.on{background:var(--preto);color:var(--ouro-claro);border-color:var(--preto)}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sexo{display:flex;gap:6px}.sexo button{flex:1;border:1px solid var(--borda);background:#fff;border-radius:10px;padding:9px;font-weight:900}
+.sexo button.on{background:var(--verde);color:#fff;border-color:var(--verde)}
+.fav-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(180deg,#f3d989,#dfb84f);border:1px solid #b98f2e;
+  color:#4a3305;border-radius:11px;padding:10px 16px;font-weight:900;font-size:13px}
+.ins-btn{display:inline-flex;align-items:center;gap:7px;background:var(--preto);color:var(--marfim);border:1px solid rgba(201,162,39,.6);border-radius:11px;padding:10px 16px;font-weight:850;font-size:12.5px}
+.frase{background:#faf6ec;border:1px solid #eadfc4;border-radius:10px;padding:8px 11px;font-size:12px;margin-top:7px;display:flex;gap:8px;align-items:center}
+.frase button{margin-left:auto;border:0;background:var(--preto);color:var(--ouro-claro);border-radius:8px;padding:5px 10px;font-size:11px;font-weight:800}
+.sugestoes{border:1px solid var(--borda);border-radius:10px;margin-top:5px;overflow:hidden;display:none}
+.sugestoes div{padding:8px 11px;font-size:12.5px;border-bottom:1px solid #f0ece2;cursor:pointer}
+.sugestoes div:hover{background:#faf6ec}
+.sugestoes div:last-child{border-bottom:0}
+.sugestoes b{color:#6b4d00}
+/* catálogo completo dentro do Orquestrator */
+.dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.rolo-interno{max-height:300px;overflow:auto}
+.paleta{display:flex;gap:7px;margin-top:6px;flex-wrap:wrap}
+.paleta button{width:26px;height:26px;border-radius:8px;border:2px solid #fff;box-shadow:0 0 0 1px var(--borda);cursor:pointer}
+.paleta button.on{box-shadow:0 0 0 2px var(--ink)}
+.folha.folha-real{width:100%;max-width:1180px;padding:0;background:transparent;box-shadow:none}
+.folha-frame{width:100%;height:1020px;border:0;border-radius:8px;background:#fff;box-shadow:0 10px 28px rgba(28,36,48,.14)}
+/* escrever DIRETO no documento (o mínimo) + espelho da 2ª via */
+.duas-vias{display:grid;grid-template-columns:1fr 1fr}
+.via-col{padding:0 14px;min-width:0}
+.via-col+.via-col{border-left:1.5px dashed #b9b2a4}
+.folha.folha-larga{width:100%;max-width:1160px;font-size:11px}
+.folha [contenteditable]{outline:none;border-radius:3px;cursor:text}
+.folha [contenteditable]:focus{background:#fdf6e3;box-shadow:0 0 0 2px rgba(229,193,88,.4)}
+#catOrq{display:block;border:1px solid var(--borda);border-radius:12px;margin-top:8px;overflow:hidden;background:#fff}
+#catOrq.aberto{display:block}
+#catOrq .cat-busca{display:flex;align-items:center;gap:7px;padding:9px 11px;border-bottom:1px solid #f0ece2}
+#catOrq .cat-busca input{border:0!important;padding:2px!important;font-size:12.5px}
+#catOrq details{border-bottom:1px solid #f0ece2}
+#catOrq details:last-child{border-bottom:0}
+#catOrq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:12px 13px;font-size:11px;font-weight:900;letter-spacing:.09em;color:#41414d}
+#catOrq summary::before{content:'▸';color:var(--ouro);transition:transform .15s}
+#catOrq details[open] summary::before{transform:rotate(90deg)}
+#catOrq summary .n{margin-left:auto;background:#f1ede1;border-radius:999px;padding:1px 8px;font-size:10px;color:#6b6455}
+.cat-sub{padding:2px 8px 8px}
+.cat-subtit{font-size:9.5px;font-weight:900;letter-spacing:.12em;color:#9a93a3;padding:7px 6px 3px}
+.cat-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:0;background:none;border-radius:9px;padding:9px 10px;font-size:13px;font-weight:700;color:var(--ink)}
+.cat-item:hover{background:#faf6ec}
+.cat-item .ico{width:24px;height:24px;flex:0 0 auto;background:#f2f0ea;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.cat-item.oculto{display:none}
+#orq .rodape{border-top:1px solid var(--borda);padding:11px 18px;font-size:11px;color:#5b5565;background:#fdfbf6}
+#orq .rodape b{color:#4a3305}
+.dica{background:#fdf6e3;border:1px solid #eadfa9;border-radius:10px;padding:9px 12px;font-size:11.5px;color:#6b5308;margin-top:10px}
+@media print{.faixa-previa,#orq,.appbar,.toolbar,.acoes,.card-dra,.tray{display:none}}
+</style>
+</head>
+<body>
+<div class="faixa-previa">Prévia da proposta — o preenchimento vive no Orquestrator · nada disto está no hub ainda</div>
+
+<header class="appbar">
+  <button class="burger">☰</button>
+  <button class="tb-btn" title="Voltar ao hub" style="padding:9px 12px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#1c2430" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M5.5 10v9h13v-9"/><path d="M10 19v-5.4h4V19"/>
+      <path d="M16.6 5.2v2.6" stroke-width="2.2"/></svg>
+  </button>
+  <div><h1>Receituários Orquestrador</h1><div class="sub">Clínica do Orquestrador · 2026</div></div>
+  <div class="dir">
+    <span class="pill">▤ Bloco médico</span>
+    <span class="pill off">100% offline</span>
+    <button class="orq-selo-btn" onclick="orqToggle()" title="Abrir o Orquestrator"><span class="simb"></span>ORQUESTRATOR</button>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="tb-tit"><b>Pré-natal de rotina</b><span>Pré-natal · 2 esquema(s)</span></div>
+  <div class="tb-sel">
+    <select><option>Ácido fólico + sulfato ferroso</option><option>Ácido fólico em grupo especial</option></select>
+    <select id="selDocTop" onchange="rotaDoc(this.value)">
+      <option value="receita">Receita simples SUS</option>
+      <option value="especial">Controle especial</option>
+      <option value="encaminhamento">Encaminhamento</option>
+      <option value="orientacoes">Orientações</option>
+      <option value="guia">Guia do paciente</option>
+    </select>
+    <div class="tabs"><b class="on">Receita</b><b>Orientações</b><b>Notas médicas</b></div>
+  </div>
+</div>
+
+<main>
+  <div class="card-dra">
+    <span>👑</span><span class="nome">Dra. Orquestrador</span><span class="tag">nesta doença</span>
+    <div class="dir"><span class="chip">Histórico</span><span class="chip on">Meus esquemas</span><span class="chip">SOAP</span></div>
+  </div>
+
+  <div class="tray">
+    <span class="rot">Receita do atendimento — soma entre doenças:</span>
+    <span style="color:#667085">marque "Somar à receita" nas doenças da paciente — tudo sai numa folha só</span>
+    <button class="btn-branco">+ item livre</button>
+    <span style="display:inline-flex;gap:8px;white-space:nowrap">
+      <button class="btn-verde">Montar receita (0)</button>
+      <button class="btn-preto"><span class="simb"></span>Categorias do Orquestrator</button>
+    </span>
+  </div>
+
+  <div class="zona">
+    <div class="mesa"><div class="folha" id="folha"></div></div>
+    <div class="acoes">
+      <div class="acard">
+        <h4>Ações</h4>
+        <button class="btn-verde">Imprimir</button>
+        <button class="btn-branco">Preencher data de hoje</button>
+        <button class="btn-branco">Novo paciente</button>
+      </div>
+      <div class="acard nota-verde" style="border:0">
+        O preenchimento deste e de QUALQUER documento agora mora num lugar só: o botão
+        <b>ORQUESTRATOR</b> lá em cima. A folha muda aqui, na página da paciente — ninguém sai dela.
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════ PAINEL ORQUESTRATOR — o preenchimento universal ═══════════ -->
+<aside id="orq" aria-label="Assistente Orquestrator">
+  <div class="cab">
+    <span class="simb"></span>
+    <div><b>ORQUESTRATOR</b><small id="orqCtx">Receituário simples · Pré-natal de rotina</small></div>
+    <button class="fecha" onclick="orqToggle()">✕</button>
+  </div>
+  <div class="rolo">
+
+    <div class="secao"><svg viewBox="0 0 24 27" fill="none" style="width:14px;height:16px;flex:0 0 auto">
+      <path d="M6.6 6.9V3.4l2.7 1.7L12 2.4l2.7 2.7 2.7-1.7v3.5z" fill="#C9A227"/>
+      <path d="M6.6 6.9h10.8" stroke="#B08A3E" stroke-width="1.1"/>
+      <path d="M5.5 10.6h13a1 1 0 0 1 1 1V24a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1V11.6a1 1 0 0 1 1-1z" fill="none" stroke="#1c2430" stroke-width="1.8"/>
+      <path d="M8 15h8M8 18.2h8M8 21.4h5.2" stroke="#1c2430" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>DOCUMENTO DESTA FOLHA</div>
+    <div class="docsel" id="docsel">
+      <button data-d="receita" class="on" onclick="rotaDoc('receita')">Receita SUS</button>
+      <button data-d="especial" onclick="rotaDoc('especial')">Controle especial</button>
+      <button data-d="encaminhamento" onclick="rotaDoc('encaminhamento')">Encaminhamento</button>
+      <button data-d="orientacoes" onclick="rotaDoc('orientacoes')">Orientações</button>
+      <button data-d="guia" onclick="rotaDoc('guia')">Guia do paciente</button>
+    </div>
+    <div class="secao" style="margin-top:14px">TODOS OS DOCUMENTOS <span class="badge">48</span></div>
+    <div id="catOrq" class="aberto">
+      <div class="cat-busca">🔎<input type="text" placeholder="Buscar por tema…" oninput="catFiltra(this.value)"></div>
+      <details class="gav" open>
+        <summary><span class="dot" style="background:#B08A3E"></span>ESSENCIAIS<span class="n">3</span></summary>
+        <div class="cat-sub">
+          <button class="cat-item" onclick="rotaDoc('receita')"><span class="dot" style="background:#2F6E62"></span>Receituário simples SUS</button>
+          <button class="cat-item" onclick="rotaDoc('especial')"><span class="dot" style="background:#A93636"></span>Receituário de controle especial</button>
+          <button class="cat-item" onclick="rotaDoc('orientacoes')"><span class="dot" style="background:#2B5BA8"></span>Orientações ao paciente</button>
+        </div>
+      </details>
+      <details class="gav">
+        <summary><span class="dot" style="background:#2F6E62"></span>GUIAS DO PACIENTE<span class="n">20</span></summary>
+        <div class="cat-sub rolo-interno">
+          <div class="cat-subtit">GERAIS</div>
+          <button class="cat-item" onclick="setDocGuias('Rotina diária sem diagnóstico')"><span class="dot" style="background:#2F6E62"></span>Rotina diária sem diagnóstico</button>
+          <button class="cat-item" onclick="setDocGuias('Tratamento temporário')"><span class="dot" style="background:#2F6E62"></span>Tratamento temporário</button>
+          <button class="cat-item" onclick="setDocGuias('Medicamentos de resgate')"><span class="dot" style="background:#2F6E62"></span>Medicamentos de resgate</button>
+          <div class="cat-subtit">CONDIÇÕES CRÔNICAS</div>
+          <button class="cat-item" onclick="setDocGuias('Hipertensão arterial')"><span class="dot" style="background:#2B5BA8"></span>Hipertensão arterial</button>
+          <button class="cat-item" onclick="setDocGuias('Diabetes sem insulina')"><span class="dot" style="background:#2B5BA8"></span>Diabetes sem insulina</button>
+          <button class="cat-item" onclick="setDocGuias('Dislipidemia')"><span class="dot" style="background:#2B5BA8"></span>Dislipidemia</button>
+          <button class="cat-item" onclick="setDocGuias('Pressão + diabetes + colesterol')"><span class="dot" style="background:#2B5BA8"></span>Pressão + diabetes + colesterol</button>
+          <button class="cat-item" onclick="setDocGuias('Rins e doença renal')"><span class="dot" style="background:#2B5BA8"></span>Rins e doença renal</button>
+          <button class="cat-item" onclick="setDocGuias('Coração')"><span class="dot" style="background:#2B5BA8"></span>Coração</button>
+          <button class="cat-item" onclick="setDocGuias('Tireoide')"><span class="dot" style="background:#2B5BA8"></span>Tireoide</button>
+          <div class="cat-subtit">ALTO RISCO</div>
+          <button class="cat-item" onclick="setDocGuias('Esquema de insulinas')"><span class="dot" style="background:#A93636"></span>Esquema de insulinas</button>
+          <button class="cat-item" onclick="setDocGuias('Anticoagulantes e antiagregantes')"><span class="dot" style="background:#A93636"></span>Anticoagulantes e antiagregantes</button>
+          <div class="cat-subtit">SAÚDE MENTAL E NEUROLÓGICA</div>
+          <button class="cat-item" onclick="setDocGuias('Psicotrópicos')"><span class="dot" style="background:#6B4FA3"></span>Psicotrópicos</button>
+          <button class="cat-item" onclick="setDocGuias('Medicamentos neurológicos')"><span class="dot" style="background:#6B4FA3"></span>Medicamentos neurológicos</button>
+          <div class="cat-subtit">USO POR DISPOSITIVO</div>
+          <button class="cat-item" onclick="setDocGuias('Asma, DPOC e inaladores')"><span class="dot" style="background:#B08A3E"></span>Asma, DPOC e inaladores</button>
+          <button class="cat-item" onclick="setDocGuias('Pele, olhos, ouvidos e nariz')"><span class="dot" style="background:#B08A3E"></span>Pele, olhos, ouvidos e nariz</button>
+          <div class="cat-subtit">SINTOMAS E SUPORTE</div>
+          <button class="cat-item" onclick="setDocGuias('Dor aguda ou crônica')"><span class="dot" style="background:#D19A1F"></span>Dor aguda ou crônica</button>
+          <button class="cat-item" onclick="setDocGuias('Estômago e intestino')"><span class="dot" style="background:#D19A1F"></span>Estômago e intestino</button>
+          <div class="cat-subtit">CICLOS DE VIDA</div>
+          <button class="cat-item" onclick="setDocGuias('Gestante e puérpera')"><span class="dot" style="background:#B04A6E"></span>Gestante e puérpera</button>
+          <button class="cat-item" onclick="setDocGuias('Pediátrico e cuidador')"><span class="dot" style="background:#B04A6E"></span>Pediátrico e cuidador</button>
+        </div>
+      </details>
+      <details class="gav">
+        <summary><span class="dot" style="background:#4A5568"></span>REGISTROS<span class="n">7</span></summary>
+        <div class="cat-sub">
+          <div class="cat-subtit">PRESSÃO ARTERIAL</div>
+          <button class="cat-item" onclick="setDocGuias('MRPA · protocolo de 7 dias')"><span class="dot" style="background:#A93636"></span>MRPA · protocolo de 7 dias</button>
+          <button class="cat-item" onclick="setDocGuias('Diário simplificado de pressão')"><span class="dot" style="background:#A93636"></span>Diário simplificado de pressão</button>
+          <div class="cat-subtit">GLICEMIA</div>
+          <button class="cat-item" onclick="setDocGuias('Diário glicêmico essencial')"><span class="dot" style="background:#2B5BA8"></span>Diário glicêmico essencial</button>
+          <button class="cat-item" onclick="setDocGuias('Diário glicêmico intensivo')"><span class="dot" style="background:#2B5BA8"></span>Diário glicêmico intensivo</button>
+          <button class="cat-item" onclick="setDocGuias('Cartão visual de glicemia baixa')"><span class="dot" style="background:#2B5BA8"></span>Cartão visual de glicemia baixa</button>
+          <div class="cat-subtit">ORGANIZAÇÃO</div>
+          <button class="cat-item" onclick="setDocGuias('Calendário de medicamentos não diários')"><span class="dot" style="background:#2F6E62"></span>Calendário de medicamentos não diários</button>
+          <button class="cat-item" onclick="setDocGuias('O que mudou hoje')"><span class="dot" style="background:#2F6E62"></span>O que mudou hoje</button>
+        </div>
+      </details>
+      <details class="gav">
+        <summary><span class="dot" style="background:#B08A3E"></span>DOCUMENTOS DA UNIDADE<span class="n">18</span></summary>
+        <div class="cat-sub rolo-interno">
+          <div class="cat-subtit">ATESTADO E ENCAMINHAMENTOS</div>
+          <button class="cat-item" onclick="setDocReal('atestado-medico','Atestado médico')"><span class="dot" style="background:#2B5BA8"></span>Atestado médico</button>
+          <button class="cat-item" onclick="setDocReal('encaminhamento-geral','Encaminhamento e contrarreferência')"><span class="dot" style="background:#2B5BA8"></span>Encaminhamento e contrarreferência</button>
+          <button class="cat-item" onclick="setDocReal('encaminhamento-planejamento-familiar','Encaminhamento — planejamento familiar')"><span class="dot" style="background:#2B5BA8"></span>Encaminhamento — planejamento familiar</button>
+          <div class="cat-subtit">EXAMES</div>
+          <button class="cat-item" onclick="setDocReal('exames-labs-pre-natal','Exames laboratoriais — pré-natal de rotina')"><span class="dot" style="background:#2F6E62"></span>Exames laboratoriais — pré-natal de rotina</button>
+          <button class="cat-item" onclick="setDocReal('exames-labs-rotina','Exames laboratoriais — rotina')"><span class="dot" style="background:#2F6E62"></span>Exames laboratoriais — rotina</button>
+          <button class="cat-item" onclick="setDocReal('exames-simples','Requisição de exames')"><span class="dot" style="background:#2F6E62"></span>Requisição de exames</button>
+          <div class="cat-subtit">RECEITUÁRIOS PRONTOS</div>
+          <button class="cat-item" onclick="setDocReal('receituario-gestante','Receituário gestante')"><span class="dot" style="background:#B08A3E"></span>Receituário gestante</button>
+          <button class="cat-item" onclick="setDocReal('receituario-rn','Receituário RN')"><span class="dot" style="background:#B08A3E"></span>Receituário RN</button>
+          <button class="cat-item" onclick="setDocReal('receituario-puerpera','Receituário puérpera')"><span class="dot" style="background:#B08A3E"></span>Receituário puérpera</button>
+          <button class="cat-item" onclick="setDocReal('receituario-controle-especial','Receituário de controle especial')"><span class="dot" style="background:#B08A3E"></span>Receituário de controle especial</button>
+          <div class="cat-subtit">SOLICITAÇÕES À REDE</div>
+          <button class="cat-item" onclick="setDocReal('formula-lactea','Fórmula láctea')"><span class="dot" style="background:#B04A6E"></span>Fórmula láctea</button>
+          <button class="cat-item" onclick="setDocReal('fraldas-pediatricas','Fraldas pediátricas')"><span class="dot" style="background:#B04A6E"></span>Fraldas pediátricas</button>
+          <button class="cat-item" onclick="setDocReal('insumos-diabetes','Insumos (diabetes)')"><span class="dot" style="background:#B04A6E"></span>Insumos (diabetes)</button>
+          <div class="cat-subtit">ACOMPANHAMENTO EM CASA</div>
+          <button class="cat-item" onclick="setDocReal('mrpa','MRPA — mapa de PA/glicemia')"><span class="dot" style="background:#A93636"></span>MRPA — mapa de PA/glicemia</button>
+          <button class="cat-item" onclick="setDocReal('tabela-pa-residencial','Aferição de PA residencial')"><span class="dot" style="background:#A93636"></span>Aferição de PA residencial</button>
+          <button class="cat-item" onclick="setDocReal('controle-glicemico','Controle glicêmico')"><span class="dot" style="background:#A93636"></span>Controle glicêmico</button>
+          <button class="cat-item" onclick="setDocReal('esquema-insulina-nph-regular','Meu esquema de insulina')"><span class="dot" style="background:#A93636"></span>Meu esquema de insulina</button>
+          <button class="cat-item" onclick="setDocReal('plano-visual-medicamentos','Plano visual de medicamentos')"><span class="dot" style="background:#A93636"></span>Plano visual de medicamentos</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="secao">PACIENTE <span class="badge">busca por CPF ou nome</span></div>
+    <input type="text" id="bNome" placeholder="Nome ou CPF — 3 letras buscam a ficha…" oninput="buscaPaciente(this.value)" autocomplete="off">
+    <div class="sugestoes" id="sugPac"></div>
+    <div class="par" style="margin-top:9px">
+      <div><label>Idade</label><input type="text" id="bIdade" oninput="pinta()"></div>
+      <div><label>Sexo</label><div class="sexo"><button id="sF" class="on" onclick="sexo('F')">F</button><button id="sM" onclick="sexo('M')">M</button></div></div>
+    </div>
+
+    <div id="formDoc"><!-- formulário adaptável entra aqui --></div>
+
+    <div class="secao">BUSCAR CID <span class="badge">sugestões — conferir</span></div>
+    <input type="text" id="bCid" placeholder="Código ou descrição…" oninput="buscaCid(this.value)" autocomplete="off">
+    <div class="sugestoes" id="sugCid"></div>
+
+    <div class="secao">NOTAS</div>
+    <textarea rows="3" placeholder="Rascunhos, lembretes da consulta…"></textarea>
+
+    <div class="secao">FRASES FAVORITAS</div>
+    <div style="display:flex;gap:9px">
+      <button class="fav-btn">☆ Favoritar frase</button>
+      <button class="ins-btn"><span class="simb" style="width:13px;height:13px"></span>Inserir</button>
+    </div>
+    <div class="frase">Retornar se febre, sangramento ou dor forte.<button onclick="insereFrase(this)">Inserir</button></div>
+    <div class="frase">Beber bastante água ao longo do dia.<button onclick="insereFrase(this)">Inserir</button></div>
+
+    <div class="dica">Tudo que salvares aqui entra no <b>histórico da paciente</b> e reaparece nas próximas consultas.</div>
+  </div>
+  <div class="rodape">O Orquestrator sugere e organiza — <b>a decisão é sempre da médica</b>.</div>
+</aside>
+
+<script>
+/* ───────── estado da maquete ───────── */
+const E = { doc:'receita', nome:'', idade:'', sexo:'F', cid:'', motivo:'', texto:'Evitar contato com gatos. Utilizar repelente se necessário. Orientar pródromos do trabalho de parto e maternidade de referência.', esp:'Obstetrícia (pré-natal de alto risco)', med1:'' };
+const PACS = [
+  {n:'Maria Aparecida dos Santos', cpf:'482.113.771-04', idade:'29', sexo:'F'},
+  {n:'Marina Costa e Silva', cpf:'301.554.982-33', idade:'24', sexo:'F'},
+  {n:'José Carlos Pereira', cpf:'118.902.334-55', idade:'61', sexo:'M'},
+];
+const CIDS = [
+  ['Z34','Supervisão de gravidez normal'],['O21','Vômitos excessivos na gravidez'],
+  ['O23','Infecção do trato urinário na gravidez'],['O24','Diabetes na gravidez'],
+  ['O13','Hipertensão gestacional'],['B82','Parasitose intestinal']
+];
+function orqToggle(){ document.body.classList.toggle('orq-aberta'); }
+function sexo(s){ E.sexo=s; sF.classList.toggle('on',s==='F'); sM.classList.toggle('on',s==='M'); pinta(); }
+function buscaPaciente(q){
+  const box=document.getElementById('sugPac'); q=q.trim().toLowerCase();
+  if(q.length<3){ box.style.display='none'; E.nome=q; pinta(); return; }
+  const hits=PACS.filter(p=>p.n.toLowerCase().includes(q)||p.cpf.replace(/\D/g,'').includes(q.replace(/\D/g,'')));
+  box.innerHTML=hits.map((p,i)=>`<div onclick="pegaPac(${i},'${q}')"><b>${p.n}</b> · ${p.cpf} · ${p.idade} anos</div>`).join('')||'<div style="color:#8a93a3">nenhuma ficha local — o nome digitado vai direto para a folha</div>';
+  box.style.display='block'; E.nome=document.getElementById('bNome').value; pinta();
+}
+function pegaPac(i){ const p=PACS.filter(x=>x.n.toLowerCase().includes(bNome.value.trim().toLowerCase())||x.cpf.replace(/\D/g,'').includes(bNome.value.replace(/\D/g,'')))[i]||PACS[i];
+  E.nome=p.n; E.idade=p.idade; E.sexo=p.sexo; bNome.value=p.n; bIdade.value=p.idade; sexo(p.sexo); sugPac.style.display='none'; pinta(); }
+function buscaCid(q){
+  const box=document.getElementById('sugCid'); q=q.trim().toLowerCase();
+  if(q.length<2){ box.style.display='none'; return; }
+  const hits=CIDS.filter(c=>c[0].toLowerCase().includes(q)||c[1].toLowerCase().includes(q));
+  box.innerHTML=hits.map(c=>`<div onclick="pegaCid('${c[0]}','${c[1]}')"><b>${c[0]}</b> — ${c[1]}</div>`).join('')||'<div style="color:#8a93a3">nada encontrado</div>';
+  box.style.display='block';
+}
+function pegaCid(c,d){ E.cid=`${c} — ${d}`; bCid.value=E.cid; sugCid.style.display='none'; pinta(); }
+function insereFrase(btn){ E.texto=(E.texto?E.texto+' ':'')+btn.parentElement.firstChild.textContent.trim(); const t=document.getElementById('fTexto'); if(t)t.value=E.texto; pinta(); }
+function campo(v,ph){ return v?`<b>${v}</b>`:`<span style="color:#aaa">${ph||''}</span>`; }
+/* ───────── as 5 folhas ───────── */
+const CAB=`<div class="cab"><b>Clínica do Orquestrador</b><small>Clínica do Orquestrador; Qd 17 - Jd. Cerrado IV<br>Goiânia/GO - CEP 74.491-510</small></div>`;
+const HOJE='30/08/2026';
+const FOLHAS={
+receita:()=>{const corpo=E.corpoEdit!=null?E.corpoEdit:`1- Ácido fólico 0,2 mg/mL — uso contínuo.
+Tomar 40 gotas, via oral, 1 vez ao dia, até 12 semanas de gestação.
+
+2- Sulfato ferroso 200 mg/comprimido — uso contínuo.
+Tomar 1 comprimido, via oral, 30 minutos antes do almoço, a partir da 26ª semana.${E.med1?`
+
+3- ${E.med1}`:''}`;
+const via=(rot,ed)=>`${CAB}<div class="via">${rot}</div><h2>RECEITUÁRIO</h2>
+  <div class="linha"><span class="rotulo">Nome:</span><span class="campo" ${ed?'contenteditable="true" data-c="nome"':'data-eco="nome"'}>${E.nome||''}</span></div>
+  <div class="linha"><span class="rotulo">Idade:</span><span class="campo" style="max-width:90px" ${ed?'contenteditable="true" data-c="idade"':'data-eco="idade"'}>${E.idade||''}</span>
+    <span class="rotulo">Sexo:</span><span class="campo" style="max-width:70px">${E.sexo}</span>
+    <span class="rotulo">Data:</span><span class="campo" style="max-width:110px"><b>${HOJE}</b></span></div>
+  <div style="font-weight:800;margin-top:10px;text-align:center">Uso oral:</div>
+  <div class="corpo" ${ed?'contenteditable="true" data-c="corpo"':'data-eco="corpo"'}>${corpo}</div>
+  <div class="assin">Assinatura — CRM</div>`;
+return `<div class="duas-vias"><div class="via-col">${via('1ª VIA — preencha aqui',true)}</div><div class="via-col">${via('2ª VIA — espelhada',false)}</div></div>`;},
+especial:()=>`${CAB}<div class="via">1ª VIA — FARMÁCIA</div><div class="moldura"><h2>RECEITUÁRIO DE CONTROLE ESPECIAL</h2>
+  <div class="linha"><span class="rotulo">Paciente:</span><span class="campo">${campo(E.nome)}</span></div>
+  <div class="linha"><span class="rotulo">Endereço:</span><span class="campo"></span></div>
+  <div class="corpo" style="min-height:120px">${E.med1?E.med1:'<span style="color:#aaa">medicamento controlado — nome, concentração, posologia e quantidade por extenso</span>'}</div>
+  <div class="linha"><span class="rotulo">Data:</span><span class="campo" style="max-width:150px"><b>${HOJE}</b></span></div>
+  <div class="assin">Assinatura e carimbo — CRM</div></div>
+  <div style="display:flex;gap:12px;margin-top:12px">
+    <div style="flex:1;border:1px solid #555;padding:8px;font-size:10px"><b>IDENTIFICAÇÃO DO COMPRADOR</b><br><br>Nome:<br>RG:<br>End.:</div>
+    <div style="flex:1;border:1px solid #555;padding:8px;font-size:10px"><b>IDENTIFICAÇÃO DO FORNECEDOR</b><br><br><br><div style="text-align:center;border-top:1px solid #999;margin-top:8px;padding-top:2px">Assinatura do farmacêutico</div></div></div>`,
+encaminhamento:()=>`${CAB}<h2>REFERÊNCIA / ENCAMINHAMENTO</h2>
+  <div class="linha"><span class="rotulo">Paciente:</span><span class="campo">${campo(E.nome)}</span>
+    <span class="rotulo">Idade:</span><span class="campo" style="max-width:100px">${campo(E.idade)}</span></div>
+  <div class="linha"><span class="rotulo">Unidade de origem:</span><span class="campo"><b>Clínica do Orquestrador</b></span></div>
+  <div class="linha"><span class="rotulo">Especialidade de destino:</span><span class="campo">${campo(E.esp)}</span></div>
+  <div class="linha"><span class="rotulo">Hipótese (CID):</span><span class="campo">${campo(E.cid,'usar o buscador do Orquestrator →')}</span></div>
+  <div style="font-weight:800;margin-top:12px">Motivo / resumo clínico:</div>
+  <div class="corpo">${E.motivo||'<span style="color:#aaa">escreve no painel — aparece aqui na hora</span>'}</div>
+  <div class="linha"><span class="rotulo">Data:</span><span class="campo" style="max-width:150px"><b>${HOJE}</b></span></div>
+  <div class="assin">Assinatura — CRM</div>`,
+orientacoes:()=>`${CAB}<h2>ORIENTAÇÕES AO PACIENTE</h2>
+  <div class="linha"><span class="rotulo">Nome:</span><span class="campo" contenteditable="true" data-c="nome">${E.nome||''}</span></div>
+  <div class="corpo" contenteditable="true" data-c="texto">${E.texto}</div>
+  <div class="linha"><span class="rotulo">DATA:</span><span class="campo" style="max-width:150px"><b>${HOJE}</b></span></div>
+  <div class="assin">Assinatura — CRM</div>`,
+guia:()=>`${CAB}<h2 style="letter-spacing:.02em;color:var(--verde)">MEU PLANO DE MEDICAMENTOS</h2>
+  <div style="text-align:center;font-size:11.5px;color:#444;margin-top:-8px;margin-bottom:10px">Este quadro ajuda a organizar seus medicamentos. Use somente o que foi conferido com a equipe.</div>
+  <div class="linha"><span class="rotulo">Paciente</span><span class="campo">${campo(E.nome)}</span>
+    <span class="rotulo">Data</span><span class="campo" style="max-width:130px"><b>${HOJE}</b></span></div>
+  <table><tr><th>Nº</th><th>Medicamento</th><th>Quanto usar</th><th>Quando usar</th><th>Comida</th></tr>
+  <tr><td style="color:#B08A3E;font-weight:900">1</td><td>${E.med1||'nome do medicamento'}</td><td>quantidade</td><td>momento da rotina</td><td>relação com comida</td></tr></table>`,
+};
+/* ───────── formulários adaptáveis ───────── */
+const FORMS={
+receita:`<div class="secao">MEDICAMENTOS DESTA RECEITA</div>
+  <label>Acrescentar item (além dos esquemas do guia)</label>
+  <input type="text" id="fMed" placeholder="Ex.: Dimenidrinato 50 mg — 1 cp de 8/8h se náusea" oninput="E.med1=this.value;pinta()">
+  <div class="dica">Os esquemas do guia entram pelo "Somar à receita" — aqui só o que for além.</div>`,
+especial:`<div class="secao">CONTROLE ESPECIAL</div>
+  <label>Medicamento controlado (por extenso)</label>
+  <input type="text" id="fMed" placeholder="Nome, concentração, posologia, quantidade…" oninput="E.med1=this.value;pinta()">
+  <div class="dica">2 vias automáticas · identificação do comprador fica em branco para a farmácia.</div>`,
+encaminhamento:`<div class="secao">ENCAMINHAMENTO</div>
+  <label>Especialidade de destino</label>
+  <select onchange="E.esp=this.value;pinta()">
+    <option>Obstetrícia (pré-natal de alto risco)</option><option>Cardiologia</option>
+    <option>Endocrinologia</option><option>Dermatologia</option><option>Psiquiatria</option></select>
+  <label>Motivo / resumo clínico</label>
+  <textarea rows="4" placeholder="Escreve aqui — aparece na folha na hora…" oninput="E.motivo=this.value;pinta()"></textarea>`,
+orientacoes:`<div class="secao">TEXTO DA ORIENTAÇÃO</div>
+  <textarea id="fTexto" rows="5" oninput="E.texto=this.value;pinta()"></textarea>
+  <div class="dica">O ☆ guarda frases que usas sempre; o Inserir joga no texto.</div>`,
+guia:`<div class="secao">CAMPOS DESTE MODELO</div>
+  <div class="par"><div><label>Usar quando</label><input type="text" placeholder="Situação definida"></div>
+  <div><label>Intervalo mínimo</label><input type="text" placeholder="Tempo entre usos"></div></div>
+  <div class="par"><div><label>Máximo em 24h</label><input type="text" placeholder="Limite prescrito"></div>
+  <div><label>Quando procurar ajuda</label><input type="text" placeholder="Orientação"></div></div>
+  <label>Medicamento 1</label>
+  <input type="text" id="fMed" placeholder="Nome — não sugerimos medicamentos" oninput="E.med1=this.value;pinta()">
+  <div class="secao">COR DO CARD <span class="badge">tema da doença</span></div>
+  <div class="paleta">
+    <button style="background:#2F6E62" onclick="temaCard('#2F6E62',this)" title="Verde — geral"></button>
+    <button style="background:#A93636" onclick="temaCard('#A93636',this)" title="Vermelho — cardíaca / alto risco"></button>
+    <button style="background:#2B5BA8" onclick="temaCard('#2B5BA8',this)" title="Azul — metabólica / renal"></button>
+    <button style="background:#D19A1F" onclick="temaCard('#D19A1F',this)" title="Amarelo — infecciosa"></button>
+    <button style="background:#6B4FA3" onclick="temaCard('#6B4FA3',this)" title="Roxo — neuro / psiquiátrica"></button>
+    <button style="background:#B04A6E" onclick="temaCard('#B04A6E',this)" title="Rosa — materno-infantil"></button>
+  </div>
+  <div class="dica">A cor pinta o card do guia na folha — vincula o documento à doença no olho da paciente.</div>`,
+};
+const CTX={receita:'Receituário simples',especial:'Controle especial',encaminhamento:'Encaminhamento',orientacoes:'Orientações ao paciente',guia:'Guia do paciente',gen:''};
+/* ── catálogo completo (sketch) ── */
+function catFiltra(q){ q=q.trim().toLowerCase();
+  document.querySelectorAll('#catOrq .cat-item').forEach(i=>i.classList.toggle('oculto',q&&!i.textContent.toLowerCase().includes(q)));
+  if(q) document.querySelectorAll('#catOrq details').forEach(d=>d.open=true);
+}
+FOLHAS.gen=()=>{
+  const g=E.docGen||{tipo:'guia',titulo:'Documento'};
+  if(g.tipo==='institucional') return `${CAB}<h2>${g.titulo.toUpperCase()}</h2>
+    <div class="linha"><span class="rotulo">Nome:</span><span class="campo">${campo(E.nome)}</span></div>
+    <div class="corpo">${E.texto||'<span style="color:#aaa">corpo do documento — preenche no painel e aparece aqui (sketch)</span>'}</div>
+    <div class="linha"><span class="rotulo">DATA:</span><span class="campo" style="max-width:150px"><b>${HOJE}</b></span></div>
+    <div class="assin">Assinatura e carimbo — CRM</div>`;
+  if(g.tipo==='registro') return `${CAB}<h2>${g.titulo.toUpperCase()}</h2>
+    <div class="linha"><span class="rotulo">Paciente:</span><span class="campo">${campo(E.nome)}</span>
+      <span class="rotulo">Início:</span><span class="campo" style="max-width:130px"><b>${HOJE}</b></span></div>
+    <table><tr><th>Data</th><th>Manhã</th><th>Tarde</th><th>Noite</th><th>Observação</th></tr>
+    ${'<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>'.repeat(6)}</table>`;
+  return `${CAB}<h2 style="letter-spacing:.02em;color:var(--verde)">${g.titulo.toUpperCase()}</h2>
+    <div style="text-align:center;font-size:11.5px;color:#444;margin-top:-8px;margin-bottom:10px">Guia do paciente — leitura + passo a passo visual (sketch)</div>
+    <div class="linha"><span class="rotulo">Paciente</span><span class="campo">${campo(E.nome)}</span>
+      <span class="rotulo">Data</span><span class="campo" style="max-width:130px"><b>${HOJE}</b></span></div>
+    <table><tr><th>Nº</th><th>Medicamento</th><th>Quanto usar</th><th>Quando usar</th><th>Comida</th></tr>
+    <tr><td style="color:#B08A3E;font-weight:900">1</td><td>${E.med1||'nome do medicamento'}</td><td>quantidade</td><td>momento da rotina</td><td>relação com comida</td></tr></table>`;
+};
+FORMS.gen=()=>{
+  const g=E.docGen||{tipo:'guia'};
+  if(g.tipo==='institucional') return `<div class="secao">${g.titulo.toUpperCase()}</div>
+    <label>Corpo do documento</label>
+    <textarea id="fTexto" rows="5" placeholder="Escreve aqui — a folha acompanha…" oninput="E.texto=this.value;pinta()"></textarea>
+    <div class="dica">No hub real, cada documento da unidade traz os SEUS campos (motor F1) — aqui é sketch.</div>`;
+  if(g.tipo==='registro') return `<div class="secao">${g.titulo.toUpperCase()}</div>
+    <div class="dica">Registro de acompanhamento: imprime em branco para a paciente preencher em casa.</div>`;
+  return FORMS.guia;
+};
+function setDocGen(tipo,titulo){
+  E.docGen={tipo,titulo}; E.doc='gen';
+  document.querySelectorAll('#docsel button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('formDoc').innerHTML=typeof FORMS.gen==='function'?FORMS.gen():FORMS.gen;
+  document.getElementById('orqCtx').textContent=titulo+' · Pré-natal de rotina';
+  const t=document.getElementById('fTexto'); if(t)t.value=E.texto==='Evitar contato com gatos. Utilizar repelente se necessário. Orientar pródromos do trabalho de parto e maternidade de referência.'?'':E.texto;
+  pinta();
+}
+function setDoc(d){
+  E.doc=d;
+  document.querySelectorAll('#docsel button').forEach(b=>b.classList.toggle('on',b.dataset.d===d));
+  document.getElementById('selDocTop').value=d;
+  document.getElementById('formDoc').innerHTML=FORMS[d];
+  document.getElementById('orqCtx').textContent=CTX[d]+' · Pré-natal de rotina';
+  const t=document.getElementById('fTexto'); if(t)t.value=E.texto;
+  const m=document.getElementById('fMed'); if(m)m.value=E.med1;
+  pinta();
+  if(!document.body.classList.contains('orq-aberta')) document.body.classList.add('orq-aberta');
+}
+function temaCard(c,btn){ E.tema=c; if(btn)btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn)); pinta(); }
+/* documento ORIGINAL da unidade — motor F1 real, preenchível na própria folha, dentro da mesma página */
+function setDocReal(id,titulo,chip){
+  E.doc='real';
+  document.querySelectorAll('#docsel button').forEach(b=>b.classList.toggle('on',!!chip&&b.dataset.d===chip));
+  if(chip){const s=document.getElementById('selDocTop');if([...s.options].some(o=>o.value===chip))s.value=chip;}
+  document.getElementById('formDoc').innerHTML=`<div class="secao">DOCUMENTO ORIGINAL DA UNIDADE</div>
+    <div class="dica">Folha REAL do motor F1 — idêntica ao papel da unidade. Escreve DIRETO na folha; a 2ª via espelha sozinha onde o documento exige. Funciona 100% sem internet.</div>`;
+  document.getElementById('orqCtx').textContent=titulo+' · Pré-natal de rotina';
+  const f=document.getElementById('folha');
+  f.classList.add('folha-real');
+  f.style.height='';f.style.overflow='';
+  f.innerHTML='<iframe class="folha-frame" src="previa-f1-frame.html?doc='+id+'" title="'+titulo+'"></iframe>';
+}
+/* guias e registros — o documento desenhado por ele com o codex (preenchimento lateral é FEATURE, dentro do próprio documento) */
+function setDocGuias(titulo){
+  E.doc='real';
+  document.querySelectorAll('#docsel button').forEach(b=>b.classList.toggle('on',b.dataset.d==='guia'));
+  document.getElementById('selDocTop').value='guia';
+  document.getElementById('formDoc').innerHTML=`<div class="secao">GUIA DO PACIENTE — O TEU MODELO</div>
+    <div class="dica">O documento desenhado por ti com o codex: escreve direto na folha (o mínimo) e, como FEATURE da marca, o guia de preenchimento na lateral do próprio documento. Escolhe o guia pelo índice interno.</div>`;
+  document.getElementById('orqCtx').textContent=(titulo||'Guia do paciente')+' · Pré-natal de rotina';
+  const f=document.getElementById('folha');
+  f.classList.add('folha-real');
+  f.style.height='';f.style.overflow='';
+  f.innerHTML='<iframe class="folha-frame" src="documentos-preenchiveis2.html" title="Guias e registros do paciente"></iframe>';
+}
+/* receita simples — O MODELO QUE ELE MANDOU (padrão SUS, A4 paisagem, 2 vias com corte, espelho nativo) */
+function setDocReceita(){
+  E.doc='real';
+  document.querySelectorAll('#docsel button').forEach(b=>b.classList.toggle('on',b.dataset.d==='receita'));
+  document.getElementById('selDocTop').value='receita';
+  document.getElementById('formDoc').innerHTML=`<div class="secao">RECEITUÁRIO SIMPLES — O TEU MODELO SUS</div>
+    <div class="dica">O modelo que tu mandaste: A4 paisagem, 2 vias com linha de corte, 2ª via espelhada somente-leitura. Escreve direto na folha; imprime pela barra do próprio documento.</div>`;
+  document.getElementById('orqCtx').textContent='Receituário simples · Pré-natal de rotina';
+  const f=document.getElementById('folha');
+  f.classList.add('folha-real');
+  f.innerHTML='<iframe class="folha-frame frame-largo" src="receituario-simples-sus.html" title="Receituário simples SUS"></iframe>';
+  ajustaFrameLargo();
+}
+function ajustaFrameLargo(){
+  const f=document.getElementById('folha');
+  const fr=f.querySelector('.frame-largo'); if(!fr)return;
+  const cw=f.clientWidth||900; const W=1190; const H=940;
+  const s=Math.min(1,cw/W);
+  fr.style.width=W+'px'; fr.style.height=H+'px';
+  fr.style.transformOrigin='top left'; fr.style.transform='scale('+s+')';
+  f.style.height=Math.round(H*s)+'px'; f.style.overflow='hidden';
+}
+window.addEventListener('resize',()=>{ if(document.querySelector('#folha .frame-largo')) ajustaFrameLargo(); });
+/* rota única dos 5 tipos da folha: cada um abre o que já existe PRONTO */
+function rotaDoc(v){
+  if(v==='receita')setDocReceita();
+  else if(v==='especial')setDocReal('receituario-controle-especial','Receituário de controle especial','especial');
+  else if(v==='encaminhamento')setDocReal('encaminhamento-geral','Encaminhamento e contrarreferência','encaminhamento');
+  else if(v==='guia')setDocGuias();
+  else setDoc(v);
+}
+function pinta(){ const f=document.getElementById('folha'); f.classList.toggle('folha-real',E.doc==='real'); f.classList.toggle('folha-larga',E.doc==='receita'); if(E.doc==='real')return; f.style.height='';f.style.overflow=''; f.style.setProperty('--verde',E.tema||'#2F6E62'); f.innerHTML=FOLHAS[E.doc](); }
+/* escrever DIRETO no documento (o mínimo): eco em tempo real na 2ª via + sincronia com o painel */
+document.getElementById('folha').addEventListener('input',e=>{
+  const c=e.target.dataset&&e.target.dataset.c; if(!c)return;
+  const v=e.target.innerText;
+  document.querySelectorAll('#folha [data-eco="'+c+'"]').forEach(el=>el.innerText=v);
+  if(c==='nome'){E.nome=v;const b=document.getElementById('bNome');if(b)b.value=v;}
+  else if(c==='idade'){E.idade=v;const b=document.getElementById('bIdade');if(b)b.value=v;}
+  else if(c==='texto'){E.texto=v;const t=document.getElementById('fTexto');if(t)t.value=v;}
+  else if(c==='corpo'){E.corpoEdit=v;}
+});
+rotaDoc('receita'); document.body.classList.remove('orq-aberta');
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "pacote": "F3 medical-knolege",
+  "data_extracao": "2026-08-28T02:31:15-03:00",
+  "ferramenta_autor": "pdftotext Poppler (pdftotext version 26.04.0)",
+  "ferramenta_imagens": "pdfimages -j + pdftoppm -png -r 150",
+  "auditor": "liteparse 2.12.0 (não escreveu MD)",
+  "script": "_ferramentas/f3_pipeline.py",
+  "documentos": [
+    {
+      "doc_id": "DN-osteoartrite-joelho-MS-conitec",
+      "paginas": 82,
+      "sha256": "7814d321542893766bc8fb85e97c87903161eeb309876eaf6a8cf2264ac43e74",
+      "tipo_ms": "DN",
+      "data_versao": "2024-08-26"
+    },
+    {
+      "doc_id": "DN-osteoartrite-quadril-MS-conitec",
+      "paginas": 72,
+      "sha256": "e62b4d3023e696749d8ed56700d54c894cb0d39e24ff69172895af9d5f7fc937",
+      "tipo_ms": "DN",
+      "data_versao": "2024-08-26"
+    }
+  ],
+  "estado": {
+    "etapas": {
+      "0": true,
+      "1-joelho": true,
+      "2-joelho": true,
+      "3-joelho": true,
+      "4-joelho": true,
+      "liteparse-joelho": true,
+      "1-quadril": true,
+      "2-quadril": true,
+      "3-quadril": true,
+      "4-quadril": true,
+      "liteparse-quadril": true,
+      "5": true,
+      "7": true,
+      "8": true,
+      "6": true
+    }
+  },
+  "ressalva": "capa p.1 raster branco nos dois DNs (pdftoppm/pdftocairo/sips); algoritmo p.14 PNG conferido a vista; hashes intocados"
+}

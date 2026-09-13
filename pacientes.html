@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Pacientes e atendimentos · Hub UBS 2026</title>
+  <link rel="stylesheet" href="f2.css">
+  <link rel="stylesheet" href="tema-orquestrator.css">
+</head>
+<body class="f2-page">
+
+  <div class="f2-topbar">
+    <a class="f2-voltar" href="index-f2.html">← Hub</a>
+    <h1>Pacientes e atendimentos</h1>
+    <div class="f2x-abas" role="tablist" aria-label="Seções">
+      <button type="button" data-aba="pacientes" class="ativa" role="tab" aria-selected="true">Pacientes</button>
+      <button type="button" data-aba="dossie" role="tab" aria-selected="false" class="f2-coroa">Dossiê da Orquestrador</button>
+    </div>
+    <button type="button" class="f2-btn f2-btn-secundario" id="btnExportar">Exportar cópia</button>
+    <button type="button" class="f2-btn f2-btn-secundario" id="btnImportar">Importar de um arquivo</button>
+    <input type="file" id="inpArquivo" accept="application/json,.json" hidden>
+  </div>
+
+  <div class="f2-wrap" id="abaPacientes">
+
+    <!-- Aviso de primeira abertura: onde os dados ficam -->
+    <div class="f2-aviso" id="avisoPrivacidade" hidden>
+      <strong>Onde ficam os dados?</strong> Os dados ficam salvos <strong>neste computador, neste
+      navegador</strong>. Nada vai para a internet. Use sempre o mesmo navegador. Para trocar de
+      computador: toque em <strong>Exportar cópia</strong>, leve o arquivo e toque em
+      <strong>Importar</strong> no outro computador.
+      <div style="margin-top:10px"><button type="button" class="f2-btn f2-btn-secundario" id="btnAvisoOk">Entendi</button></div>
+    </div>
+
+    <div class="f2-card" id="cardLista">
+      <div class="f2-form" style="margin:0;background:transparent;padding:0">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input type="text" class="f2-busca" id="inpBusca" placeholder="Buscar paciente pelo nome…" autocomplete="off" style="flex:1;min-width:220px">
+          <button type="button" class="f2-btn f2-btn-primario" id="btnNovo">＋ Novo paciente</button>
+        </div>
+
+        <!-- Cadastro: só o nome é obrigatório -->
+        <div id="formNovo" hidden style="margin-top:12px;background:var(--f2-bg);border-radius:12px;padding:14px">
+          <label for="novoNome">Nome do paciente</label>
+          <input type="text" id="novoNome" autocomplete="off">
+          <label for="novoNasc">Nascimento <span class="f2-opcional">(opcional)</span></label>
+          <input type="date" id="novoNasc">
+          <label for="novoCns">Cartão SUS <span class="f2-opcional">(opcional)</span></label>
+          <input type="text" id="novoCns" autocomplete="off">
+          <div class="f2-form-erro" id="erroNovo" role="alert"></div>
+          <div class="f2-form-acoes">
+            <button type="button" class="f2-btn f2-btn-primario" id="btnSalvarNovo">Salvar paciente</button>
+            <button type="button" class="f2-btn f2-btn-secundario" id="btnCancelarNovo">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="f2-lista" id="listaPacientes"></div>
+
+      <div class="f2-dra-rodape" style="margin-top:16px">
+        <span class="f2-onde" id="infoStorage">Guardado neste computador, neste navegador.</span>
+        <button type="button" class="f2-btn f2-btn-perigo" id="btnApagarTudo">Apagar tudo</button>
+      </div>
+    </div>
+
+    <!-- Ficha do paciente (linha do tempo) -->
+    <div id="ficha" hidden>
+      <div class="f2-card">
+        <div class="f2-form" style="margin:0;background:transparent;padding:0">
+          <button type="button" class="f2-btn f2-btn-secundario" id="btnVoltarLista">← Voltar à lista</button>
+          <h2 id="fichaNome" style="margin:12px 0 2px"></h2>
+          <p style="margin:0"><span class="f2-pasta-selo">Pasta: por paciente</span></p>
+          <p id="fichaDetalhe" style="color:var(--f2-muted);margin:0 0 10px"></p>
+          <div class="f2-form-acoes">
+            <a class="f2-btn f2-btn-primario" id="btnNovoAtendimento" href="#">＋ Novo atendimento</a>
+            <button type="button" class="f2-btn f2-btn-secundario" id="btnEditarPac">Editar dados</button>
+            <button type="button" class="f2-btn f2-btn-perigo" id="btnApagarPac">Apagar paciente</button>
+          </div>
+          <div id="formEditar" hidden style="margin-top:12px;background:var(--f2-bg);border-radius:12px;padding:14px">
+            <label for="edNome">Nome do paciente</label>
+            <input type="text" id="edNome" autocomplete="off">
+            <label for="edNasc">Nascimento <span class="f2-opcional">(opcional)</span></label>
+            <input type="date" id="edNasc">
+            <label for="edCns">Cartão SUS <span class="f2-opcional">(opcional)</span></label>
+            <input type="text" id="edCns" autocomplete="off">
+            <div class="f2-form-erro" id="erroEditar" role="alert"></div>
+            <div class="f2-form-acoes">
+              <button type="button" class="f2-btn f2-btn-primario" id="btnSalvarEdicao">Salvar</button>
+              <button type="button" class="f2-btn f2-btn-secundario" id="btnCancelarEdicao">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="f2-card">
+        <h3 style="margin:0 0 6px">Linha do tempo</h3>
+        <p style="margin:0;color:var(--f2-muted);font-size:.92rem">Os atendimentos e receitas deste paciente, do mais recente ao mais antigo. Os nomes de doença abrem a pasta da doença.</p>
+        <div class="f2-tl" id="timeline"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Aba do Dossiê da Orquestrador (F-H): renderizada por js/Orquestrador-extra.js
+       a partir dos dados soberanos js/farmacia.js e js/dossie-Orquestrador.js -->
+  <div class="f2-wrap" id="abaDossie" hidden>
+    <div id="dossieMount"></div>
+  </div>
+
+  <script src="js/dados.js"></script>
+  <script src="js/topicos.js"></script>
+  <script src="tema-orquestrator.js"></script>
+  <script src="js/farmacia.js"></script>
+  <script src="js/dossie-Orquestrador.js"></script>
+  <script src="js/Orquestrador-extra.js"></script>
+  <script>
+  (() => {
+    'use strict';
+    const $=s=>document.querySelector(s);
+    const DB=window.F2DB;
+    const TOPICOS=window.F2_TOPICOS||[];
+    let aberto=null; // id do paciente com ficha aberta
+
+    function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function avisar(msg){
+      let t=$('#f2Toast');
+      if(!t){t=document.createElement('div');t.id='f2Toast';t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#172033;color:#fff;padding:12px 20px;border-radius:12px;font-size:1rem;z-index:99;max-width:90vw;text-align:center;';document.body.appendChild(t);}
+      t.textContent=msg;t.style.display='block';clearTimeout(t._timer);t._timer=setTimeout(()=>{t.style.display='none'},2800);
+    }
+    function confirmar(titulo,texto,rotulo,aoConfirmar){
+      const fundo=document.createElement('div');fundo.className='f2-modal-fundo';
+      fundo.innerHTML='<div class="f2-modal" role="dialog" aria-modal="true"><h2>'+esc(titulo)+'</h2><p>'+esc(texto)+'</p><div class="f2-form-acoes"><button type="button" class="f2-btn f2-btn-secundario" data-a="v">Voltar</button><button type="button" class="f2-btn f2-btn-perigo" data-a="c">'+esc(rotulo)+'</button></div></div>';
+      fundo.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.dataset.a==='v'||e.target===fundo){fundo.remove();return;}fundo.remove();aoConfirmar();});
+      document.body.appendChild(fundo);
+    }
+
+    // ---------------- Lista ----------------
+    function renderLista(){
+      const q=$('#inpBusca').value;
+      const lista=DB.patients.procurar(q).slice().sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
+      const alvo=$('#listaPacientes');
+      if(lista.length===0){
+        alvo.innerHTML='<div class="f2-vazio">'+(q?'Nenhum paciente encontrado com esse nome.':
+          'Nenhum paciente cadastrado ainda.<br>Toque em <strong>＋ Novo paciente</strong> para começar — basta o nome.')+'</div>';
+      }else{
+        alvo.innerHTML=lista.map(p=>{
+          const n=DB.consults.doPaciente(p.id).length;
+          return '<div class="f2-linha-pac"><span class="f2-nome">'+esc(p.nome)+'</span>'+
+            '<span class="f2-detalhe">'+DB.plural(n,'atendimento')+(p.nascimento?' · Nasc.: '+esc(DB.dataBR(p.nascimento)):'')+'</span>'+
+            '<button type="button" class="f2-btn f2-btn-secundario" data-abrir="'+esc(p.id)+'">Abrir ficha</button></div>';
+        }).join('');
+      }
+      const ultima=DB.meta.ultimaExportacao();
+      $('#infoStorage').innerHTML='Guardado <strong>neste computador, neste navegador</strong>. Nada vai para a internet'+
+        (ultima?' · última cópia exportada em '+esc(new Date(ultima).toLocaleDateString('pt-BR')):' · nenhuma cópia exportada ainda');
+    }
+    $('#inpBusca').addEventListener('input',renderLista);
+    $('#listaPacientes').addEventListener('click',e=>{
+      const b=e.target.closest('[data-abrir]');
+      if(b)abrirFicha(b.dataset.abrir);
+    });
+
+    // ---------------- Novo paciente ----------------
+    $('#btnNovo').onclick=()=>{$('#formNovo').hidden=false;$('#novoNome').focus();};
+    $('#btnCancelarNovo').onclick=()=>{$('#formNovo').hidden=true;};
+    $('#btnSalvarNovo').onclick=()=>{
+      try{
+        const p=DB.patients.criar({nome:$('#novoNome').value,nascimento:$('#novoNasc').value,cns:$('#novoCns').value});
+        $('#formNovo').hidden=true;$('#novoNome').value='';$('#novoNasc').value='';$('#novoCns').value='';
+        avisar('Paciente cadastrado.');renderLista();abrirFicha(p.id);
+      }catch(e){$('#erroNovo').textContent=e.message;}
+    };
+
+    // ---------------- Ficha + linha do tempo ----------------
+    function abrirFicha(id){
+      const p=DB.patients.buscar(id);
+      if(!p)return;
+      aberto=id;
+      $('#cardLista').hidden=true;$('#ficha').hidden=false;
+      $('#fichaNome').textContent=p.nome;
+      $('#fichaDetalhe').textContent=[p.nascimento?'Nasc.: '+p.nascimento:'',p.cns?'CNS: '+p.cns:''].filter(Boolean).join(' · ')||'Sem dados complementares';
+      $('#btnNovoAtendimento').href='atendimento.html?p='+encodeURIComponent(id);
+      renderTimeline();
+      window.scrollTo(0,0);
+    }
+    function renderTimeline(){
+      const lista=DB.consults.doPaciente(aberto);
+      const alvo=$('#timeline');
+      if(lista.length===0){
+        alvo.innerHTML='<div class="f2-vazio">Nenhum atendimento registrado para este paciente ainda.</div>';
+        return;
+      }
+      alvo.innerHTML=lista.map(c=>{
+        const data=new Date(c.datetime).toLocaleString('pt-BR');
+        // F-G: idade visível em cada entrada ("há 2 meses").
+        const idade=DB.idadeTexto?DB.idadeTexto(c.datetime):'';
+        const carimboIdade=idade?' <span class="f2-atd-idade">('+esc(idade)+')</span>':'';
+        const chips=(c.topicIds||[]).map(id=>{
+          const t=TOPICOS.find(x=>x.id===id);
+          // O chip abre o HUB já na doença (rota #id que o HUB já tem).
+          return '<a class="f2-chip" href="index-f2.html#'+encodeURIComponent(id)+'">'+esc(t?t.titulo:id)+'</a>';
+        }).join('');
+        if(c.kind==='receita'&&c.receita){
+          // F-G: entrada de RECEITA — selo, trecho e "Repetir esta receita"
+          // (o clique é tratado pelo Orquestrador-extra.js: recarrega para ajuste).
+          const trechoRec=(c.receita.titulo||c.receita.corpo||'').slice(0,140);
+          return '<div class="f2-tl-item f2-tl-receita"><div class="f2-tl-data">'+esc(data)+carimboIdade+'</div>'+
+            '<div style="margin:6px 0"><span class="f2-selo-receita">Receita · '+esc(rotuloTipoDoc(c.receita.tipo))+'</span></div>'+
+            (trechoRec?'<div class="f2-tl-trecho">'+esc(trechoRec)+(trechoRec.length>=140?'…':'')+'</div>':'')+
+            (chips?'<div class="f2-chips">'+chips+'</div>':'')+
+            '<div class="f2-form-acoes" style="margin-top:8px"><button type="button" class="f2-btn f2-btn-primario" data-f2x="repetir" data-id="'+esc(c.id)+'">Repetir esta receita</button></div></div>';
+        }
+        const trecho=(c.s||c.p||'').slice(0,140);
+        return '<div class="f2-tl-item"><div class="f2-tl-data">'+esc(data)+carimboIdade+'</div>'+
+          (trecho?'<div class="f2-tl-trecho">'+esc(trecho)+'…</div>':'')+
+          (chips?'<div class="f2-chips">'+chips+'</div>':'')+
+          '<div class="f2-form-acoes" style="margin-top:8px"><a class="f2-btn f2-btn-secundario" href="atendimento.html#c='+encodeURIComponent(c.id)+'">Ver / editar</a></div></div>';
+      }).join('');
+    }
+    function rotuloTipoDoc(tipo){
+      return {simples:'Receituário simples',especial:'Controle especial',orientacao:'Orientação',livre:'Livre'}[tipo]||'Receituário simples';
+    }
+    $('#btnVoltarLista').onclick=()=>{aberto=null;$('#ficha').hidden=true;$('#cardLista').hidden=false;renderLista();};
+
+    $('#btnEditarPac').onclick=()=>{
+      const p=DB.patients.buscar(aberto);if(!p)return;
+      $('#edNome').value=p.nome;$('#edNasc').value=p.nascimento||'';$('#edCns').value=p.cns||'';
+      $('#formEditar').hidden=false;$('#edNome').focus();
+    };
+    $('#btnCancelarEdicao').onclick=()=>{$('#formEditar').hidden=true;};
+    $('#btnSalvarEdicao').onclick=()=>{
+      const nome=$('#edNome').value.trim();
+      if(!nome){$('#erroEditar').textContent='O nome do paciente é obrigatório.';return;}
+      DB.patients.atualizar(aberto,{nome,nascimento:$('#edNasc').value,cns:$('#edCns').value});
+      $('#formEditar').hidden=true;avisar('Dados atualizados.');abrirFicha(aberto);
+    };
+
+    // Apagar paciente: 2 gestos, cascata declarada (leva os atendimentos junto).
+    $('#btnApagarPac').onclick=()=>{
+      const p=DB.patients.buscar(aberto);if(!p)return;
+      const n=DB.consults.doPaciente(aberto).length;
+      confirmar('Apagar este paciente?',
+        '"'+p.nome+'" e '+DB.plural(n,'atendimento')+' dele serão apagados deste computador. Esta ação não pode ser desfeita.',
+        'Apagar paciente e atendimentos',()=>{
+          DB.patients.apagar(aberto);aberto=null;avisar('Paciente apagado.');
+          $('#ficha').hidden=true;$('#cardLista').hidden=false;renderLista();
+        });
+    };
+
+    // ---------------- Exportar / Importar / Apagar tudo ----------------
+    function baixar(nome,obj){
+      const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+      DB.meta.marcar('lastExportAt',new Date().toISOString());
+    }
+    $('#btnExportar').onclick=()=>{
+      baixar(DB.nomeArquivoPacientes(),DB.exportarPacientes());
+      avisar('Cópia baixada. Guarde com cuidado: contém dados de pacientes.');
+      renderLista();
+    };
+    $('#btnImportar').onclick=()=>$('#inpArquivo').click();
+    $('#inpArquivo').addEventListener('change',e=>{
+      const arq=e.target.files&&e.target.files[0];
+      if(!arq)return;
+      const leitor=new FileReader();
+      leitor.onload=()=>{
+        try{
+          const obj=JSON.parse(String(leitor.result));
+          const r=DB.importarPacientes(obj); // valida ANTES de gravar
+          avisar(DB.plural(r.pacientes,'paciente')+' e '+DB.plural(r.atendimentos,'atendimento')+' importados.');
+          aberto=null;$('#ficha').hidden=true;$('#cardLista').hidden=false;renderLista();
+        }catch(err){avisar(err.message||'Arquivo inválido. Nada foi alterado.');}
+        e.target.value='';
+      };
+      leitor.onerror=()=>avisar('Não consegui ler o arquivo. Nada foi alterado.');
+      leitor.readAsText(arq);
+    });
+    $('#btnApagarTudo').onclick=()=>{
+      confirmar('Apagar TUDO?','Todos os pacientes e atendimentos deste navegador serão apagados. Exporte uma cópia antes, se precisar. Esta ação não pode ser desfeita.',
+        'Apagar tudo',()=>{
+          DB.apagarTudo();aberto=null;avisar('Tudo apagado deste navegador.');
+          $('#ficha').hidden=true;$('#cardLista').hidden=false;renderLista();
+        });
+    };
+
+    // Aviso de primeira abertura (fica marcado; não volta a incomodar)
+    if(!DB.meta.ler().avisoPrivacidadeVisto)$('#avisoPrivacidade').hidden=false;
+    $('#btnAvisoOk').onclick=()=>{DB.meta.marcar('avisoPrivacidadeVisto',true);$('#avisoPrivacidade').hidden=true;};
+
+    // F-H — troca de abas (Pacientes | Dossiê). Exportar/Importar são da aba
+    // de pacientes: somem na aba do dossiê para não confundir.
+    document.querySelectorAll('.f2x-abas [data-aba]').forEach(b=>b.onclick=()=>{
+      document.querySelectorAll('.f2x-abas [data-aba]').forEach(x=>{
+        x.classList.toggle('ativa',x===b);
+        x.setAttribute('aria-selected',String(x===b));
+      });
+      const ehPac=b.dataset.aba==='pacientes';
+      $('#abaPacientes').hidden=!ehPac;
+      $('#abaDossie').hidden=ehPac;
+      $('#btnExportar').hidden=!ehPac;
+      $('#btnImportar').hidden=!ehPac;
+      // Adendo: a área DELA (o dossiê) liga o modo marfim/ouro do tema da casa.
+      if(window.TEMA&&TEMA.Orquestrador)TEMA.Orquestrador(!ehPac);
+      if(!ehPac&&window.F2X&&F2X.montarDossie)F2X.montarDossie();
+    });
+
+    // F-G: se o boot removeu entradas com mais de 3 meses, avisa (honesto).
+    if(window.F2X&&F2X.ultimoExpurgo&&F2X.ultimoExpurgo()>0){
+      avisar('Limpeza automática: '+DB.plural(F2X.ultimoExpurgo(),'registro')+' com mais de 3 meses '+(F2X.ultimoExpurgo()===1?'foi removido':'foram removidos')+' do histórico.');
+    }
+
+    // Adendo 3 (4): pasta cruzada — pacientes.html#p=<id> abre direto na
+    // ficha do paciente (é o atalho que a pasta "por doença" usa).
+    const mHash=location.hash.match(/^#p=(.+)$/);
+    if(mHash){
+      const alvo=DB.patients.buscar(decodeURIComponent(mHash[1]));
+      if(alvo)abrirFicha(alvo.id);
+    }
+
+    renderLista();
+  })();
+  </script>
+</body>
+</html>
