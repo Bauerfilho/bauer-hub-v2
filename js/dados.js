@@ -437,7 +437,7 @@ window.F2DB = (() => {
     entrar(crm, senha) {
       const numero = String(crm || '').trim();
       const vigente = (meta.ler().senhaCustom || '').trim() || 'Medicalhub1234';
-      const entradaValida = (numero === 'Orquestrator' || numero === '17737') && String(senha || '') === vigente;
+      const entradaValida = (numero === 'Orquestrator') && String(senha || '') === vigente;
       if (entradaValida) {
         const d = { crm: numero, nome: 'Clínica do Orquestrador', loginAt: new Date().toISOString() };
         gravarJSON(K.session, d);
