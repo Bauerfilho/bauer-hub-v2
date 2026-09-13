@@ -479,7 +479,7 @@
       $$('.copies button').forEach(button=>button.addEventListener('click',()=>{state.copies=Number(button.dataset.copies);$$('.copies button').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});renderPreview()}));
       $$('[data-print]').forEach(button=>button.addEventListener('click',()=>preparePrint(button.dataset.print)));
       $('#clearPatient').addEventListener('click',clearPatient);window.addEventListener('afterprint',cleanupPrint);
-      /* atalhos globais só valem com a view Documentos visível — fora dela, o hub manda */
+      /* atalhos globais só valem com a view Documentos visível — fora da casa, o hub manda */
       document.addEventListener('click',e=>{if(!guiaAtivo())return;if(!e.target.closest('.patient-autocomplete'))hidePatientSuggestions()});
       document.addEventListener('keydown',e=>{
         if(!guiaAtivo())return;

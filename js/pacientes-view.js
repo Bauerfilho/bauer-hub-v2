@@ -1,5 +1,5 @@
 /* pacientes-view.js — Pacientes e atendimentos como VIEW INTERNA do hub (1 página, 1 identidade).
-   LINHAGEM: transplante do <script> inline de pacientes.html (autor original: codex, casa Bauer),
+   LINHAGEM: transplante do <script> inline de pacientes.html (autor original: codex, casa Orquestrador),
    adaptado por kimi em 30/08/2026 (contrato F4' — pacientes/atendimento como views):
    - raiz escopada em #patientsView (const $ = s => VIEW.querySelector(s)), padrão js/guias-view.js;
    - boot preguiçoso e fail-closed NA VIEW (erro trava só a view, jamais o hub);

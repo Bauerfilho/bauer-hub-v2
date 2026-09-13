@@ -24,7 +24,7 @@
  *       meta:{ createdAt, lastExportAt } }
  *   Nada vai para a internet: este arquivo não faz fetch, não chama rede,
  *   não carrega nada de fora. O Exportar gera um arquivo .json na pasta de
- *   downloads dela; o Importar lê um .json que ela escolhe. É assim que ela
+ *   downloads; o Importar lê um .json escolhido. É assim que se
  *   troca de computador sem perder nada.
  *
  * COMO LIGAR NO HUB (1 linha — NÃO aplicada nesta entrega por ordem do
@@ -63,7 +63,7 @@
   const $ = (sel, raiz) => (raiz || document).querySelector(sel);
 
   // Cria elemento com classe e texto (texto via textContent — nunca innerHTML
-  // com dado dela, para nenhum texto virar HTML por acidente).
+  // com dado do usuário, para nenhum texto virar HTML por acidente).
   function el(tag, classe, texto) {
     const n = document.createElement(tag);
     if (classe) n.className = classe;
@@ -218,13 +218,13 @@
     const caixa = caixaDoTopico(store, topicId, false) || { own: [], favs: [] };
     sec.innerHTML = '';
 
-    // Título + aviso de onde grava (em linguagem dela).
+    // Título + aviso de onde grava (em linguagem clara).
     sec.appendChild(el('h2', 'dm-title', '⭐ Esquemas da Orquestrador'));
     sec.appendChild(el('p', 'dm-hint',
       'Guardado neste computador, neste navegador. Nada vai para a internet. ' +
       'Para trocar de computador: use Exportar, leve o arquivo e use Importar no outro.'));
 
-    // Lista: primeiro os esquemas dela (selo "Meu esquema"), depois os favoritos do guia.
+    // Lista: primeiro os esquemas próprios (selo "Meu esquema"), depois os favoritos do guia.
     const lista = el('div', 'dm-list');
     let temAlgo = false;
 

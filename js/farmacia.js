@@ -114,7 +114,7 @@ window.FARMACIA_CSF = {
     {nome:'Noretisterona + Estradiol 50 + 5mg/ml Inj 1ml', cat:'Saúde da mulher', riscado:true},
     {nome:'Omeprazol 20mg Cap', cat:'Digestivo'},
     {nome:'Ondansetrona 4 mg cp orodispersível', cat:'Digestivo'},
-    {nome:'Ondansetrona 8 mg cp', cat:'Digestivo', obs:'não consta no PDF da lista — tem na unidade, confirmado pelo Bauer (28/08)'},
+    {nome:'Ondansetrona 8 mg cp', cat:'Digestivo', obs:'não consta no PDF da lista — tem na unidade, confirmado pela casa (28/08)'},
     {nome:'Paracetamol 200mg/ml gts fr 15ml', cat:'Analgésicos'},
     {nome:'Paracetamol 500mg cp', cat:'Analgésicos'},
     {nome:'Paracetamol + Codeína 500mg + 30 mg cp cartela 12 cp', cat:'Analgésicos'},

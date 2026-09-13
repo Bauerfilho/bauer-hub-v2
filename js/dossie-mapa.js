@@ -1,5 +1,5 @@
 /* F-H · Mapa do dossiê → doenças do catálogo (roteamento de apresentação).
-   Autoria: brain, 28/08/2026, por ordem do dono: os esqueminhas do dossiê da Dra.
+   Autoria: brain, 28/08/2026, por ordem do dono: os esqueminhas do dossiê da casa
    aparecem TAMBÉM dentro da página de cada doença relacionada, como cartão de
    REFERÊNCIA ("não é que ela vá usar exatamente — é referência e um jeito de
    explicar como a plataforma funciona"). Chave = `tema` do DOSSIE_Orquestrador;
@@ -13,7 +13,7 @@ window.DOSSIE_MAPA = {
     'Depressão / ansiedade': [],
     'Vitaminas': ['anemia-macrocitica','osteoporose'],
     'Compulsão / alcoolismo': [],
-    'Hipertensão — a escada dela': ['hipertensao-negros-idosos','hipertensao-nefropata-diabetico-obeso','hipertensao-branco-jovem','hipertensao-ic-dac'],
+    'Hipertensão — a escada do Orquestrador': ['hipertensao-negros-idosos','hipertensao-nefropata-diabetico-obeso','hipertensao-branco-jovem','hipertensao-ic-dac'],
     'Dislipidemia': ['dislipidemia-diabetes','dislipidemia-alto-risco','dislipidemia-aterosclerose-significativa','hipertrigliceridemia'],
     'AINEs': ['dorsalgia-discopatia','osteoartrite','gota','dismenorreia'],
     'Diabetes': ['diabetes-mellitus-tipo-2','neuropatia-periferica','pe-diabetico'],

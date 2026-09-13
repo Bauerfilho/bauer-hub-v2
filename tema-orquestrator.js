@@ -45,7 +45,7 @@
       if(chave&&icone&&!icone.dataset.orq){icone.dataset.orq='1';icone.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">'+ICONES[chave]+'</svg>'}
     });
   }
-  /* O modo dela (palha/marfim) liga SEMPRE que há sessão viva — blindado contra
+  /* O modo claro (palha/marfim) liga SEMPRE que há sessão viva — blindado contra
      regressões no fluxo de login (28/08 22h55: boot com sessão persistida perdia o tema). */
   function ligarModoDela(){try{if(localStorage.getItem('ubs2026.v1.session'))document.body.classList.add('tema-Orquestrador')}catch(_){}}
   function boot(){selo();dedicatoria();marcaUnidade();iconesFinos();ligarModoDela();}

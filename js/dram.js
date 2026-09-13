@@ -2,7 +2,7 @@
    F2b — O BOTÃO DA Orquestrador (frente mais importante)
    ----------------------------------------------------------------------------
    O que faz: dentro de CADA doença do HUB, no TOPO do workspace, monta a seção
-   "Esquemas do Orquestrador": os esquemas PRÓPRIOS dela (selo "Meu esquema")
+   "Esquemas do Orquestrador": os esquemas PRÓPRIOS da casa (selo "Meu esquema")
    aparecem primeiro, depois os espelhos dos favoritos ⭐ do guia. Vazia, a
    seção mostra um convite curto + botão grande [＋ Adicionar meu esquema].
    Também monta "Atendimentos nesta doença" (o caminho inverso da F2).
@@ -65,7 +65,7 @@ window.F2 = (() => {
 
   /* ==========================================================================
      B1 — A seção montada em TODA doença, no topo.
-     Adendo 2: o título usa o ESTETOSCOPIO dela (classe .orq-esteto — o tema
+     Adendo 2: o título usa o ESTETOSCOPIO da casa (classe .orq-esteto — o tema
      desenha o SVG dourado; sem emoji) e ganhou TRÊS BOTÕES ao lado:
      [Histórico] [Meus esquemas] [SOAP]. Cada botão troca a view do corpo da
      seção; "Meus esquemas" é a view original (padrão ao abrir a doença).
@@ -84,7 +84,7 @@ window.F2 = (() => {
       '<section class="f2-dra" aria-label="Área do Orquestrador nesta doença">' +
         '<div class="f2-dra-topo">' +
           '<h2 class="f2-coroa"><span class="orq-esteto" aria-hidden="true"></span> Esquemas do Orquestrador <span class="f2-esq-selo">nesta doença</span></h2>' +
-          '<div class="f2-dra-abas" role="tablist" aria-label="Área da Dra. nesta doença">' +
+          '<div class="f2-dra-abas" role="tablist" aria-label="Área da casa nesta doença">' +
             aba('historico', 'Histórico') + aba('esquemas', 'Meus esquemas') + aba('soap', 'SOAP') +
           '</div>' +
         '</div>';
@@ -98,7 +98,7 @@ window.F2 = (() => {
     if (visaoAtual === 'soap') ligarFormSoap();
   }
 
-  // Adendo 3 (2) — DOSSIÊ POR DOENÇA: os esqueminhas do dossiê dela aparecem
+  // Adendo 3 (2) — DOSSIÊ POR DOENÇA: os esqueminhas do dossiê da casa aparecem
   // dentro da área de esquemas de cada doença relacionada, como cartão de
   // REFERÊNCIA ("Referência do Orquestrador") — NÃO é esquema imprimível do
   // guia. Mapa pronto do brain em js/dossie-mapa.js (tema → ids de tópicos);
@@ -120,7 +120,7 @@ window.F2 = (() => {
       if (!esq) return '';
       return '<aside class="f2-ref-dra" aria-label="Referência do Orquestrador — ' + esc(temaNome) + '">' +
         '<h3><span class="orq-esteto" aria-hidden="true"></span> Referência do Orquestrador <span class="f2-ref-tema">' + esc(temaNome) + '</span></h3>' +
-        '<p class="f2-ref-nota">Referência de como ela costuma conduzir — não é esquema imprimível do guia.</p>' +
+        '<p class="f2-ref-nota">Referência de como o Orquestrador costuma conduzir — não é esquema imprimível do guia.</p>' +
         '<ul>' + esq.itens.map(i => {
           const selo = seloUnidadeLocal(i.unidade);
           return '<li><div class="f2-esqmin-topo"><strong>' + esc(i.t) + '</strong>' +
@@ -160,7 +160,7 @@ window.F2 = (() => {
     html += cartoesReferenciaHTML();
 
     // Rodapé: declaração de onde grava + exportar/importar (B4).
-    // Adendo 2: rótulos em linguagem simples — a Dra. não precisa saber o que é JSON.
+    // Adendo 2: rótulos em linguagem simples — a casa não precisa saber o que é JSON.
     html +=
         '<div class="f2-dra-rodape">' +
           '<span class="f2-onde">Guardado <strong>neste computador, neste navegador</strong>. Nada vai para a internet. Para trocar de computador: exporte, leve o arquivo e importe no outro.</span>' +
@@ -655,7 +655,7 @@ window.F2 = (() => {
 
   // Cartão de esquema PRÓPRIO (selo "Meu esquema" + selo do tipo escolhido).
   // F-J: se o texto tem hidroclorotiazida > 25 mg, o cartão mostra o aviso da
-  // regra da Dra. — destacado, NUNCA bloqueio (imprime normal).
+  // regra da casa — destacado, NUNCA bloqueio (imprime normal).
   function cartaoProprio(e) {
     const img = e.imagem
       ? '<img src="' + esc(e.imagem) + '" alt="Foto do esquema" onerror="this.style.display=\'none\'">'
@@ -667,7 +667,7 @@ window.F2 = (() => {
         '<span class="f2-esq-selo">Meu esquema</span>' +
         (e.tipo ? '<span class="f2-esq-selo f2-selo-tipo">' + esc(rotuloTipo(e.tipo)) + '</span>' : '') +
         '</div>' +
-        (doseHctz ? '<div class="f2-hctz-aviso" role="alert">Regra da Dra.: hidroclorotiazida no máximo 25 mg — este esquema cita ' + esc(String(doseHctz).replace('.', ',')) + ' mg.</div>' : '') +
+        (doseHctz ? '<div class="f2-hctz-aviso" role="alert">Regra da casa: hidroclorotiazida no máximo 25 mg — este esquema cita ' + esc(String(doseHctz).replace('.', ',')) + ' mg.</div>' : '') +
         (e.texto ? '<div class="f2-esq-texto">' + esc(e.texto) + '</div>' : '') +
         img +
         '<div class="f2-esq-acoes">' +
@@ -728,13 +728,13 @@ window.F2 = (() => {
     form.querySelector('#f2Tipo').value = edicao && edicao.tipo ? edicao.tipo : 'simples';
     form.querySelector('#f2Nome').focus();
 
-    // F-J — aviso da regra da Dra. (HCTZ > 25 mg) aparece ENQUANTO digita.
+    // F-J — aviso da regra da casa (HCTZ > 25 mg) aparece ENQUANTO digita.
     // É aviso destacado, nunca bloqueio: salvar e imprimir seguem livres.
     const avisoHctz = form.querySelector('.f2-hctz-aviso');
     const conferirHctz = () => {
       const dose = DB().hctzAcimaDe25 ? DB().hctzAcimaDe25(form.querySelector('#f2Texto').value) : null;
       avisoHctz.hidden = !dose;
-      if (dose) avisoHctz.textContent = 'Regra da Dra.: hidroclorotiazida no máximo 25 mg — aqui está ' + String(dose).replace('.', ',') + ' mg. Pode salvar mesmo assim.';
+      if (dose) avisoHctz.textContent = 'Regra da casa: hidroclorotiazida no máximo 25 mg — aqui está ' + String(dose).replace('.', ',') + ' mg. Pode salvar mesmo assim.';
     };
     form.querySelector('#f2Texto').addEventListener('input', conferirHctz);
     conferirHctz();
@@ -845,7 +845,7 @@ window.F2 = (() => {
   }
 
   /* ==========================================================================
-     B6 — Imprimir o esquema dela em 1 folha A4
+     B6 — Imprimir o esquema da casa em 1 folha A4
      Reusa o portal de impressão do HUB (#printPortal): no "beforeprint", o HUB
      prepara a folha dele e ESTE módulo, registrado depois, sobrescreve o portal
      com a folha F2 quando a impressão foi armada por aqui. Ordem determinística

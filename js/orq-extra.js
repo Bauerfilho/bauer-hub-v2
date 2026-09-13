@@ -2,7 +2,7 @@
    HUBv3 — Módulo "Orquestrador extra" (frentes F-D/E/F/G/H/I/J · contrato de 28/08)
    ----------------------------------------------------------------------------
    F-D Login (identidade e acolhimento, NÃO segurança — declarado no LEIA-ME) ·
-   F-E Rodapé dela em toda receita e orientação (MutationObserver nos prints) ·
+   F-E Rodapé da casa em toda receita e orientação (MutationObserver nos prints) ·
    F-G Histórico com 3 meses (oferta explícita pós-print + repetir + expurgo) ·
    F-H UI do Dossiê (farmácia da unidade + esqueminhas — dados SOBERANOS do
    brain em js/farmacia.js e js/dossie-orq.js: só consome, não reescreve) ·
@@ -58,7 +58,7 @@ window.F2X = (() => {
 
   /* ==========================================================================
      F-D · LOGIN — overlay de boot. CRM Orquestrator + senha Medicalhub1234.
-     É identidade e acolhimento: ao entrar, liga a personalização dela.
+     É identidade e acolhimento: ao entrar, liga a personalização da casa.
      ========================================================================== */
   function montarLogin() {
     if (DB().sessao.ler()) { personalizar(); aplicarRepeticaoPendente(); return; }
@@ -99,7 +99,7 @@ window.F2X = (() => {
      ADENDO 10 (3) · ESQUECI MINHA SENHA
      Pede o CRM (Orquestrator = a chave) → define senha NOVA 2x → grava em
      ubs2026.v1.meta.senhaCustom (sessao.entrar passa a exigir a nova) →
-     notificação ao WhatsApp dela (real via gateway plugável, ou wa.me pronto).
+     notificação ao WhatsApp da casa (real via gateway plugável, ou wa.me pronto).
      ========================================================================== */
   function montarResetSenha() {
     const fundo = $('#f2xLogin');
@@ -149,7 +149,7 @@ window.F2X = (() => {
     });
   }
 
-  // Notificação da troca ao WhatsApp dela ( ):
+  // Notificação da troca ao WhatsApp da casa ( ):
   //  TENTA envio real via rede — gateway PLUGÁVEL em meta.whatsappGateway
   //  (POST JSON {para, texto}); sem gateway configurado ou se a rede falhar,
   //  abre wa.me com o texto pronto. A lei nova: rede é permitida quando ajuda.
@@ -250,14 +250,14 @@ window.F2X = (() => {
     avisar('Voltou à unidade padrão.');
   }
 
-  // A personalização dela na home: saudação com coroa + cidade do rodapé + sair.
+  // A personalização da casa na home: saudação com coroa + cidade do rodapé + sair.
   function personalizar() {
     if ($('#f2xSaudacao')) return;
     const shell = $('#hubView .shell');
     if (!shell) return;
     const s = DB().sessao.ler();
     if (!s) return;
-    // Liga o MODO DELA do tema da casa (marfim/ouro) — a personalização na
+    // Liga o MODO DA CASA do tema da casa (marfim/ouro) — a personalização na
     // linguagem do próprio hub. Sem tema carregado, segue tudo igual.
     if (window.TEMA && window.TEMA.Orquestrador) window.TEMA.Orquestrador(true);
     const div = document.createElement('div');
@@ -298,7 +298,7 @@ window.F2X = (() => {
   }
 
   /* ==========================================================================
-     F-E · O RODAPÉ DELA EM TODA RECEITA E ORIENTAÇÃO
+     F-E · O RODAPÉ DA CASA EM TODA RECEITA E ORIENTAÇÃO
      MutationObserver nos mounts de impressão do hub (#recipePrint /
      #orientationPrint): a cada render do hub, re-injeta as 4 linhas no fim de
      CADA via (.rx-copy) e da moldura da orientação — fora do carimbo, impresso.
@@ -306,7 +306,7 @@ window.F2X = (() => {
      do hub encolhem alguns mm) — por isso o fit/espelho do hub não sente nada.
      ========================================================================== */
   function injetarRodapes(forcar) {
-    // Adendo 2 (3): receita REIMPRESSA do histórico leva o selo dela NO LOCAL
+    // Adendo 2 (3): receita REIMPRESSA do histórico leva o selo da casa NO LOCAL
     // do carimbo/assinatura (modo "carimbo"); impressão comum: rodapé no pé.
     const carimbo = !!(DB().meta.ler().reimpressaoCarimbo);
     const limpar = raiz => {
@@ -316,7 +316,7 @@ window.F2X = (() => {
       if (sig) sig.classList.remove('f2x-sig-oculta');
     };
     // Adendo 6 — o selo ancora NO ELEMENTO DA LINHA DE ASSINATURA: vai
-    // imediatamente abaixo dela, colado, centralizado (nunca solto no pé).
+    // imediatamente abaixo da casa, colado, centralizado (nunca solto no pé).
     const seloAposAssinatura = raiz => {
       const sig = raiz.querySelector('.signature-line');
       if (sig && !raiz.querySelector('.f2x-rodape-dra')) {
@@ -525,7 +525,7 @@ window.F2X = (() => {
         const pac = DB().patients.buscar(c.patientId);
         injetarCampoPaciente('name', pac ? pac.nome : '');
         injetarCampoPaciente('date', new Intl.DateTimeFormat('pt-BR').format(new Date()));
-        // Adendo 2 (3): esta reimpressão veio do histórico — o selo dela vai
+        // Adendo 2 (3): esta reimpressão veio do histórico — o selo da casa vai
         // NO LUGAR do carimbo/assinatura (só nesta doença).
         DB().meta.marcar('reimpressaoCarimbo', { topicId: tid || hash });
         injetarRodapes(true);
@@ -542,11 +542,11 @@ window.F2X = (() => {
   }
 
   /* ==========================================================================
-     F-H · UI DO DOSSIÊ — a farmácia da unidade + os esqueminhas dela.
+     F-H · UI DO DOSSIÊ — a farmácia da unidade + os esqueminhas da casa.
      Dados SOBERANOS (js/farmacia.js, js/dossie-orq.js): renderiza como
      estão, sem reescrever uma palavra do conteúdo clínico.
      ========================================================================== */
-  // Adendo 8 (BRONCA): pendência/cobrança NUNCA na UI dela. Não existe selo
+  // Adendo 8 (BRONCA): pendência/cobrança NUNCA na UI da casa. Não existe selo
   // "confirmar" — disponibilidade desconhecida vira SEM selo, nunca tarefa.
   function seloUnidade(u) {
     return {
@@ -604,7 +604,7 @@ window.F2X = (() => {
     const dos = window.DOSSIE_Orquestrador;
     const farm = window.FARMACIA_CSF;
     // Adendo 8: re-render do dado LIMPO — sem bloco de alertas, sem
-    // notaRiscados, sem nada com cheiro de pendência na tela dela.
+    // notaRiscados, sem nada com cheiro de pendência na tela da casa.
     mount.innerHTML =
       '<div class="f2x-dossie-aviso">' + esc(dos.avisoGeral || '') + '</div>' +
       '<div class="f2-card">' +
@@ -646,7 +646,7 @@ window.F2X = (() => {
       const rid = slot.dataset.regimenId || '';
       const marcado = !!(topico && DB().draOrq.ehFavorito(topico.id, rid));
       slot.innerHTML =
-        '<button type="button" class="f2-btn f2-btn-mini f2-coroa" data-f2x="coroar" data-regimen="' + esc(rid) + '" title="Adicionar este esquema na seção da Dra.">Adicionar</button>' +
+        '<button type="button" class="f2-btn f2-btn-mini f2-coroa" data-f2x="coroar" data-regimen="' + esc(rid) + '" title="Adicionar este esquema na seção da casa">Adicionar</button>' +
         '<button type="button" class="f2-btn f2-btn-secundario f2-btn-mini f2x-estrela-btn' + (marcado ? ' f2-fav-on' : '') + '" data-f2x="estrela" data-regimen="' + esc(rid) + '" title="Marcar como preferido">' + (marcado ? '⭐' : '☆') + '</button>';
     });
     coroasArmadas = true;

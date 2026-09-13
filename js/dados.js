@@ -1,5 +1,5 @@
 /* ============================================================================
-   F2 — Camada única de dados (pacientes, atendimentos SOAP, esquemas da Dra.)
+   F2 — Camada única de dados (pacientes, atendimentos SOAP, esquemas da casa)
    ----------------------------------------------------------------------------
    ONDE GRAVA: localStorage do navegador, neste computador. NADA vai para a
    internet (zero fetch / zero XMLHttpRequest neste arquivo — verificável).
@@ -16,9 +16,9 @@ window.F2DB = (() => {
   const K = {
     patients: 'ubs2026.v1.patients',   // pacientes cadastrados
     consults: 'ubs2026.v1.consults',   // atendimentos (SOAP)
-    draOrq: 'ubs2026.v1.draOrq', // esquemas preferidos e próprios da Dra.
+    draOrq: 'ubs2026.v1.draOrq', // esquemas preferidos e próprios da casa
     meta: 'ubs2026.v1.meta',           // carimbos internos (ex.: última cópia exportada)
-    session: 'ubs2026.v1.session',     // sessão do login da Dra. (F-D: identidade, NÃO segurança)
+    session: 'ubs2026.v1.session',     // sessão do login da casa (F-D: identidade, NÃO segurança)
   };
   const VERSAO = 1; // versão do formato (vai dentro de cada arquivo exportado)
 
@@ -201,7 +201,7 @@ window.F2DB = (() => {
     apagar(id) {
       gravarJSON(K.consults, consults.listar().filter(c => c.id !== id));
     },
-    // F-G — Registra uma RECEITA impressa no histórico (oferta explícita dela,
+    // F-G — Registra uma RECEITA impressa no histórico (oferta explícita da casa,
     // nunca automático). Mesma gaveta dos atendimentos: lida por paciente E
     // por doença pelos métodos já existentes (doPaciente / daDoenca).
     registrarReceita(dados) {
@@ -387,7 +387,7 @@ window.F2DB = (() => {
     gravarJSON(K.consults, obj.consults);
     return { pacientes: obj.patients.length, atendimentos: obj.consults.length };
   }
-  // Esquemas da Dra.: MESCLA (o mais recente vence em conflito de id).
+  // Esquemas da casa: MESCLA (o mais recente vence em conflito de id).
   function importarDraOrq(obj) {
     validarDraOrq(obj);
     const atual = draOrq._ler();
@@ -422,7 +422,7 @@ window.F2DB = (() => {
   // ==========================================================================
   // SESSÃO (F-D) — login do Orquestrador. É IDENTIDADE E ACOLHIMENTO, não
   // segurança: nada aqui criptografa nem bloqueia dado (coerente com a decisão
-  // da F2 de não criptografar o histórico). Só liga a personalização dela.
+  // da F2 de não criptografar o histórico). Só liga a personalização da casa.
   // ==========================================================================
   const sessao = {
     ler() {
@@ -430,7 +430,7 @@ window.F2DB = (() => {
       return (d && d.crm) ? d : null;
     },
     // Adendo 5: DUAS entradas com a mesma senha — o CRM Orquestrator OU o  
-    // dela. Qualquer outro número não entra. Guarda qual dos dois ela usou.
+    // da casa. Qualquer outro número não entra. Guarda qual dos dois ela usou.
     // Adendo 10: se existir senhaCustom (trocada em "Esqueci minha senha"), a
     // senha vigente é ELA — a padrão deixa de abrir a porta (aceite do dono:
     // "entrar com a nova ✓ e com a antiga ✗").
@@ -445,7 +445,7 @@ window.F2DB = (() => {
       }
       return null;
     },
-    // "Esqueci minha senha": grava a senha NOVA dela (a chave do reset é o
+    // "Esqueci minha senha": grava a senha NOVA da casa (a chave do reset é o
     // CRM Orquestrator — validado no fluxo, em Orquestrador-extra.js).
     trocarSenha(nova) {
       const limpa = String(nova || '');
@@ -501,7 +501,7 @@ window.F2DB = (() => {
     return n + ' ' + (n === 1 ? singular : (pluralForm || singular + 's'));
   }
 
-  // F-J — Regra da Dra.: hidroclorotiazida no MÁXIMO 25 mg nas receitas DELA.
+  // F-J — Regra da casa: hidroclorotiazida no MÁXIMO 25 mg nas receitas DA CASA.
   // Procura "hidroclorotiazida ... <n> mg" (e a sigla HCTZ) no texto e devolve
   // a MAIOR dose encontrada quando passa de 25 mg; senão devolve null.
   // AVISO apenas — nunca bloqueio (o hub oferece e obedece).
@@ -517,15 +517,15 @@ window.F2DB = (() => {
     return maior > 25 ? maior : null;
   }
 
-  // F-E — O rodapé dela (4 linhas), fiel ao e-SUS, fora do carimbo.
+  // F-E — O rodapé da casa (4 linhas), fiel ao e-SUS, fora do carimbo.
   // A cidade tem override editável em ubs2026.v1.meta.rodapeLocal.
   function rodapeDraHTML(classe) {
     const local = (meta.ler().rodapeLocal || 'Goiânia - GO').trim() || 'Goiânia - GO';
     const dataExtenso = new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
     return '<div class="' + (classe || 'f2x-rodape-dra') + '">' +
       '<strong><span class="orq-coroa orq-coroa-inline" aria-label="Orquestrador"></span></strong>' +
-      '<span>CRM-GO Orquestrator</span>' +
-      '<span>Médica da Estratégia de Saúde da Família</span>' +
+      '<span>CRM-GO</span>' +
+      '<span>Médico da Estratégia de Saúde da Família</span>' +
       '<span>' + local + ', ' + dataExtenso + '</span>' +
       '</div>';
   }

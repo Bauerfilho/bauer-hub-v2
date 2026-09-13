@@ -1,6 +1,6 @@
 /* dossie-orquestrator.js — CATEGORIAS DO ORQUESTRATOR (extra do dono, 30/08/2026).
    Dossiê de medicamentos favoritos por categoria: o DONO dita os itens de cada categoria (julgamento
-   médico não se delega — a estrutura nasce pronta e VAZIA de conduta); a Dra. marca os dela e pode
+   médico não se delega — a estrutura nasce pronta e VAZIA de conduta); a casa marca os da casa e pode
    completar qualquer categoria com itens próprios. Tudo rotulado "referência — conferir": o hub não
    decide conduta. Persistência aditiva em ubs2026.v1.meta.orqDossie (export/import continuam válidos).
    UI: popover estilo menu-de-comandos — preto #15181D, rolagem, acentos dourados (tema Orquestrator).

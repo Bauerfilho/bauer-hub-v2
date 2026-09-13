@@ -1,6 +1,6 @@
 /* F-SOAP · Dossiê de CIDs compatíveis por doença (campo do Plano no SOAP).
    Autoria: brain, 28/08/2026 — SUGESTÕES de CID-10 por tópico do catálogo, para a
-   médica escolher ao suspeitar da doença. NÃO é decisão: o CID do atendimento é dela.
+   médica escolher ao suspeitar da doença. NÃO é decisão: o CID do atendimento é da casa.
    Rotular na UI: "sugestões — conferir". Chave = id do tópico no catalogData. */
 window.CIDS_COMPATIVEIS = {
   aviso: 'Sugestões de CID-10 compatíveis com a suspeita — conferir; o CID do atendimento é decisão da médica.',
