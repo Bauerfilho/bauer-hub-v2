@@ -192,7 +192,7 @@ window.F2X = (() => {
     return {
       nome: (m.unidadeNome || '').trim() || 'Clínica do Orquestrador',
       end: (m.unidadeEndereco || '').trim() || 'Clínica do Orquestrador',
-      cid: (m.unidadeCidadeCep || '').trim() || 'Goiânia/GO - CEP  ',
+      cid: (m.unidadeCidadeCep || '').trim() || 'Goiânia/GO',
     };
   }
 
