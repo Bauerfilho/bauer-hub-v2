@@ -17,7 +17,7 @@
     if(!hero||hero.querySelector('.orq-dedicatoria'))return;
     var d=document.createElement('div');
     d.className='orq-dedicatoria';
-    d.innerHTML='<span class="orq-coroa"></span>Clínica do Orquestrador · Clínica do Orquestrador';
+    d.innerHTML='<span class="orq-coroa"></span>'+unidadeNome().replace(/</g,'&lt;');
     hero.appendChild(d);
   }
   function unidadeNome(){try{var m=JSON.parse(localStorage.getItem('ubs2026.v1.meta')||'{}');return m.unidadeNome||'Clínica do Orquestrador'}catch(_){return 'Clínica do Orquestrador'}}
@@ -25,7 +25,7 @@
     var b=document.querySelector('.brand span');
     if(b&&/USF|UBS|CSF/i.test(b.textContent))b.textContent=unidadeNome()+' · 2026';
     var d=document.querySelector('.orq-dedicatoria');
-    if(d)d.innerHTML='<span class="orq-coroa"></span>'+unidadeNome().replace(/</g,'&lt;')+' · Clínica do Orquestrador';
+    if(d)d.innerHTML='<span class="orq-coroa"></span>'+unidadeNome().replace(/</g,'&lt;');
   }
   /* Os desenhos dos ícones do índice (ordem do dono 22h18): SVG de traço fino
      verde, centrado, no lugar dos caracteres de texto. */

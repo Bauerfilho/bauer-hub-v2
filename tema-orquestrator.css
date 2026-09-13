@@ -34,7 +34,7 @@
     font-size:10.5px;font-weight:800;letter-spacing:.22em;color:var(--ouro);
     border:1px solid var(--ouro-linha);border-radius:999px;padding:6px 12px 6px 10px;
     background:linear-gradient(180deg,#fff,#FDFAF4);white-space:nowrap;user-select:none}
-  .orq-coroa{display:inline-block;width:17px;height:12px;background:var(--coroa) center/contain no-repeat}
+  .orq-coroa{display:inline-block;width:15px;height:15px;background:var(--simbolo) center/contain no-repeat}
   .orq-simbolo{display:inline-block;width:20px;height:20px;background:var(--simbolo) center/contain no-repeat}
 
   /* ─── a página de login (direção do dono 28/08 ~23h: assinatura da casa) ─── */
@@ -214,7 +214,7 @@ body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
     background:linear-gradient(180deg,#fff,#FBF6EA)!important;color:#7A5B1E!important;
     font-weight:800;border-radius:999px}
   .f2-coroa::before{content:"";display:inline-block;width:17px;height:12px;margin-right:7px;
-    vertical-align:-1px;background:var(--coroa) center/contain no-repeat}
+    vertical-align:-2px;background:var(--simbolo) center/contain no-repeat}
   .f2-coroa:hover{background:linear-gradient(180deg,#fff,#F6ECD6)!important;border-color:var(--ouro)!important}
 
   /* cards de esquema (quando o codex os entregar) — só acento, sem briga de layout */
