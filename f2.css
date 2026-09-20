@@ -1,0 +1,609 @@
+/* ============================================================================
+   F2 — Estilos do módulo Pacientes/SOAP/Orquestrador
+   Mesma família visual do HUB (variáveis copiadas do index para consistência).
+   Regras de impressão SÓ atingem as classes "f2-*" — o chassi de impressão do
+   HUB (portal, @page, bloqueio) segue intacto e não é tocado aqui.
+   ========================================================================== */
+
+:root {
+  --f2-ink:#172033; --f2-muted:#667085; --f2-line:#d8dee9; --f2-paper:#fff;
+  --f2-bg:#f3f6f9; --f2-brand:#0f766e; --f2-brand-dark:#0b5d57; --f2-brand-soft:#e7f6f3;
+  --f2-danger:#b42318; --f2-danger-soft:#fee4e2;
+  --f2-shadow:0 10px 30px rgba(16,24,40,.08);
+  --f2-radius:16px;
+  /* Cores PEC do SOAP: fundo pastel + borda forte (tela boa, tinta moderada) */
+  --f2-s-bg:#FCE4EC; --f2-s-fg:#AD1457;   /* S — rosa */
+  --f2-o-bg:#E3F2FD; --f2-o-fg:#1565C0;   /* O — azul */
+  --f2-a-bg:#FFF8E1; --f2-a-fg:#F9A825;   /* A — amarelo */
+  --f2-p-bg:#E8F5E9; --f2-p-fg:#2E7D32;   /* P — verde */
+}
+
+/* Card da home injetado pelo remendo: os irmãos são <button>, este é <a> —
+   remove o sublinhado de link para ficar idêntico a eles. */
+a.feature-card.f2-card { text-decoration: none; color: inherit; }
+
+/* --------------------------------------------------------------------------
+   Orquestrador — seção no topo do workspace da doença (dentro do HUB)
+   -------------------------------------------------------------------------- */
+.f2-dra {
+  margin: 0 0 14px;
+  background: var(--f2-paper);
+  border: 1px solid var(--f2-line);
+  border-left: 5px solid var(--f2-brand);
+  border-radius: var(--f2-radius);
+  box-shadow: var(--f2-shadow);
+  padding: 16px 18px;
+}
+.f2-dra h2 {
+  margin: 0 0 4px; font-size: 1.15rem; color: var(--f2-brand-dark);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.f2-dra .f2-dra-sub { color: var(--f2-muted); font-size: .92rem; margin: 0 0 12px; }
+.f2-dra-vazio {
+  background: var(--f2-brand-soft); border-radius: 12px; padding: 18px;
+  text-align: center; color: var(--f2-ink); font-size: 1rem; line-height: 1.5;
+}
+.f2-dra-vazio p { margin: 0 0 12px; }
+
+/* Botões grandes (alvo de dedo/mouse generoso — usuária "bem rudimentar") */
+.f2-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 10px 18px; border-radius: 12px; border: 1px solid transparent;
+  font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none;
+  font-family: inherit; line-height: 1.2;
+}
+.f2-btn-primario { background: var(--f2-brand); color: #fff; }
+.f2-btn-primario:hover { background: var(--f2-brand-dark); }
+.f2-btn-secundario { background: #fff; border-color: var(--f2-line); color: var(--f2-ink); }
+.f2-btn-secundario:hover { background: var(--f2-bg); }
+.f2-btn-perigo { background: var(--f2-danger); color: #fff; }
+.f2-btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* Cartões de esquema (próprios e espelhos de favoritos) */
+.f2-esq-lista { display: grid; gap: 10px; margin: 10px 0; }
+.f2-esq {
+  border: 1px solid var(--f2-line); border-radius: 12px; padding: 12px 14px;
+  background: #fff;
+}
+.f2-esq-topo { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.f2-esq-titulo { font-weight: 700; font-size: 1.05rem; flex: 1; min-width: 200px; }
+.f2-esq-selo {
+  font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+  background: var(--f2-brand-soft); color: var(--f2-brand-dark); white-space: nowrap;
+}
+.f2-esq-selo.f2-selo-guia { background: #eef2f6; color: var(--f2-muted); }
+.f2-esq-texto {
+  margin: 8px 0; white-space: pre-wrap; color: var(--f2-ink); font-size: .98rem;
+  max-height: 7.5em; overflow: hidden; position: relative;
+}
+.f2-esq-texto.f2-aberto { max-height: none; }
+.f2-esq-acoes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.f2-esq-acoes .f2-btn { min-height: 38px; padding: 7px 13px; font-size: .92rem; }
+.f2-esq img { max-width: 100%; border-radius: 8px; margin-top: 8px; }
+
+/* Formulário de 2 campos (só o nome é obrigatório) */
+.f2-form { background: var(--f2-bg); border-radius: 12px; padding: 16px; margin-top: 12px; }
+.f2-form label { display: block; font-weight: 700; margin: 12px 0 5px; font-size: 1rem; }
+.f2-form label .f2-opcional { font-weight: 400; color: var(--f2-muted); font-size: .88rem; }
+.f2-form input[type="text"], .f2-form textarea, .f2-form input[type="date"], .f2-form input[type="datetime-local"] {
+  width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 1.05rem;
+  border: 1px solid var(--f2-line); border-radius: 10px; font-family: inherit; background: #fff;
+}
+.f2-form textarea { min-height: 110px; resize: vertical; line-height: 1.45; }
+.f2-form input:focus, .f2-form textarea:focus { outline: 2px solid var(--f2-brand); outline-offset: 1px; }
+.f2-form-acoes { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.f2-form-erro { color: var(--f2-danger); font-weight: 600; margin-top: 8px; min-height: 1.2em; }
+
+/* Linha pequena "onde fica guardado" + exportar/importar */
+.f2-dra-rodape {
+  margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--f2-line);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.f2-dra-rodape .f2-onde { color: var(--f2-muted); font-size: .85rem; flex: 1; min-width: 220px; }
+.f2-dra-rodape .f2-btn { min-height: 36px; padding: 6px 12px; font-size: .88rem; }
+
+/* Botão ⭐ ao lado do seletor de esquema */
+.f2-fav-btn {
+  min-height: 44px; padding: 8px 14px; border-radius: 12px; cursor: pointer;
+  border: 1px solid var(--f2-line); background: #fff; font-size: 1rem; font-weight: 600;
+  color: var(--f2-ink); font-family: inherit; white-space: nowrap;
+}
+.f2-fav-btn.f2-fav-on { background: #FFF8E1; border-color: var(--f2-a-fg); color: #7a5d00; }
+
+/* --------------------------------------------------------------------------
+   CAMINHO INVERSO — "Atendimentos nesta doença" (dentro do HUB)
+   -------------------------------------------------------------------------- */
+.f2-atd {
+  margin: 0 0 14px; background: var(--f2-paper); border: 1px solid var(--f2-line);
+  border-radius: var(--f2-radius); padding: 14px 18px; box-shadow: var(--f2-shadow);
+}
+.f2-atd h2 { margin: 0 0 8px; font-size: 1.02rem; color: var(--f2-ink); }
+.f2-atd ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.f2-atd li { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: .98rem; }
+.f2-atd .f2-atd-data { color: var(--f2-muted); white-space: nowrap; }
+.f2-atd .f2-atd-vazio { color: var(--f2-muted); font-size: .95rem; margin: 0; }
+.f2-atd a { color: var(--f2-brand-dark); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   PÁGINAS NOVAS (pacientes.html / atendimento.html) — chassi próprio
+   -------------------------------------------------------------------------- */
+body.f2-page { background: var(--f2-bg); color: var(--f2-ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; }
+.f2-topbar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--f2-paper); border-bottom: 1px solid var(--f2-line);
+  padding: 12px 18px; position: sticky; top: 0; z-index: 10;
+}
+.f2-topbar h1 { font-size: 1.25rem; margin: 0; color: var(--f2-brand-dark); flex: 1; min-width: 180px; }
+.f2-topbar .f2-voltar { color: var(--f2-brand-dark); text-decoration: none; font-weight: 700; font-size: 1rem; padding: 8px 10px; }
+.f2-wrap { max-width: 880px; margin: 0 auto; padding: 18px 16px 60px; }
+.f2-card { background: var(--f2-paper); border: 1px solid var(--f2-line); border-radius: var(--f2-radius); box-shadow: var(--f2-shadow); padding: 18px; margin-bottom: 16px; }
+.f2-aviso {
+  background: var(--f2-a-bg); border-left: 5px solid var(--f2-a-fg); border-radius: 12px;
+  padding: 14px 16px; font-size: 1rem; line-height: 1.55; margin-bottom: 16px;
+}
+.f2-aviso strong { color: #7a5d00; }
+.f2-busca { width: 100%; box-sizing: border-box; padding: 13px 15px; font-size: 1.08rem; border: 1px solid var(--f2-line); border-radius: 12px; }
+.f2-lista { display: grid; gap: 10px; margin-top: 14px; }
+.f2-linha-pac {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  border: 1px solid var(--f2-line); border-radius: 12px; padding: 12px 14px; background: #fff;
+}
+.f2-linha-pac .f2-nome { font-weight: 700; font-size: 1.08rem; flex: 1; min-width: 160px; }
+.f2-linha-pac .f2-detalhe { color: var(--f2-muted); font-size: .9rem; }
+.f2-vazio { text-align: center; color: var(--f2-muted); padding: 30px 10px; font-size: 1rem; line-height: 1.6; }
+
+/* Linha do tempo da ficha */
+.f2-tl { display: grid; gap: 12px; margin-top: 12px; }
+.f2-tl-item { border: 1px solid var(--f2-line); border-left: 5px solid var(--f2-brand); border-radius: 12px; padding: 12px 14px; background: #fff; }
+.f2-tl-data { font-weight: 700; color: var(--f2-brand-dark); }
+.f2-tl-trecho { color: var(--f2-ink); margin: 6px 0; white-space: pre-wrap; }
+.f2-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.f2-chip {
+  display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--f2-brand-soft);
+  color: var(--f2-brand-dark); text-decoration: none; font-size: .88rem; font-weight: 600;
+  border: 1px solid transparent;
+}
+.f2-chip:hover { border-color: var(--f2-brand); }
+.f2-chip.f2-chip-x { background: #fff; border-color: var(--f2-line); color: var(--f2-muted); }
+
+/* Seletor de doenças (chips + busca) no atendimento */
+.f2-chip-busca-resultados { max-height: 180px; overflow: auto; border: 1px solid var(--f2-line); border-radius: 10px; background: #fff; margin-top: 6px; }
+.f2-chip-busca-resultados button {
+  display: block; width: 100%; text-align: left; padding: 11px 13px; border: 0; background: #fff;
+  font-size: 1rem; cursor: pointer; font-family: inherit;
+}
+.f2-chip-busca-resultados button:hover { background: var(--f2-brand-soft); }
+.f2-chip-busca-resultados .f2-cat { color: var(--f2-muted); font-size: .82rem; }
+
+/* --------------------------------------------------------------------------
+   SOAP — 4 blocos nas cores PEC, grandes e legíveis
+   -------------------------------------------------------------------------- */
+.f2-soap { display: grid; gap: 14px; }
+.f2-soap-bloco { border-radius: 14px; padding: 14px 16px; border-left: 6px solid; }
+.f2-soap-bloco h3 { margin: 0 0 8px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+.f2-soap-bloco h3 .f2-letra {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 800; font-size: 1.1rem;
+}
+.f2-soap-bloco textarea {
+  width: 100%; box-sizing: border-box; border: 1px solid rgba(0,0,0,.12); border-radius: 10px;
+  background: rgba(255,255,255,.75); padding: 12px 14px; font-size: 1.06rem; line-height: 1.5;
+  font-family: inherit; min-height: 96px; resize: vertical;
+}
+.f2-soap-bloco textarea:focus { outline: 2px solid currentColor; }
+.f2-soap-s { background: var(--f2-s-bg); border-color: var(--f2-s-fg); color: var(--f2-s-fg); }
+.f2-soap-s .f2-letra { background: var(--f2-s-fg); }
+.f2-soap-s h3 { color: var(--f2-s-fg); }
+.f2-soap-o { background: var(--f2-o-bg); border-color: var(--f2-o-fg); color: var(--f2-o-fg); }
+.f2-soap-o .f2-letra { background: var(--f2-o-fg); }
+.f2-soap-o h3 { color: var(--f2-o-fg); }
+.f2-soap-a { background: var(--f2-a-bg); border-color: var(--f2-a-fg); color: #7a5d00; }
+.f2-soap-a .f2-letra { background: var(--f2-a-fg); }
+.f2-soap-a h3 { color: #7a5d00; }
+.f2-soap-p { background: var(--f2-p-bg); border-color: var(--f2-p-fg); color: var(--f2-p-fg); }
+.f2-soap-p .f2-letra { background: var(--f2-p-fg); }
+.f2-soap-p h3 { color: var(--f2-p-fg); }
+
+/* Caixa de diálogo simples do módulo (confirmações, aviso de 1 folha) */
+.f2-modal-fundo {
+  position: fixed; inset: 0; background: rgba(15,23,42,.45); z-index: 60;
+  display: flex; align-items: center; justify-content: center; padding: 18px;
+}
+.f2-modal {
+  background: #fff; border-radius: 16px; max-width: 520px; width: 100%; padding: 22px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.25);
+}
+.f2-modal h2 { margin: 0 0 10px; font-size: 1.15rem; }
+.f2-modal p { line-height: 1.55; margin: 0 0 16px; }
+.f2-modal .f2-form-acoes { justify-content: flex-end; }
+
+/* --------------------------------------------------------------------------
+   FOLHA DE IMPRESSÃO F2 (SOAP e esquema da Dra.) — alvo: 1 A4 retrato.
+   Na tela fica escondida; no print só ela aparece.
+   -------------------------------------------------------------------------- */
+.f2-print-sheet { display: none; }
+
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  /* Esconde a interface do módulo; a folha impressa é a única visível.
+     (Dentro do HUB, a regra body>* do próprio HUB já esconde o resto; aqui
+     cobrimos as páginas novas, que não têm aquela regra.) */
+  body.f2-page > * { display: none !important; }
+  body.f2-page > .f2-print-sheet { display: block !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+.f2-print-sheet {
+  width: 210mm; min-height: 297mm; padding: 16mm 16mm 12mm; box-sizing: border-box;
+  background: #fff; color: #111; font-family: Arial, "Liberation Sans", sans-serif;
+}
+.f2-print-head { border-bottom: 2px solid #0f766e; padding-bottom: 6px; margin-bottom: 10px; }
+.f2-print-head h1 { font-size: 15pt; margin: 0; color: #0b5d57; }
+.f2-print-head p { margin: 3px 0 0; font-size: 10.5pt; color: #333; }
+.f2-print-soap-bloco { border-left: 3pt solid; padding: 5pt 8pt; margin-bottom: 8pt; page-break-inside: avoid; }
+.f2-print-soap-bloco h2 { font-size: 11pt; margin: 0 0 3pt; }
+.f2-print-soap-bloco .f2-print-texto { font-size: 10.5pt; line-height: 1.4; white-space: pre-wrap; }
+.f2-print-rodape { margin-top: 10px; padding-top: 6px; border-top: 1px solid #999; font-size: 8.5pt; color: #555; display: flex; justify-content: space-between; gap: 10mm; }
+.f2-print-assinatura { margin-top: 14mm; text-align: center; font-size: 10pt; }
+.f2-print-assinatura .f2-linha-ass { border-top: 1px solid #111; width: 80mm; margin: 0 auto 4px; }
+
+/* Quando a folha F2 vai para o portal do HUB, ela precisa aparecer lá dentro */
+#printPortal .f2-print-sheet { display: block; }
+
+@media (max-width: 720px) {
+  .f2-wrap { padding: 14px 10px 60px; }
+  .f2-dra, .f2-atd { padding: 12px; }
+  .f2-btn { min-height: 48px; }
+}
+
+/* ============================================================================
+   HUBv3 — F-D/E/F/G/H/I/J (módulo Orquestrador extra) — 28/08
+   ========================================================================== */
+
+/* ---------- F-F · A COROA (o rosto do presente) ----------
+   O VISUAL da classe contratual .f2-coroa é do tema da casa
+   (tema-orquestrator.css, marfim/ouro, !important) — aqui NÃO se sobrepõe.
+   Mantemos só o emoji  como CONTEÚDO (coroa visível mesmo sem o tema). */
+
+/* ---------- F-J · aviso HCTZ (destacado, nunca bloqueio) ---------- */
+.f2-hctz-aviso {
+  background: #FFF4E5; border: 1px solid #F59E0B; border-left: 5px solid #D97706;
+  color: #7a4a00; border-radius: 10px; padding: 10px 14px; margin: 10px 0;
+  font-size: .98rem; font-weight: 600; line-height: 1.45;
+}
+.f2-esq-selo.f2-selo-tipo { background: #EEF2FF; color: #3730A3; }
+
+/* ---------- F-D · LOGIN (identidade e acolhimento) ---------- */
+/* Adendo 4 — login CLARO: branco/claro/fino/dourado (roxo nunca, em nenhuma
+   superfície). Fundo = véu marfim suave; cartão branco com fio dourado do
+   tema; focus ring dourado suave. Ouros sempre via variáveis do tema. */
+#f2xLogin {
+  position: fixed; inset: 0; z-index: 200;
+  background:
+    radial-gradient(60% 55% at 50% 0%, var(--ouro-nevoa, rgba(176,138,62,.10)) 0%, transparent 72%),
+    var(--marfim, #FBF8F2);
+  display: flex; justify-content: center; padding: 18px;
+  overflow-y: auto; /* formulários altos (ex.: reset de senha) rolam em janelas baixas */
+}
+.f2x-login-card {
+  background: #fff; border: 1px solid var(--ouro-linha, #d8dee9);
+  border-radius: 22px; max-width: 430px; width: 100%;
+  padding: 30px 28px 26px; text-align: center;
+  box-shadow: 0 24px 60px rgba(122, 91, 30, .14);
+  margin: auto; /* centraliza quando há espaço; vira rolável quando falta */
+  flex-shrink: 0;
+}
+.f2x-login-card h1 { font-size: 1.35rem; color: #172033; margin: 8px 0 6px; }
+.f2x-login-card p { color: #667085; margin: 0 0 16px; line-height: 1.5; }
+.f2x-login-card label { display: block; text-align: left; font-weight: 700; margin: 10px 0 5px; }
+.f2x-login-card input {
+  width: 100%; box-sizing: border-box; padding: 13px 15px; font-size: 1.1rem;
+  border: 1px solid var(--ouro-linha, #d8dee9); border-radius: 12px; font-family: inherit;
+}
+.f2x-login-card input:focus {
+  outline: 2px solid var(--ouro, #B08A3E); outline-offset: 1px;
+  box-shadow: 0 0 0 4px var(--ouro-nevoa, rgba(176,138,62,.10));
+}
+.f2x-login-erro { color: #b42318; font-weight: 700; min-height: 1.3em; margin: 10px 0 4px; }
+.f2x-login-card .f2-btn { width: 100%; margin-top: 8px; background: var(--f2-brand); }
+.f2x-login-card .f2-btn:hover { background: var(--f2-brand-dark); }
+
+/* ---------- F-D · saudação na home (personalização) ---------- */
+#f2xSaudacao {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: linear-gradient(100deg, #0f766e 0%, #0b5d57 55%, var(--ouro, #B08A3E) 125%);
+  color: #fff; border-radius: 16px; padding: 14px 18px; margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(15,118,110,.25);
+}
+.f2x-saudacao-coroa { font-size: 2rem; }
+.f2x-saudacao-texto { flex: 1; min-width: 240px; display: grid; gap: 2px; }
+.f2x-saudacao-texto strong { font-size: 1.15rem; }
+.f2x-saudacao-texto span { font-size: .95rem; opacity: .95; }
+.f2x-cidade-linha { font-size: .88rem; }
+.f2x-cidade-linha input { padding: 6px 10px; border-radius: 8px; border: 0; font-size: .95rem; width: 170px; }
+.f2x-link {
+  background: rgba(255,255,255,.2); border: 0; color: #fff; cursor: pointer;
+  border-radius: 8px; padding: 4px 10px; font-size: .88rem; font-weight: 700; font-family: inherit;
+}
+.f2x-link:hover { background: rgba(255,255,255,.32); }
+#f2xSaudacao .f2-btn-mini { background: rgba(255,255,255,.16); color: #fff; border-color: transparent; }
+
+/* ---------- F-E · O SELO DELA (4 linhas) — ADENDO 6: IMEDIATAMENTE ABAIXO
+   DA LINHA DE ASSINATURA ("Assinatura - CRM"), coladinho nela, centralizado
+   sob a linha, em CADA via, no especial e na orientação.
+   Âncora = o elemento .signature-line (nunca mais o pé absoluto da folha).
+   mm recalibrados para o selo morar dentro do rodapé de assinatura:
+   simples   → frame volta a bottom:10 mm; corpo 24→30 mm (o rodapé cresceu
+               com o selo: assinatura ~7 + selo ~13 ≈ 20 mm, folga 5 mm)
+   especial  → corpo 5→10 mm; emitter 39→37, rx 48→44, título com margem
+               menor, prescriber-row vira altura automática (cabe o selo):
+               conteúdo ≈ 180 mm num corpo de 182 mm (folga 2 mm)
+   orientação→ corpo 46→36 mm; rodapé dela 24→10 mm (folga 5 mm) ----------- */
+#recipePrint .rx-copy .simple-body { bottom: 30mm; }
+#recipePrint .rx-copy .special-body { bottom: 10mm; }
+#recipePrint .rx-copy .special-body .emitter-row,
+#recipePrint .rx-copy .special-body .emitter-box { height: 37mm; }
+#recipePrint .rx-copy .special-body .special-rx { height: 44mm; }
+#recipePrint .rx-copy .special-body .special-title { margin: 2mm 0 2mm; }
+#recipePrint .rx-copy .special-body .prescriber-row { height: auto; min-height: 11mm; }
+#orientationPrint .orientation-frame .orientation-body { bottom: 36mm; }
+#orientationPrint .orientation-frame .orientation-footer { bottom: 10mm; }
+
+.f2x-rodape-dra {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  font-family: Arial, "Liberation Sans", sans-serif; color: #111;
+  border-top: 1px solid #999; padding-top: 4pt; margin-top: 10px;
+  font-size: 8.5pt; line-height: 1.35;
+}
+/* adendo 6 — nas folhas do hub o selo vai EM FLUXO, colado sob a linha de
+   assinatura: sem borda própria (a linha dela é a régua), centralizado. */
+#recipePrint .f2x-rodape-dra, #orientationPrint .f2x-rodape-dra {
+  margin: 1mm 0 0; padding: 0; border-top: 0;
+  font-size: 6.8pt; line-height: 1.25;
+}
+.f2x-rodape-dra strong { font-size: 1.06em; }
+
+/* ---------- F-G · histórico (selo receita, idade, oferta) ---------- */
+.f2-selo-receita {
+  font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+  background: #EEF2FF; color: #3730A3; white-space: nowrap;
+}
+.f2-atd-idade { color: var(--f2-muted); font-size: .85rem; }
+.f2-btn-mini { min-height: 34px; padding: 5px 12px; font-size: .85rem; }
+.f2-tl-receita { border-left-color: var(--f2-brand); }
+.f2x-oferta label { display: block; font-weight: 700; margin: 12px 0 5px; }
+.f2x-oferta select, .f2x-oferta input {
+  width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 1.05rem;
+  border: 1px solid var(--f2-line); border-radius: 10px; font-family: inherit; background: #fff;
+}
+.f2x-oferta-resumo { background: var(--f2-bg); border-radius: 10px; padding: 10px 12px; }
+
+/* ---------- F-H · DOSSIÊ ---------- */
+.f2x-dossie-aviso {
+  background: var(--f2-brand-soft); border-radius: 12px; padding: 12px 16px;
+  color: var(--f2-brand-dark); font-weight: 600; margin-bottom: 12px;
+}
+.f2x-contagem { font-size: .85rem; color: var(--f2-muted); font-weight: 400; }
+.f2x-fonte { color: var(--f2-muted); font-size: .88rem; margin: 0 0 10px; line-height: 1.5; }
+.f2x-farm-cat {
+  margin: 16px 0 6px; font-size: 1.02rem; color: var(--f2-brand-dark);
+  border-bottom: 1px solid var(--f2-line); padding-bottom: 4px;
+}
+.f2x-farm-cat span { color: var(--f2-muted); font-weight: 400; font-size: .85rem; }
+.f2x-farm-lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.f2x-farm-lista li {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  padding: 7px 10px; border-radius: 8px; background: #fff;
+  border: 1px solid var(--f2-line); font-size: .98rem;
+}
+/* adendo 8 — "possível falta": discreto, informativo, sem alarme nem cobrança */
+.f2x-farm-lista li.f2x-falta { background: #FBFAF7; }
+.f2x-farm-nome { flex: 1; min-width: 220px; }
+.f2x-selo-falta {
+  font-size: .75rem; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+  background: #F4F1EA; color: #8a7a52; white-space: nowrap;
+}
+.f2x-obs { color: var(--f2-muted); font-size: .82rem; width: 100%; }
+.f2x-esqmin { margin-bottom: 14px; }
+.f2x-esqmin h3 { margin: 0 0 8px; color: var(--f2-brand-dark); font-size: 1.05rem; }
+.f2x-esqmin ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.f2x-esqmin li { border: 1px solid var(--f2-line); border-radius: 12px; padding: 10px 12px; background: #fff; }
+.f2x-esqmin li p { margin: 6px 0 0; line-height: 1.5; font-size: .97rem; }
+.f2x-esqmin-topo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.f2x-esqmin-topo strong { flex: 1; min-width: 160px; font-size: 1rem; }
+.f2x-selo { font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.f2x-selo-tem { background: #D1FAE5; color: #065F46; }
+.f2x-selo-tem-fora { background: #D1FAE5; color: #065F46; }
+.f2x-selo-compra { background: #FEE4E2; color: #B42318; }
+
+/* ---------- abas (pacientes.html) ---------- */
+.f2x-abas { display: flex; gap: 6px; flex-wrap: wrap; }
+.f2x-abas button {
+  min-height: 40px; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--f2-line); background: #fff; font-family: inherit;
+  font-size: .98rem; font-weight: 700; color: var(--f2-ink);
+}
+.f2x-abas button.ativa { background: var(--f2-brand); border-color: var(--f2-brand); color: #fff; }
+
+/* ---------- F-I · botões nos cards do codex ----------
+   O botão-coroa usa a classe contratual .f2-coroa — o tema desenha a coroa em
+   SVG dourado; NADA de cor hardcoded aqui (regra do adendo). */
+.f2x-estrela-btn.f2-fav-on { background: #FFF8E1; border-color: var(--f2-a-fg); color: #7a5d00; }
+
+/* ============================================================================
+   ADENDO 2 — esteto/coroa do tema (sem emoji), 3 botões da seção, SOAP inline,
+   CIDs, histórico completo e o selo no lugar do carimbo (reimpressão)
+   ========================================================================== */
+
+/* coroas do tema no login e na saudação (o SVG dourado vem da classe .orq-coroa;
+   aqui só tamanho/legibilidade — sem cor hardcoded) */
+.f2x-login-coroa { display: inline-block; width: 44px; height: 32px; margin-bottom: 2px; }
+.f2x-saudacao-coroa { display: inline-block; width: 30px; height: 22px;
+  filter: brightness(1.9) saturate(.7); /* dourado legível sobre o gradiente — mesma técnica do tema */ }
+.f2x-login-card h1 { margin-top: 4px; }
+
+/* ---------- os 3 botões ao lado do título "Clínica do Orquestrador nesta doença" ---------- */
+.f2-dra-topo { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+.f2-dra-topo .f2-coroa { margin: 0; }
+.f2-dra-abas { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+.f2-dra-abas button {
+  min-height: 36px; padding: 6px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--f2-line); background: #fff; font-family: inherit;
+  font-size: .92rem; font-weight: 700; color: var(--f2-ink);
+}
+.f2-dra-abas button.ativa { background: var(--f2-brand); border-color: var(--f2-brand); color: #fff; }
+
+/* ---------- view Histórico (completo da doença) ---------- */
+.f2-hist-lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.f2-hist-lista > li { border: 1px solid var(--f2-line); border-radius: 12px; padding: 10px 12px; background: #fff; }
+.f2-hist-linha { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.f2-hist-trecho { color: var(--f2-ink); margin: 6px 0 0; white-space: pre-wrap; font-size: .95rem; }
+
+/* ---------- view SOAP (padrão PEC inline) ---------- */
+.f2-soap-form { background: transparent; padding: 0; margin-top: 4px; }
+.f2-soap-form > label { display: block; font-weight: 700; margin: 12px 0 5px; }
+.f2-soap-form select, .f2-soap-form input[type="text"], .f2-soap-form input[type="date"] {
+  width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 1.05rem;
+  border: 1px solid var(--f2-line); border-radius: 10px; font-family: inherit; background: #fff;
+}
+.f2-soap-data-linha { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.f2-soap-data-linha input[type="date"] { flex: 1; min-width: 180px; }
+.f2-soap-idade {
+  background: var(--f2-brand-soft); border-radius: 10px; padding: 10px 14px;
+  margin-top: 10px; font-size: 1rem; color: var(--f2-brand-dark);
+}
+.f2-soap-form .f2-soap { margin-top: 14px; }
+
+/* ---------- dossiê de CIDs dentro do Plano ---------- */
+.f2-cids {
+  margin-top: 10px; background: rgba(255,255,255,.8); border: 1px dashed var(--f2-p-fg);
+  border-radius: 10px; padding: 10px 12px;
+}
+.f2-cids h4 { margin: 0 0 6px; font-size: .95rem; color: var(--f2-p-fg); }
+.f2-cids-aviso { font-weight: 400; color: #7a5d00; font-size: .82rem; }
+.f2-cids-lista { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.f2-cid {
+  display: block; width: 100%; text-align: left; padding: 8px 12px; cursor: pointer;
+  border: 1px solid var(--f2-line); border-radius: 8px; background: #fff;
+  font-family: inherit; font-size: .95rem;
+}
+.f2-cid:hover { background: var(--f2-p-bg); border-color: var(--f2-p-fg); }
+.f2-cid strong { margin-right: 6px; }
+.f2-cids-nota { margin: 8px 0 0; font-size: .85rem; color: var(--f2-muted); }
+
+/* ---------- selo dela NO LUGAR do carimbo (reimpressão do histórico) ---------- */
+.signature-line.f2x-sig-oculta { display: none; }
+.f2x-rodape-dra-carimbo {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  font-family: Arial, "Liberation Sans", sans-serif; color: #111;
+  border-top: .3mm solid #000; padding-top: 1mm; margin-top: 0;
+  font-size: 6.8pt; line-height: 1.25;
+}
+
+/* ============================================================================
+   ADENDO 3 — prescrições completas, duas pastas e cartões de referência
+   ========================================================================== */
+
+/* selo "Pasta: por doença / por paciente" — a leitura de duas pastas */
+.f2-pasta-selo {
+  display: inline-block; font-size: .75rem; font-weight: 800; letter-spacing: .04em;
+  padding: 3px 10px; border-radius: 999px; text-transform: uppercase;
+  background: var(--f2-brand-soft); color: var(--f2-brand-dark); vertical-align: 2px;
+}
+/* atalho cruzado: nome do paciente na pasta "por doença" */
+.f2-link-pac { color: var(--f2-brand-dark); font-weight: 700; text-decoration: none; border-bottom: 1px dashed var(--f2-brand); }
+.f2-link-pac:hover { text-decoration: underline; }
+/* prescrição anterior COMPLETA dentro da página da doença */
+.f2-atd-rec { align-items: flex-start !important; }
+.f2-hist-titulo { font-weight: 700; color: var(--f2-ink); margin: 4px 0 0; font-size: .95rem; }
+.f2-atd-rec .f2-hist-trecho { flex-basis: 100%; }
+
+/* cartões de REFERÊNCIA do dossiê dentro da área de esquemas da doença */
+.f2-ref-dra {
+  margin-top: 12px; border: 1px solid var(--ouro-linha, var(--f2-line));
+  border-left: 5px solid var(--ouro, var(--f2-brand));
+  border-radius: var(--f2-radius); background: var(--blush, #FFFDF8);
+  padding: 14px 16px;
+}
+.f2-ref-dra h3 {
+  margin: 0 0 4px; font-size: 1.05rem; color: var(--ouro, var(--f2-brand-dark));
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.f2-ref-tema { font-size: .8rem; font-weight: 700; padding: 2px 10px; border-radius: 999px;
+  background: var(--ouro-nevoa, var(--f2-brand-soft)); color: var(--ouro, var(--f2-brand-dark)); }
+.f2-ref-nota { margin: 0 0 10px; font-size: .88rem; color: var(--f2-muted); }
+.f2-ref-dra ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.f2-ref-dra li { border: 1px solid var(--f2-line); border-radius: 10px; padding: 9px 12px; background: #fff; }
+.f2-ref-dra li p { margin: 5px 0 0; line-height: 1.5; font-size: .95rem; }
+.f2-esqmin-topo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.f2-esqmin-topo strong { flex: 1; min-width: 160px; }
+
+/* ============================================================================
+   ADENDO 7 — marcações de 1 clique, triagem com IMC, nascimento-antes
+   ========================================================================== */
+
+/* marcações: botões de marcar (single-select por grupo) */
+.f2-marcacoes { margin-top: 14px; display: grid; gap: 6px; }
+.f2-marc-rotulo { font-weight: 700; font-size: .95rem; color: var(--f2-ink); }
+.f2-marc-grupo { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+.f2-marc-grupo button {
+  min-height: 38px; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--f2-line); background: #fff; font-family: inherit;
+  font-size: .92rem; font-weight: 700; color: var(--f2-ink);
+}
+.f2-marc-grupo button.ativa { background: var(--f2-brand); border-color: var(--f2-brand); color: #fff; }
+
+/* triagem no O: campos curtos em grade; IMC só leitura */
+.f2-triagem {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 8px; margin-bottom: 10px; background: rgba(255,255,255,.6);
+  border-radius: 10px; padding: 10px;
+}
+.f2-tri-campo label { display: block; font-size: .78rem; font-weight: 700; color: #14532d; margin-bottom: 3px; }
+.f2-tri-campo input {
+  width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 1rem;
+  border: 1px solid rgba(0,0,0,.14); border-radius: 8px; font-family: inherit; background: #fff;
+}
+.f2-tri-campo input[readonly] { background: #eef7f0; font-weight: 800; }
+.f2-tri-imc-classe { display: block; font-size: .75rem; color: #14532d; margin-top: 3px; min-height: 1em; font-weight: 600; }
+
+/* nascimento ANTES: acolhedor (blush do tema), nunca cobrança */
+.f2-soap-nasc-antes {
+  margin-top: 12px; background: var(--blush, #FAF3EC);
+  border: 1px solid var(--ouro-linha, var(--f2-line));
+  border-radius: 12px; padding: 12px 14px;
+}
+.f2-nasc-antes-texto { margin: 0 0 8px; font-size: 1rem; line-height: 1.5; color: #6b5a33; }
+
+/* união de CIDs: grupo por doença */
+.f2-cids-grupo h5 { margin: 8px 0 4px; font-size: .88rem; color: #7a5d00; }
+
+/* selos informativos das marcações nas leituras (histórico/atendimentos) */
+.f2-marc-selos { display: inline-flex; gap: 5px; flex-wrap: wrap; }
+.f2-selo-marc {
+  font-size: .75rem; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+  background: var(--f2-brand-soft); color: var(--f2-brand-dark); white-space: nowrap;
+}
+.f2-selo-marc.f2-selo-local { background: #EEF2FF; color: #3730A3; }
+.f2-tri-linha { margin-top: 5px; font-size: .85rem; color: var(--f2-muted); }
+
+/* ---------- adendo 9 · editor da unidade na saudação ---------- */
+.f2x-unidade-linha { font-size: .88rem; display: block; }
+.f2x-uni-editor { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.f2x-uni-editor input {
+  padding: 6px 10px; border-radius: 8px; border: 0; font-size: .9rem; font-family: inherit;
+}
+.f2x-uni-editor #f2xUniNome { width: 190px; }
+.f2x-uni-editor #f2xUniEnd { width: 230px; }
+.f2x-uni-editor #f2xUniCid { width: 190px; }
+
+/* ---------- adendo 10 · link "Esqueci minha senha" (discreto) ---------- */
+.f2x-esqueci {
+  display: block; margin: 12px auto 0; background: none; border: 0; cursor: pointer;
+  color: var(--f2-muted); font-size: .92rem; font-family: inherit; text-decoration: underline;
+  text-underline-offset: 3px; padding: 6px;
+}
+.f2x-esqueci:hover { color: var(--f2-brand-dark); }
+
+/* símbolo do Orquestrador usado inline, no lugar do nome */
+.orq-coroa-inline{display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.18em;margin:0 .08em}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bactéria Gram-Negativa: Alvos dos Antibióticos</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    margin: 0; padding: 20px; min-height: 100vh; color: #ecf0f1;
+  }
+  h1 { text-align: center; color: #4ecdc4; font-size: 2em; text-shadow: 0 0 10px rgba(78,205,196,0.5); margin-bottom: 5px; }
+  .subtitle { text-align: center; color: #95a5a6; margin-bottom: 25px; font-size: 0.95em; }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .main-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 25px; }
+  .svg-card, .info-card {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(10px);
+    border-radius: 15px; padding: 25px; border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  svg { width: 100%; height: auto; display: block; }
+  .info-card { min-height: 500px; }
+  .info-header { color: #4ecdc4; border-bottom: 2px solid rgba(78,205,196,0.3); padding-bottom: 10px; margin-top: 0; }
+  .drug-tag { display: inline-block; padding: 4px 10px; margin: 3px; border-radius: 15px; font-size: 0.85em; font-weight: bold; color: white; }
+  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; }
+  .legend-item {
+    padding: 8px 10px; background: rgba(255,255,255,0.05); border-radius: 8px;
+    cursor: pointer; transition: all 0.3s; border: 2px solid transparent; font-size: 0.88em;
+  }
+  .legend-item:hover { background: rgba(78,205,196,0.15); transform: translateX(4px); }
+  .legend-item.active { background: rgba(78,205,196,0.2); border-color: #4ecdc4; }
+  .legend-color { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: middle; box-shadow: 0 0 6px currentColor; }
+  .hotspot { cursor: pointer; }
+  .hotspot-circle { transition: r 0.3s, filter 0.3s; }
+  .hotspot:hover .hotspot-circle { r: 14; filter: drop-shadow(0 0 14px currentColor); }
+  .hotspot-pulse { animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+  .footer { text-align: center; color: #7f8c8d; font-size: 0.8em; margin-top: 25px; padding: 10px; }
+  @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .legend { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🧬 Bactéria Gram-Negativa &amp; Alvos dos Antibióticos</h1>
+  <p class="subtitle">Passe o mouse sobre os <strong style="color:#e74c3c">números pulsantes</strong> para explorar os mecanismos de ação</p>
+  <div class="main-grid">
+    <div class="svg-card">
+      <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="cytoplasm" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#a8dadc" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#457b9d" stop-opacity="0.9"/>
+          </radialGradient>
+          <linearGradient id="outerMembrane" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f1c40f"/><stop offset="100%" stop-color="#b7950b"/>
+          </linearGradient>
+          <linearGradient id="innerMembrane" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f9e79f"/><stop offset="100%" stop-color="#b7950b"/>
+          </linearGradient>
+          <radialGradient id="nucleoid" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#9b59b6" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#5b2c6f" stop-opacity="0.5"/>
+          </radialGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+
+        <rect width="600" height="600" fill="#1a1a2e" rx="15"/>
+        <text x="300" y="28" text-anchor="middle" fill="#4ecdc4" font-size="13" font-weight="bold">ESQUEMA ILUSTRATIVO — NÃO EM ESCALA</text>
+
+        <!-- LPS espinhos -->
+        <g stroke="#e74c3c" stroke-width="2" fill="none">
+          <line x1="300" y1="118" x2="300" y2="92"/><line x1="372" y1="132" x2="390" y2="112"/>
+          <line x1="438" y1="165" x2="464" y2="152"/><line x1="490" y1="218" x2="520" y2="210"/>
+          <line x1="518" y1="285" x2="552" y2="280"/><line x1="520" y1="350" x2="552" y2="358"/>
+          <line x1="490" y1="410" x2="518" y2="425"/><line x1="438" y1="455" x2="462" y2="475"/>
+          <line x1="372" y1="488" x2="390" y2="510"/><line x1="300" y1="500" x2="300" y2="528"/>
+          <line x1="228" y1="488" x2="210" y2="510"/><line x1="162" y1="455" x2="138" y2="475"/>
+          <line x1="110" y1="410" x2="82" y2="425"/><line x1="80" y1="350" x2="48" y2="358"/>
+          <line x1="82" y1="285" x2="48" y2="280"/><line x1="110" y1="218" x2="80" y2="210"/>
+          <line x1="162" y1="165" x2="138" y2="152"/><line x1="228" y1="132" x2="210" y2="112"/>
+        </g>
+        <g fill="#e74c3c">
+          <circle cx="300" cy="89" r="3"/><circle cx="392" cy="109" r="3"/><circle cx="466" cy="149" r="3"/>
+          <circle cx="522" cy="207" r="3"/><circle cx="555" cy="280" r="3"/><circle cx="555" cy="360" r="3"/>
+          <circle cx="520" cy="427" r="3"/><circle cx="464" cy="478" r="3"/><circle cx="392" cy="513" r="3"/>
+          <circle cx="300" cy="530" r="3"/><circle cx="208" cy="513" r="3"/><circle cx="136" cy="478" r="3"/>
+          <circle cx="80" cy="427" r="3"/><circle cx="45" cy="360" r="3"/><circle cx="45" cy="280" r="3"/>
+          <circle cx="78" cy="207" r="3"/><circle cx="136" cy="149" r="3"/><circle cx="208" cy="109" r="3"/>
+        </g>
+
+        <!-- Membrana externa (bicamada) -->
+        <ellipse cx="300" cy="300" rx="240" ry="180" fill="none" stroke="url(#outerMembrane)" stroke-width="6"/>
+        <ellipse cx="300" cy="300" rx="232" ry="173" fill="none" stroke="#7d6608" stroke-width="1" stroke-dasharray="3,3"/>
+
+        <!-- Espaço periplásmico -->
+        <ellipse cx="300" cy="300" rx="225" ry="167" fill="#ecf0f1" fill-opacity="0.1" stroke="none"/>
+
+        <!-- Porinas (3 canais) -->
+        <g>
+          <ellipse cx="455" cy="200" rx="9" ry="15" fill="#f39c12" stroke="#d68910" stroke-width="1.2"/>
+          <ellipse cx="455" cy="200" rx="3.5" ry="9" fill="#7d6608"/>
+          <ellipse cx="510" cy="280" rx="9" ry="15" fill="#f39c12" stroke="#d68910" stroke-width="1.2"/>
+          <ellipse cx="510" cy="280" rx="3.5" ry="9" fill="#7d6608"/>
+          <ellipse cx="160" cy="395" rx="9" ry="15" fill="#f39c12" stroke="#d68910" stroke-width="1.2"/>
+          <ellipse cx="160" cy="395" rx="3.5" ry="9" fill="#7d6608"/>
+        </g>
+
+        <!-- Peptidoglicano -->
+        <ellipse cx="300" cy="300" rx="213" ry="158" fill="none" stroke="#8b4513" stroke-width="3" stroke-dasharray="5,2"/>
+        <g fill="#a0522d">
+          <circle cx="180" cy="290" r="1.5"/><circle cx="205" cy="280" r="1.5"/><circle cx="230" cy="295" r="1.5"/>
+          <circle cx="255" cy="285" r="1.5"/><circle cx="280" cy="300" r="1.5"/><circle cx="305" cy="285" r="1.5"/>
+          <circle cx="330" cy="295" r="1.5"/><circle cx="355" cy="280" r="1.5"/><circle cx="380" cy="290" r="1.5"/>
+          <circle cx="405" cy="285" r="1.5"/><circle cx="180" cy="320" r="1.5"/><circle cx="205" cy="325" r="1.5"/>
+          <circle cx="230" cy="320" r="1.5"/><circle cx="255" cy="330" r="1.5"/><circle cx="280" cy="320" r="1.5"/>
+          <circle cx="305" cy="335" r="1.5"/><circle cx="330" cy="325" r="1.5"/><circle cx="355" cy="330" r="1.5"/>
+          <circle cx="380" cy="320" r="1.5"/><circle cx="405" cy="325" r="1.5"/>
+        </g>
+
+        <!-- Membrana interna -->
+        <ellipse cx="300" cy="300" rx="200" ry="150" fill="none" stroke="url(#innerMembrane)" stroke-width="5"/>
+        <ellipse cx="300" cy="300" rx="193" ry="144" fill="none" stroke="#7d6608" stroke-width="1" stroke-dasharray="3,3"/>
+
+        <!-- Citoplasma -->
+        <ellipse cx="300" cy="300" rx="195" ry="145" fill="url(#cytoplasm)"/>
+
+        <!-- Nucleoide (DNA) -->
+        <g>
+          <path d="M 235 280 Q 260 245, 300 265 T 360 255 Q 385 280, 365 320 Q 325 350, 275 335 Q 245 320, 235 280 Z"
+                fill="url(#nucleoid)" stroke="#8e44ad" stroke-width="1.5" opacity="0.85"/>
+          <path d="M 245 290 Q 270 280, 295 295 T 340 285 Q 360 295, 350 320" fill="none" stroke="#5b2c6f" stroke-width="1.5"/>
+          <path d="M 255 310 Q 285 300, 315 315 T 355 305" fill="none" stroke="#5b2c6f" stroke-width="1.5"/>
+          <path d="M 265 330 Q 295 320, 325 335" fill="none" stroke="#5b2c6f" stroke-width="1.5"/>
+        </g>
+
+        <!-- Ribossomos 30S -->
+        <g>
+          <circle cx="180" cy="220" r="6" fill="#2ecc71" stroke="#27ae60" stroke-width="1.2"/><circle cx="180" cy="220" r="3" fill="#27ae60"/>
+          <circle cx="420" cy="360" r="6" fill="#2ecc71" stroke="#27ae60" stroke-width="1.2"/><circle cx="420" cy="360" r="3" fill="#27ae60"/>
+          <circle cx="160" cy="360" r="6" fill="#2ecc71" stroke="#27ae60" stroke-width="1.2"/><circle cx="160" cy="360" r="3" fill="#27ae60"/>
+          <circle cx="450" cy="260" r="6" fill="#2ecc71" stroke="#27ae60" stroke-width="1.2"/><circle cx="450" cy="260" r="3" fill="#27ae60"/>
+        </g>
+
+        <!-- Ribossomos 50S -->
+        <g>
+          <circle cx="220" cy="200" r="7" fill="#3498db" stroke="#2874a6" stroke-width="1.2"/><circle cx="220" cy="200" r="3.5" fill="#2874a6"/>
+          <circle cx="400" cy="400" r="7" fill="#3498db" stroke="#2874a6" stroke-width="1.2"/><circle cx="400" cy="400" r="3.5" fill="#2874a6"/>
+          <circle cx="200" cy="400" r="7" fill="#3498db" stroke="#2874a6" stroke-width="1.2"/><circle cx="200" cy="400" r="3.5" fill="#2874a6"/>
+        </g>
+
+        <!-- Plasmídeos -->
+        <g fill="none" stroke="#16a085" stroke-width="2">
+          <circle cx="380" cy="220" r="12"/><circle cx="380" cy="220" r="7" fill="#1abc9c" fill-opacity="0.3"/>
+          <circle cx="240" cy="395" r="10"/><circle cx="240" cy="395" r="6" fill="#1abc9c" fill-opacity="0.3"/>
+        </g>
+
+        <!-- HOTSPOTS (9 pontos interativos) -->
+        <g class="hotspot" data-target="lps">
+          <circle class="hotspot-pulse" cx="380" cy="115" r="22" fill="none" stroke="#e74c3c" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="380" cy="115" r="10" fill="#e74c3c" filter="url(#glow)"/>
+          <text x="380" y="119" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">1</text>
+        </g>
+        <g class="hotspot" data-target="porins">
+          <circle class="hotspot-pulse" cx="510" cy="280" r="22" fill="none" stroke="#f39c12" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="510" cy="280" r="10" fill="#f39c12" filter="url(#glow)"/>
+          <text x="510" y="284" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">2</text>
+        </g>
+        <g class="hotspot" data-target="peptidoglycan">
+          <circle class="hotspot-pulse" cx="540" cy="305" r="22" fill="none" stroke="#9b59b6" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="540" cy="305" r="10" fill="#9b59b6" filter="url(#glow)"/>
+          <text x="540" y="309" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">3</text>
+        </g>
+        <g class="hotspot" data-target="innerMembrane">
+          <circle class="hotspot-pulse" cx="500" cy="370" r="22" fill="none" stroke="#cd853f" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="500" cy="370" r="10" fill="#cd853f" filter="url(#glow)"/>
+          <text x="500" y="374" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">4</text>
+        </g>
+        <g class="hotspot" data-target="ribosome30S">
+          <circle class="hotspot-pulse" cx="180" cy="220" r="22" fill="none" stroke="#2ecc71" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="180" cy="220" r="10" fill="#2ecc71" filter="url(#glow)"/>
+          <text x="180" y="224" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">5</text>
+        </g>
+        <g class="hotspot" data-target="ribosome50S">
+          <circle class="hotspot-pulse" cx="220" cy="200" r="22" fill="none" stroke="#3498db" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="220" cy="200" r="10" fill="#3498db" filter="url(#glow)"/>
+          <text x="220" y="204" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">6</text>
+        </g>
+        <g class="hotspot" data-target="dnaGyrase">
+          <circle class="hotspot-pulse" cx="270" cy="290" r="22" fill="none" stroke="#e91e63" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="270" cy="290" r="10" fill="#e91e63" filter="url(#glow)"/>
+          <text x="270" y="294" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">7</text>
+        </g>
+        <g class="hotspot" data-target="rnaPol">
+          <circle class="hotspot-pulse" cx="335" cy="320" r="22" fill="none" stroke="#00bcd4" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="335" cy="320" r="10" fill="#00bcd4" filter="url(#glow)"/>
+          <text x="335" y="324" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">8</text>
+        </g>
+        <g class="hotspot" data-target="folate">
+          <circle class="hotspot-pulse" cx="380" cy="280" r="22" fill="none" stroke="#ff5722" stroke-width="2"/>
+          <circle class="hotspot-circle" cx="380" cy="280" r="10" fill="#ff5722" filter="url(#glow)"/>
+          <text x="380" y="284" text-anchor="middle" fill="white" font-size="11" font-weight="bold" pointer-events="none">9</text>
+        </g>
+
+        <!-- Rótulos das estruturas -->
+        <text x="555" y="200" fill="#f39c12" font-size="11" font-weight="bold">Porinas</text>
+        <text x="555" y="245" fill="#9b59b6" font-size="10" font-weight="bold">Peptidoglicano</text>
+        <text x="555" y="258" fill="#95a5a6" font-size="9">(parede)</text>
+        <text x="555" y="375" fill="#cd853f" font-size="10" font-weight="bold">Membrana</text>
+        <text x="555" y="387" fill="#cd853f" font-size="10" font-weight="bold">interna</text>
+        <text x="55" y="195" fill="#a8dadc" font-size="10" font-weight="bold">Ribossomos</text>
+        <text x="55" y="208" fill="#95a5a6" font-size="9">(30S e 50S)</text>
+        <text x="295" y="200" fill="#8e44ad" font-size="11" font-weight="bold">Nucleoide</text>
+        <text x="295" y="213" fill="#95a5a6" font-size="9">(DNA cromossômico)</text>
+        <text x="55" y="490" fill="#e74c3c" font-size="10" font-weight="bold">LPS</text>
+        <text x="55" y="503" fill="#95a5a6" font-size="9">(Lipopolissacarídeo)</text>
+        <text x="295" y="455" fill="#16a085" font-size="10" font-weight="bold">Plasmídeos</text>
+
+        <!-- Legenda das camadas -->
+        <text x="15" y="555" fill="#f1c40f" font-size="10" font-weight="bold">━ Membrana externa</text>
+        <text x="15" y="572" fill="#8b4513" font-size="10" font-weight="bold">┄ Periplasma + Peptidoglicano</text>
+        <text x="15" y="589" fill="#f9e79f" font-size="10" font-weight="bold">━ Membrana interna (citoplasmática)</text>
+      </svg>
+    </div>
+
+    <div class="info-card">
+      <h2 class="info-header">📚 Painel de Informações</h2>
+      <div id="infoContent">
+        <h3>👋 Bem-vindo!</h3>
+        <p>Este é um esquema ilustrativo de uma <strong>bactéria Gram-negativa</strong> mostrando os principais <strong>sítios de ação dos antibióticos</strong> usados na prática clínica.</p>
+        <p>🖱️ <strong>Instruções:</strong></p>
+        <ul>
+          <li>Passe o mouse sobre os <strong style="color:#e74c3c">números pulsantes</strong> no diagrama</li>
+          <li>Ou clique nos itens da legenda abaixo</li>
+        </ul>
+        <div class="legend" id="legendContainer"></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">⚠️ Material didático ilustrativo. Não substitui literatura médica oficial (Goodman &amp; Gilman, Mandell, Sanford Guide).</div>
+</div>
+
+<script>
+const targetData = {
+  lps: { title: '🔴 1. LPS / Membrana Externa', color: '#e74c3c',
+    structure: 'Lipopolissacarídeo (lipídeo A + core + antígeno O). Exclusivo de Gram-negativas. Carga negativa.',
+    target: 'Integridade da membrana externa',
+    drugs: ['Polimixina B', 'Colistina (Polimixina E)'],
+    mechanism: 'Antibióticos catiônicos que se ligam ao lipídeo A do LPS, deslocando Ca²⁺/Mg²⁺ que estabilizam a membrana externa. Causam desorganização, aumento de permeabilidade e lise celular.',
+    note: '⚠️ Última linha para multirresistentes (Acinetobacter, Pseudomonas, Klebsiella). Nefro e neurotóxica.' },
+  porins: { title: '🟡 2. Porinas (Canais de Entrada)', color: '#f39c12',
+    structure: 'Proteínas transmembrana (OmpF, OmpC) que formam canais aquosos para moléculas hidrofílicas (&lt;600 Da).',
+    target: 'Via de penetração de antibióticos',
+    drugs: ['β-lactâmicos', 'Fluoroquinolonas', 'Cloranfenicol', 'Tetraciclinas'],
+    mechanism: 'As porinas permitem a difusão passiva de antibióticos hidrofílicos até o espaço periplásmico. Moléculas grandes ou hidrofóbicas não passam bem.',
+    note: '💡 Mecanismo de resistência: perda ou mutação de porinas reduz a concentração intracelular do antibiótico.' },
+  peptidoglycan: { title: '🟣 3. Peptidoglicano (Parede Celular)', color: '#9b59b6',
+    structure: 'Polímero de NAG-NAM crosslinked por peptídeos. Em Gram-negativas: fina (1-2 camadas) entre as duas membranas.',
+    target: 'PBPs (Penicillin Binding Proteins) - transpeptidação',
+    drugs: ['Penicilinas (Ampicilina)', 'Cefalosporinas (Ceftriaxona, Cefepima)', 'Carbapenêmicos (Meropenem, Imipenem)', 'Monobactâmicos (Aztreonam)'],
+    mechanism: 'β-lactâmicos mimetizam o substrato D-Ala-D-Ala e inibem irreversivelmente as PBPs, impedindo a crosslinking final. A parede enfraquece e há lise osmótica.',
+    note: '⚠️ Resistência: β-lactamases (ESBL, AmpC, KPC, NDM). Aztreonam é estável contra várias ESBL mas não contra todas.' },
+  innerMembrane: { title: '🟠 4. Membrana Interna (Citoplasmática)', color: '#cd853f',
+    structure: 'Bicamada lipídica clássica de fosfolipídeos, semelhante a membranas eucarióticas, mas com composição distinta.',
+    target: 'Potencial de membrana / integridade lipídica',
+    drugs: ['Daptomicina (NÃO eficaz em Gram-negativas!)'],
+    mechanism: 'Daptomicina é lipopeptídeo que forma poros dependentes de Ca²⁺ na membrana citoplasmática, despolarizando-a. Em Gram-negativas, fica retida na membrana externa → clinicamente inativa.',
+    note: '🚫 Exemplo paradigmático: a membrana externa bloqueia antibióticos grandes/aniônicos. Razão da dificuldade de descobrir novos antibióticos para Gram-negativas.' },
+  ribosome30S: { title: '🟢 5. Subunidade 30S do Ribossomo', color: '#2ecc71',
+    structure: 'Subunidade menor do ribossomo 70S bacteriano. Responsável pela decodificação do mRNA.',
+    target: 'Início da tradução / leitura do mRNA',
+    drugs: ['Aminoglicosídeos: Gentamicina, Amicacina, Tobramicina', 'Tetraciclinas: Doxiciclina, Minociclina, Tigeciclina'],
+    mechanism: 'Aminoglicosídeos ligam-se à 30S → leitura errada do mRNA + proteínas defeituosas (bactericidas). Tetraciclinas bloqueiam aminoacil-tRNA no sítio A (bacteriostáticas).',
+    note: '📌 Aminoglicosídeos exigem O₂ para transporte ativo (inúteis contra anaeróbios). Gentamicina e Amicacina são pilares contra Pseudomonas e Enterobactérias.' },
+  ribosome50S: { title: '🔵 6. Subunidade 50S do Ribossomo', color: '#3498db',
+    structure: 'Subunidade maior do ribossomo. Catalisa a ligação peptídica (peptidil transferase).',
+    target: 'Elongação da tradução / peptidil transferase',
+    drugs: ['Macrolídeos: Azitromicina, Claritromicina (eficácia variável em Gram-neg)', 'Cloranfenicol', 'Linezolida (oxazolidinona)'],
+    mechanism: 'Macrolídeos bloqueiam a saída do peptidil-tRNA do sítio P (túnel de saída). Cloranfenicol inibe a peptidil transferase. Em Gram-negativas, penetração limitada pela membrana externa.',
+    note: '⚠️ Azitromicina é ativa contra H. influenzae, N. gonorrhoeae, Moraxella. Cloranfenicol: risco de anemia aplásica limitou o uso.' },
+  dnaGyrase: { title: '🩷 7. DNA Girase (Topoisomerase II) / Topo IV', color: '#e91e63',
+    structure: 'Enzimas essenciais para superenovelamento e separação do DNA durante a replicação.',
+    target: 'Replicação do DNA cromossômico',
+    drugs: ['Fluoroquinolonas: Ciprofloxacino, Levofloxacino, Moxifloxacino, Delafloxacino'],
+    mechanism: 'Inibem DNA girase (alvo principal em Gram-neg) e Topo IV. Estabilizam o complexo DNA-enzima clivada, impedindo a religação. Resultado: fragmentação do DNA e morte bacteriana.',
+    note: '⚠️ Resistência crescente: mutações QRDR (gyrA, parC), bombas de efluxo (AcrAB-TolC), proteínas Qnr. Ciprofloxacino é o mais usado para Gram-negativas.' },
+  rnaPol: { title: '🩵 8. RNA Polimerase DNA-dependente', color: '#00bcd4',
+    structure: 'Enzima multimérica (subunidades α₂ββ\'ωσ) que sintetiza RNA a partir do DNA molde.',
+    target: 'Transcrição gênica',
+    drugs: ['Rifampicina'],
+    mechanism: 'Liga-se à subunidade β da RNA polimerase, bloqueando a elongação do RNA logo após o início (após 2-3 nucleotídeos).',
+    note: '📌 Uso principal: tuberculose (com outros fármacos), profilaxia de meningite meningocócica e por H. influenzae tipo b. Resistência surge rapidamente se usada isolada.' },
+  folate: { title: '🟠 9. Via do Ácido Fólico (Síntese de Timidilato)', color: '#ff5722',
+    structure: 'Cascata enzimática citoplasmática que produz tetrahidrofolato (THF), necessário para síntese de timidina e purinas.',
+    target: 'DHPS (Sulfonamidas) + DHFR (Trimetoprima)',
+    drugs: ['Sulfametoxazol + Trimetoprima (= Cotrimoxazol/TMP-SMX)'],
+    mechanism: 'Sulfonamidas inibem a di-hidropteroato sintase (DHPS) — primeira etapa (análogas ao PABA). Trimetoprima inibe a di-hidrofolato redutase (DHFR) — etapa tardia. Bloqueio sequencial = sinergia bactericida.',
+    note: '💡 Bactérias sintetizam ácido fólico; células humanas não (captam da dieta). Essa diferença bioquímica é a base da seletividade. Usado em ITU, PCP, nocardiose, Listeria.' }
+};
+
+const colors = {};
+Object.keys(targetData).forEach(k => colors[k] = targetData[k].color);
+
+function showInfo(target) {
+  const data = targetData[target];
+  const c = document.getElementById('infoContent');
+  c.innerHTML = `
+    <h2 style="color:${data.color}; margin-top:0;">${data.title}</h2>
+    <p><strong>📍 Estrutura:</strong> ${data.structure}</p>
+    <p><strong>🎯 Alvo terapêutico:</strong> ${data.target}</p>
+    <div style="margin:12px 0;">
+      <strong>💊 Antibióticos principais:</strong><br>
+      ${data.drugs.map(d => `<span class="drug-tag" style="background:${data.color};">${d}</span>`).join('')}
+    </div>
+    <p><strong>⚙️ Mecanismo de ação:</strong> ${data.mechanism}</p>
+    <p style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; border-left:3px solid ${data.color};"><em>${data.note}</em></p>
+  `;
+  document.querySelectorAll('.legend-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.target === target);
+  });
+  document.querySelectorAll('.hotspot').forEach(h => {
+    h.style.opacity = (h.dataset.target === target) ? '1' : '0.45';
+  });
+}
+
+const order = ['lps','porins','peptidoglycan','innerMembrane','ribosome30S','ribosome50S','dnaGyrase','rnaPol','folate'];
+const names = {
+  lps:'1. LPS / Membrana externa', porins:'2. Porinas',
+  peptidoglycan:'3. Peptidoglicano', innerMembrane:'4. Membrana interna',
+  ribosome30S:'5. Ribossomo 30S', ribosome50S:'6. Ribossomo 50S',
+  dnaGyrase:'7. DNA girase', rnaPol:'8. RNA polimerase', folate:'9. Ácido fólico'
+};
+const lg = document.getElementById('legendContainer');
+order.forEach(t => {
+  const el = document.createElement('div');
+  el.className = 'legend-item';
+  el.dataset.target = t;
+  el.innerHTML = `<span class="legend-color" style="background:${colors[t]}; color:${colors[t]};"></span>${names[t]}`;
+  el.addEventListener('mouseenter', () => showInfo(t));
+  el.addEventListener('click', () => showInfo(t));
+  lg.appendChild(el);
+});
+
+document.querySelectorAll('.hotspot').forEach(h => {
+  h.addEventListener('mouseenter', () => showInfo(h.dataset.target));
+});
+</script>
+</body>
+</html>

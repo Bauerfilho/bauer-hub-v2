@@ -1,0 +1,309 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   TEMA ORQUESTRATOR — camada de identidade visual do hub (screen-only)
+   Autoria: brain, 28/08/2026, sob direção do dono (branco · claro · fino ·
+   chique · dourado na coroa dela e na marca Orquestrator · semânticas intactas).
+   REGRAS DURAS: só @media screen · NUNCA tocar .print-sheet/.orientation-page/
+   #printPortal/.rx-body (papel é sagrado) · tipografia da plataforma mantida ·
+   carregar DEPOIS do <style> inline (cascata é a integração).
+   Ativação do modo dela: body.tema-Orquestrador (window.TEMA.Orquestrador(true|false)).
+   ══════════════════════════════════════════════════════════════════════════ */
+@font-face{font-family:'Archivo Black';src:url('fonts/archivo-black.woff2') format('woff2');font-weight:400;font-style:normal;font-display:block}
+@media screen {
+
+  /* ─── tokens da camada ─── */
+  :root{
+    --ouro:#B08A3E;            /* ouro velho, contido */
+    --ouro-vivo:#C9A227;
+    --ouro-linha:rgba(176,138,62,.42);
+    --ouro-nevoa:rgba(176,138,62,.10);
+    --marfim:#FBF8F2;          /* fundo do modo dela */
+    --blush:#FAF3EC;           /* cartões do modo dela */
+    --coroa: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M3 13h18M4 10 3 4l4.6 3L12 2l4.4 5L21 4l-1 6z' fill='none' stroke='%23B08A3E' stroke-width='1.3' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E");
+    /* o símbolo do ORQUESTRATOR (ordem do dono 22h40): círculo dourado com a
+       pedrinha-losango dentro — sem o fundo preto do app icon */
+    --simbolo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.2' fill='none' stroke='%23B08A3E' stroke-width='1.7'/%3E%3Crect x='8.9' y='8.9' width='6.2' height='6.2' rx='1.1' transform='rotate(45 12 12)' fill='%23C9A227'/%3E%3C/svg%3E");
+  }
+
+  /* ─── a marca do Orquestrator em TODO o UI ───
+     1) o filete de ouro no topo da appbar — a assinatura silenciosa */
+  .appbar::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--ouro-linha) 18%,var(--ouro-vivo) 50%,var(--ouro-linha) 82%,transparent)}
+
+  /* 2) o selo-palavra (injetado por tema-orquestrator.js) */
+  .orq-marca{display:inline-flex;align-items:center;gap:7px;margin-left:auto;
+    font-size:10.5px;font-weight:800;letter-spacing:.22em;color:var(--ouro);
+    border:1px solid var(--ouro-linha);border-radius:999px;padding:6px 12px 6px 10px;
+    background:linear-gradient(180deg,#fff,#FDFAF4);white-space:nowrap;user-select:none}
+  .orq-coroa{display:inline-block;width:15px;height:15px;background:var(--simbolo) center/contain no-repeat}
+  .orq-simbolo{display:inline-block;width:20px;height:20px;background:var(--simbolo) center/contain no-repeat}
+
+  /* ─── a página de login (direção do dono 28/08 ~23h: assinatura da casa) ─── */
+  .f2x-login-card{border:1.5px solid #C9A227!important;box-shadow:0 12px 44px rgba(201,162,39,.18)!important}
+  .orq-emblema{width:62px;height:62px;margin:0 auto 8px}
+  .orq-emblema svg{width:100%;height:100%;display:block}
+  .orq-wordmark{margin:0 auto 4px;text-align:center}
+  .orq-wordmark svg{display:block;width:min(330px,94%);margin:0 auto}
+  .orq-wordsub{font-size:11px;font-weight:800;color:#C9A227;margin-top:1px;display:flex;align-items:center;justify-content:center;gap:9px}
+  .orq-wordsub .w{letter-spacing:.42em;margin-right:-.42em}
+  .orq-losango{display:inline-block;width:8px;height:8px;background:#15181D;transform:rotate(45deg);border-radius:1.5px;flex:0 0 auto}
+  #f2xLoginEntrar{background:#15181D!important;border-color:#15181D!important;color:#fff!important}
+  #f2xLoginEntrar:hover{background:#000!important}
+  /* o símbolo DELA (ordem do dono 28/08: "o esteto é mais ela"; estrela fica p/ favoritos) */
+  .orq-esteto{display:inline-block;width:16px;height:16px;vertical-align:-2px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3' fill='none' stroke='%23B08A3E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4' fill='none' stroke='%23B08A3E' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='10' r='2' fill='none' stroke='%23B08A3E' stroke-width='1.6'/%3E%3C/svg%3E") center/contain no-repeat}
+  @media(max-width:720px){.orq-marca{display:none}}
+
+  /* 3a) A HOME (direção do dono 28/08 ~22h18): verde à esquerda morrendo em
+     dourado no canto direito — nos DOIS cards do topo, com tracejado dourado.
+     Círculos decorativos do hero mantidos; ouro é cor, nunca neon. */
+  .hero{background:linear-gradient(115deg,#083c3a 0%,#0f766e 48%,#1d6b58 64%,#6e6134 86%,#B08A3E 103%);
+    border:1.5px solid #C9A227;box-shadow:0 4px 18px rgba(201,162,39,.16),var(--shadow)}
+  #f2xSaudacao{border:1.5px solid #C9A227!important;box-shadow:0 3px 14px rgba(201,162,39,.14)}
+
+  /* 3b) os ícones do índice: glifo VERDE, centrado, encaixado; fio dourado
+     extremamente fino circulando o ícone + réstia interna de ouro (brilho, não neon) */
+  .feature-icon{display:grid;place-items:center;font-size:19px;line-height:1;color:#0f766e;
+    border:1px solid rgba(176,138,62,.55);
+    box-shadow:inset 0 0 0 1.5px rgba(201,162,39,.16), inset 0 1px 6px rgba(201,162,39,.10)}
+  .feature-icon>*{margin:0;line-height:1;transform:none}
+  .feature-icon svg{display:block;width:32px;height:32px;margin:auto;position:relative;top:2px}
+  .feature-card{align-items:center}
+
+  /* 3) acabamentos finos herdados pela plataforma inteira */
+  .category-title:after{background:linear-gradient(90deg,var(--line),var(--ouro-linha))}
+  .feature-card:hover{border-color:var(--ouro-linha)}
+  .topic-card:hover{border-color:var(--ouro-linha)}
+  .brand strong{letter-spacing:.02em}
+
+  /* ─── um pouco DELA na página inicial: a dedicatória (injetada via JS) ─── */
+  .orq-dedicatoria{position:relative;z-index:1;display:inline-flex;align-items:center;gap:9px;
+    margin-top:16px;padding:7px 14px;border:1px solid #C9A227;border-radius:999px;
+    font-size:12px;letter-spacing:.08em;color:#F6EFDD;background:rgba(255,255,255,.08)}
+  .orq-dedicatoria .orq-coroa{filter:brightness(1.9) saturate(.7)}
+
+  /* ─── a coroa dela — botão e cabeçalhos (classe contratual .f2-coroa) ─── */
+  /* ── CARDS DE DOENÇA — a mescla cravada pelo dono (30/08 ~02h15): diagonal rica + fio dourado +
+      fita fina no topo (ouro ou dupla rosa⇢roxo) + selo-pílula + silhueta-sombra (agy) + logo dourada.
+      Saúde do adulto mantém o card antigo até ele avaliar. ── */
+.category.orq-cat .card-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:1000px){.category.orq-cat .card-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.category.orq-cat .card-grid{grid-template-columns:1fr}}
+.orq-topic{position:relative;min-height:280px;border-radius:22px;overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;text-align:left;
+  padding:24px 22px 16px;border:1px solid rgba(201,162,39,.6);cursor:pointer;
+  box-shadow:0 16px 40px rgba(21,24,29,.16);transition:transform .16s ease,box-shadow .16s ease}
+.orq-topic:hover{transform:translateY(-4px);box-shadow:0 24px 54px rgba(21,24,29,.24);border-color:var(--ouro-vivo)}
+.orq-topic h3{position:relative;z-index:2;color:#fff;font-size:20px;line-height:1.15;margin:0;letter-spacing:-.02em;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.orq-fita{position:absolute;z-index:2;top:0;left:0;right:0;height:5px}
+.orq-fita.ouro{background:linear-gradient(90deg,#B08A3E,#E5C158)}
+.orq-fita.dupla{background:linear-gradient(90deg,#DB2777,#7C3AED)}
+.orq-selo{position:absolute;z-index:2;top:16px;left:18px;max-width:calc(100% - 36px);font-size:9.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 12px}
+.orq-sombra{position:absolute;inset:0;z-index:0;display:grid;place-items:center;pointer-events:none}
+.orq-sombra svg{width:82%;height:82%;opacity:.16;fill:#fff;transform:translate(14%,4%)}
+.orq-rodape{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;margin-top:12px}
+.orq-logo{display:inline-flex;align-items:center;gap:6px;opacity:.95}
+.orq-logo svg{width:19px;height:19px}
+.orq-logo span{font-size:8.5px;font-weight:900;letter-spacing:.22em;color:#E5C158}
+.orq-abrir{color:rgba(255,255,255,.9);font-size:11px;font-weight:850;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:5px 12px}
+.orq-topic{--ang:118deg;--pa:30%;--pb:80%}
+.orq-topic.orq-v2{--ang:242deg;--pa:26%;--pb:84%}
+.orq-topic.orq-v3{--ang:104deg;--pa:38%;--pb:74%}
+.orq-topic.orq-v4{--ang:132deg;--pa:22%;--pb:88%}
+.orq-v2 .orq-sombra svg{transform:translate(-16%,6%) scaleX(-1)}
+.orq-v3 .orq-sombra svg{width:104%;height:104%;opacity:.12;transform:translate(20%,12%)}
+.orq-v4 .orq-sombra svg{width:66%;height:66%;opacity:.2;transform:translate(-22%,-8%) scaleX(-1)}
+.orq-roxo{background:linear-gradient(var(--ang),#3B0764 0 var(--pa),#7C3AED var(--pb) 100%)}
+.orq-rosa{background:linear-gradient(var(--ang),#831843 0 var(--pa),#DB2777 var(--pb) 100%)}
+.orq-rosa-violeta{background:linear-gradient(var(--ang),#9D174D 0 var(--pa),#7C3AED var(--pb) 100%)}
+.orq-rosa-coral{background:linear-gradient(var(--ang),#831843 0 var(--pa),#E11D48 var(--pb) 100%)}
+.orq-azul{background:linear-gradient(var(--ang),#172554 0 var(--pa),#2563EB var(--pb) 100%)}
+.orq-azul-ceu{background:linear-gradient(var(--ang),#172554 0 var(--pa),#38BDF8 var(--pb) 100%)}
+.orq-azul-esmeralda{background:linear-gradient(var(--ang),#1E3A8A 0 var(--pa),#10B981 var(--pb) 100%)}
+.orq-azul-teal{background:linear-gradient(var(--ang),#1E3A8A 0 var(--pa),#0D9488 var(--pb) 100%)}
+.orq-ist{background:linear-gradient(var(--ang),#052E16 0 var(--pa),#15803D var(--pb) 100%)}
+body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
+
+/* ── ASSISTENTE UNIVERSAL ORQUESTRATOR (feature-coroa, 30/08): gaveta direita universal —
+      marfim com cabeça preta/dourada; ☆ Favoritar DOURADO; Inserir PRETO com a logo. ── */
+.orq-marca[role="button"]{cursor:pointer}
+.orq-marca[role="button"]:hover{box-shadow:0 0 0 2px var(--ouro-linha);border-radius:999px}
+/* gaveta do assistente COMPRIME a página (ordem do dono: aproveitar a vista, não cobrir) */
+@media (min-width:1100px){
+  #hubView,#workspaceView,#documentsView,#patientsView,#encounterView{transition:margin-right .28s ease}
+  body.orqa-comprime #hubView,body.orqa-comprime #workspaceView,body.orqa-comprime #documentsView,
+  body.orqa-comprime #patientsView,body.orqa-comprime #encounterView{margin-right:392px}
+}
+@media print{body.orqa-comprime #hubView,body.orqa-comprime #workspaceView,body.orqa-comprime #documentsView,
+  body.orqa-comprime #patientsView,body.orqa-comprime #encounterView{margin-right:0}}
+#orqAssist{position:fixed;z-index:130;top:0;right:0;bottom:0;width:min(380px,92vw);display:flex;flex-direction:column;
+  background:var(--marfim);border-left:1px solid rgba(201,162,39,.5);box-shadow:-24px 0 60px rgba(0,0,0,.28);
+  transform:translateX(105%);transition:transform .2s ease;font-size:12.5px;color:#1c2430}
+#orqAssist.aberta{transform:translateX(0)}
+.orqa-top{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#15181D;color:#F4EFE6}
+.orqa-top strong{display:block;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro-claro,#E5C158)}
+.orqa-ctx{display:block;font-size:10px;color:rgba(244,239,230,.65);margin-top:2px}
+.orqa-simbolo svg{width:22px;height:22px;display:block}
+.orqa-fechar{margin-left:auto;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:#F4EFE6;font-size:19px;cursor:pointer}
+.orqa-fechar:hover{background:rgba(255,255,255,.1)}
+.orqa-rolagem{flex:1;overflow:auto;padding:6px 14px 14px;scrollbar-width:thin}
+.orqa-sec{padding:12px 0;border-bottom:1px solid rgba(176,138,62,.22)}
+.orqa-sec h4{margin:0 0 8px;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#5b6472}
+.orqa-conferir{font-weight:700;font-size:9px;color:var(--ouro);border:1px solid var(--ouro-linha);border-radius:999px;padding:1px 7px;margin-left:6px;text-transform:none;letter-spacing:0}
+.orqa-busca{width:100%;padding:9px 11px;border-radius:9px;border:1px solid #d8d2c4;background:#fff;font:inherit}
+.orqa-busca:focus{outline:0;border-color:var(--ouro-vivo);box-shadow:0 0 0 3px rgba(201,162,39,.14)}
+.orqa-res{margin-top:6px;display:grid;gap:4px}
+.orqa-item{text-align:left;border:1px solid #e4ddcd;border-radius:9px;background:#fff;padding:8px 10px;font-size:11.5px;cursor:pointer}
+.orqa-item:hover{border-color:var(--ouro-vivo);background:#fffdf6}
+.orqa-notas{width:100%;min-height:110px;resize:vertical;border:1px solid #d8d2c4;border-radius:10px;background:#fff;padding:10px;font:inherit;line-height:1.5}
+.orqa-notas:focus{outline:0;border-color:var(--ouro-vivo)}
+.orqa-fav{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 14px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--ouro);background:linear-gradient(180deg,#F7E9C4,#EDD89A);color:#6b4d00;font-weight:850;font-size:12px}
+.orqa-fav:hover{box-shadow:0 0 0 2px var(--ouro-linha)}
+.orqa-frases{margin-top:10px;display:grid;gap:8px}
+.orqa-frase{display:flex;align-items:center;gap:8px;border:1px solid #e4ddcd;border-radius:10px;background:#fff;padding:8px 10px}
+.orqa-frase-t{flex:1;font-size:11.5px;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.orqa-inserir{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 11px;border-radius:8px;cursor:pointer;
+  background:#15181D;color:#F4EFE6;border:1px solid rgba(201,162,39,.6);font-weight:850;font-size:11px;flex:0 0 auto}
+.orqa-inserir:hover{border-color:var(--ouro-vivo)}
+.orqa-mini-logo{width:12px;height:12px;background:var(--simbolo) center/contain no-repeat}
+.orqa-x{width:26px;height:26px;border:0;border-radius:7px;background:transparent;color:#98a2b3;font-size:15px;cursor:pointer;flex:0 0 auto}
+.orqa-x:hover{background:#f2ede1;color:#b42318}
+.orqa-vazio{font-size:10.5px;color:#8a93a3;padding:4px 2px}
+.orqa-pe{padding:10px 16px;border-top:1px solid rgba(176,138,62,.3);font-size:9.5px;color:#6b7280;background:#faf6ec}
+
+/* ── Categorias do Orquestrator (extra do dono, 30/08): botão preto+símbolo dourado na bandeja
+      + popover estilo menu-de-comandos — preto, rolagem, acentos ouro. ── */
+.orq-par-montar{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.orq-cat-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:10px;
+  background:#15181D;color:var(--marfim);border:1px solid rgba(201,162,39,.65);font-weight:850;font-size:12px;cursor:pointer}
+.orq-cat-btn:hover{border-color:var(--ouro-vivo);box-shadow:0 0 0 1px var(--ouro-linha)}
+.orq-cat-simbolo{width:15px;height:15px;flex:0 0 auto;background:var(--simbolo) center/contain no-repeat}
+.orqd-pop{position:fixed;z-index:140;display:flex;flex-direction:column;max-height:min(520px,72vh);
+  background:#15181D;color:#F4EFE6;border:1px solid rgba(201,162,39,.55);border-radius:14px;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);overflow:hidden;font-size:12.5px}
+.orqd-top{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid rgba(201,162,39,.3)}
+.orqd-top strong{flex:1;font-size:12.5px;letter-spacing:.04em}
+.orqd-simbolo svg{width:18px;height:18px;display:block}
+.orqd-fechar{width:30px;height:30px;border:0;border-radius:8px;background:transparent;color:#F4EFE6;font-size:18px;cursor:pointer}
+.orqd-fechar:hover{background:rgba(255,255,255,.08)}
+.orqd-busca{margin:10px 12px 6px;padding:9px 11px;border-radius:9px;border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);color:#F4EFE6;font:inherit}
+.orqd-busca:focus{outline:0;border-color:var(--ouro-vivo)}
+.orqd-rolagem{overflow:auto;padding:4px 8px 8px;flex:1;scrollbar-width:thin}
+.orqd-cat{display:flex;align-items:center;gap:7px;padding:10px 8px 5px;font-size:10px;font-weight:900;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ouro-claro, #E5C158)}
+.orqd-foco{font-size:8px;border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:2px 6px;color:var(--ouro-vivo)}
+.orqd-add{margin-left:auto;width:22px;height:22px;border-radius:7px;border:1px solid rgba(255,255,255,.2);
+  background:transparent;color:#F4EFE6;font-weight:900;cursor:pointer;line-height:1}
+.orqd-add:hover{border-color:var(--ouro-vivo);color:var(--ouro-vivo)}
+.orqd-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:8px 9px;border:0;
+  border-radius:9px;background:transparent;color:#F4EFE6;cursor:pointer}
+.orqd-item:hover{background:rgba(255,255,255,.07)}
+.orqd-item.marcado .orqd-estrela{color:var(--ouro-vivo)}
+.orqd-estrela{font-size:14px;color:rgba(255,255,255,.4);flex:0 0 auto}
+.orqd-copy{flex:1;min-width:0}
+.orqd-copy strong{display:block;font-size:12px}
+.orqd-copy span{display:block;font-size:10px;color:rgba(244,239,230,.65);margin-top:1px}
+.orqd-tag{font-size:8px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;padding:2px 6px;color:rgba(244,239,230,.7)}
+.orqd-tag.ouro{border-color:rgba(201,162,39,.55);color:var(--ouro-vivo)}
+.orqd-vazio{padding:6px 10px 10px;font-size:10.5px;color:rgba(244,239,230,.55)}
+.orqd-pe{padding:9px 14px;border-top:1px solid rgba(201,162,39,.3);font-size:9.5px;color:rgba(244,239,230,.7)}
+.f2-coroa{position:relative;border:1px solid var(--ouro-linha)!important;
+    background:linear-gradient(180deg,#fff,#FBF6EA)!important;color:#7A5B1E!important;
+    font-weight:800;border-radius:999px}
+  .f2-coroa::before{content:"";display:inline-block;width:17px;height:12px;margin-right:7px;
+    vertical-align:-2px;background:var(--simbolo) center/contain no-repeat}
+  .f2-coroa:hover{background:linear-gradient(180deg,#fff,#F6ECD6)!important;border-color:var(--ouro)!important}
+
+  /* cards de esquema (quando o codex os entregar) — só acento, sem briga de layout */
+  .regimen-card{transition:border-color .15s ease}
+  .regimen-card:hover{border-color:var(--ouro-linha)}
+  .regimen-card.active{box-shadow:0 0 0 1px var(--ouro-linha)}
+
+  /* ═══ O MODO DELA — body.tema-Orquestrador (liga ao apertar o botão/login dela) ═══
+     claro, delicado, marfim; o palco de trabalho continua branco. */
+  body.tema-Orquestrador{--bg:var(--marfim)}
+  body.tema-Orquestrador .appbar::before{height:3px}
+  body.tema-Orquestrador .appbar{border-bottom-color:var(--ouro-linha)}
+  body.tema-Orquestrador .brand span{color:#8A6D3B}
+  body.tema-Orquestrador .orq-marca{background:linear-gradient(180deg,#fff,#F8F0DF);border-color:var(--ouro)}
+
+  /* a seção dela: cartões em marfim com fio de ouro */
+  body.tema-Orquestrador #draOrquestradorMount .f2-esq,
+  body.tema-Orquestrador .f2-esq{background:#FFFDF8;border-color:var(--ouro-linha)}
+  body.tema-Orquestrador #draOrquestradorMount h3,
+  body.tema-Orquestrador #draOrquestradorMount .f2-esq-topo strong{color:#6E5320}
+  body.tema-Orquestrador .f2-btn{border-color:var(--ouro-linha)}
+  body.tema-Orquestrador .f2-btn:hover{background:var(--ouro-nevoa)}
+
+  /* toolbar e navegação ganham o véu quente, sem perder leitura */
+  body.tema-Orquestrador .workspace-toolbar{background:rgba(251,248,242,.95)}
+  body.tema-Orquestrador .feature-icon{background:var(--ouro-nevoa)}
+  body.tema-Orquestrador .stat{border-color:rgba(255,255,255,.28)}
+
+  /* semânticas INTACTAS por contrato: --warn/--danger/--brand não são tocadas. */
+}
+
+/* ═══ Orquestrator Assist — TODOS OS DOCUMENTOS em gavetas (F2 orquestrator-no-app, 30/08/2026) ═══ */
+#orqAssist .orqa-gavetas{border:1px solid #e2ddd0;border-radius:12px;overflow:hidden;background:#fff;margin-top:8px}
+#orqAssist .orqa-gav{border-bottom:1px solid #f0ece2}
+#orqAssist .orqa-gav:last-child{border-bottom:0}
+#orqAssist .orqa-gav summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:12px 13px;font-size:11px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:#41414d}
+#orqAssist .orqa-gav summary::-webkit-details-marker{display:none}
+#orqAssist .orqa-gav summary::before{content:'▸';color:#B08A3E;transition:transform .15s}
+#orqAssist .orqa-gav[open] summary::before{transform:rotate(90deg)}
+#orqAssist .orqa-gav summary b{margin-left:auto;background:#f1ede1;border-radius:999px;padding:1px 9px;font-size:10px;color:#6b6455;font-weight:800}
+#orqAssist .orqa-gav summary i,#orqAssist .orqa-doc-item i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+#orqAssist .orqa-gav-c{padding:2px 8px 10px}
+#orqAssist .orqa-rolinterno{max-height:300px;overflow:auto}
+#orqAssist .orqa-doc-sub{font-size:9.5px;font-weight:900;letter-spacing:.12em;color:#9a93a3;padding:8px 6px 3px;text-transform:uppercase}
+#orqAssist .orqa-doc-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:0;background:none;border-radius:9px;padding:9px 10px;font-size:13px;font-weight:700;color:#1c2430;cursor:pointer}
+#orqAssist .orqa-doc-item:hover{background:#faf6ec}
+#orqAssist .orqa-oculto{display:none}
+
+/* ═══ F4 — guia de preenchimento inteligente no painel (campos espelhados da folha) ═══ */
+#orqAssist .orqa-campo{display:block;margin:7px 0}
+#orqAssist .orqa-campo span{display:block;font-size:11px;font-weight:800;color:#3d4451;margin-bottom:3px}
+#orqAssist .orqa-campo input,#orqAssist .orqa-campo select,#orqAssist .orqa-campo textarea{width:100%;border:1px solid #d8dee9;border-radius:9px;padding:8px 10px;font:inherit;font-size:13px;background:#fff}
+
+/* ═══ G4 — editor do guia ("Preencher") adotado no painel Orquestrator ═══ */
+#orqAssist [data-orqa-editor-slot] .editor{position:static;max-height:none;overflow:visible;border:0;box-shadow:none;padding:0;background:transparent;width:100%}
+#orqAssist [data-orqa-editor-slot] .editor-head h2{font-size:13px;margin:0}
+#orqAssist [data-orqa-editor-slot] .editor-head{margin-bottom:6px}
+
+/* ═══ T3 (30/08) — famílias de cor novas: Clínica Médica (âmbar), Preventiva (verde), Cirurgia (aço),
+   tons novos de Obstetrícia e Pediatria. O fundo real vem inline de orqFundo(); estas regras são o piso. ═══ */
+.orq-topic.orq-ambar{background:linear-gradient(150deg,#78350F,#A16207)}
+.orq-topic.orq-ambar-vinho{background:linear-gradient(150deg,#7F1D1D,#A13A20)}
+.orq-topic.orq-ambar-mel{background:linear-gradient(150deg,#92400E,#CA8A04)}
+.orq-topic.orq-ambar-terra{background:linear-gradient(150deg,#6B3F22,#9A6534)}
+.orq-topic.orq-ambar-cobre{background:linear-gradient(150deg,#7C3A1D,#B45309)}
+.orq-topic.orq-ambar-fumo{background:linear-gradient(150deg,#5C4A3F,#87664F)}
+.orq-topic.orq-ambar-oliva{background:linear-gradient(150deg,#4D4A14,#6B661C)}
+.orq-topic.orq-verde{background:linear-gradient(150deg,#065F46,#0F766E)}
+.orq-topic.orq-aco{background:linear-gradient(150deg,#243447,#3F4C63)}
+.orq-topic.orq-roxo-profundo{background:linear-gradient(150deg,#3B0764,#4C1D95)}
+.orq-topic.orq-roxo-ameixa{background:linear-gradient(150deg,#581C87,#7E22CE)}
+.orq-topic.orq-azul-indigo{background:linear-gradient(150deg,#1E3A8A,#3730A3)}
+.orq-topic.orq-azul-aco{background:linear-gradient(150deg,#164054,#256278)}
+
+/* sub-header da sub-área dentro da grande área */
+.subcategory-title{margin:18px 0 10px;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6b6455;display:flex;align-items:center;gap:9px}
+.subcategory-title::before{content:'';width:14px;height:2px;background:#B08A3E;border-radius:2px;flex:0 0 auto}
+.subcategory-title .sub-count{background:#f1ede1;border-radius:999px;padding:1px 8px;font-size:10.5px;color:#6b6455;letter-spacing:0}
+
+/* ═══ T7 (30/08) — cor POR ESPECIALIDADE (correção do dono): cada sub-área de Clínica Médica
+   tem a cor que significa algo. Piso CSS; o fundo real vem inline de orqFundo(). ═══ */
+.orq-topic.orq-esp-cardio{background:linear-gradient(150deg,#7F1D1D,#B02020)}
+.orq-topic.orq-esp-hemato{background:linear-gradient(150deg,#6B0F35,#93184B)}
+.orq-topic.orq-esp-metab{background:linear-gradient(150deg,#7C520E,#AD7317)}
+.orq-topic.orq-esp-endocrino{background:linear-gradient(150deg,#1A3A8F,#2B57C0)}
+.orq-topic.orq-esp-osteo{background:linear-gradient(150deg,#454F5E,#65717F)}
+.orq-topic.orq-esp-pneumo{background:linear-gradient(150deg,#1D5270,#2E769A)}
+.orq-topic.orq-esp-derma{background:linear-gradient(150deg,#6B3F22,#9C6740)}
+.orq-topic.orq-esp-gastro{background:linear-gradient(150deg,#7C3F1D,#B45E28)}
+.orq-topic.orq-esp-neuro{background:linear-gradient(150deg,#4A1D8A,#6B31BC)}
+.orq-topic.orq-esp-sentidos{background:linear-gradient(150deg,#0E6280,#1690B6)}
+.orq-topic.orq-esp-renal{background:linear-gradient(150deg,#184C41,#276D5C)}

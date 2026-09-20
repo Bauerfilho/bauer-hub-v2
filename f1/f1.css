@@ -1,0 +1,1314 @@
+:root {
+  color-scheme: light;
+  --ink: #132a2a;
+  --muted: #607170;
+  --paper: #ffffff;
+  --surface: #f5f8f5;
+  --line: #1b2b2a;
+  --accent: #166b61;
+  --accent-strong: #0f5149;
+  --warning: #9a5b00;
+  --danger: #a62d2d;
+  --success: #1f6c45;
+  --safe-inset: 8mm;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #e9efec;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: radial-gradient(circle at 20% 0%, #f8fbf8 0, transparent 28rem), #e9efec;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  background: var(--accent-strong);
+  border-radius: 0.6rem;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.app-shell {
+  width: min(100% - 2rem, 1220px);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.app-header,
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.app-header {
+  margin-bottom: 1.2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.045em;
+}
+
+.app-subtitle {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.privacy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 19rem;
+  padding: 0.75rem 0.9rem;
+  color: var(--accent-strong);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(22, 107, 97, 0.18);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.privacy-badge span {
+  color: var(--success);
+}
+
+.toolbar {
+  position: sticky;
+  z-index: 20;
+  top: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.85rem;
+  background: rgba(250, 252, 250, 0.88);
+  border: 1px solid rgba(19, 42, 42, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 10px 35px rgba(24, 54, 49, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.selector-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.document-selector {
+  min-width: min(100%, 20rem);
+  flex: 1 1 18rem;
+  min-height: 2.75rem;
+  padding: 0.6rem 0.8rem;
+  color: var(--ink);
+  background: white;
+  border: 1px solid #bdc9c6;
+  border-radius: 0.65rem;
+  font: inherit;
+}
+
+.document-progress {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.button {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.65rem;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.button-primary {
+  color: white;
+  background: var(--accent);
+}
+
+.button-secondary {
+  color: var(--ink);
+  background: white;
+  border-color: #bdc9c6;
+}
+
+.button:hover {
+  filter: brightness(0.96);
+}
+
+.button:focus-visible,
+.document-selector:focus-visible,
+.form-control:focus-visible {
+  outline: 3px solid #f0b84b;
+  outline-offset: 2px;
+}
+
+.app-alert {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  color: #641c1c;
+  background: #fff0ef;
+  border: 1px solid #e5a5a1;
+  border-radius: 0.75rem;
+  font-weight: 700;
+}
+
+.app-alert[data-tipo="sucesso"] {
+  color: #154d31;
+  background: #eaf7ef;
+  border-color: #9dcab0;
+}
+
+.paper-viewport {
+  margin-top: 1.25rem;
+  overflow: auto;
+  border-radius: 1rem;
+  box-shadow: 0 20px 70px rgba(24, 54, 49, 0.18);
+}
+
+.print-sheet {
+  position: relative;
+  width: 297mm;
+  height: 210mm;
+  overflow: hidden;
+  color: #000;
+  background: var(--paper);
+}
+
+.paper-safe {
+  position: absolute;
+  inset: var(--safe-inset);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 0 minmax(0, 1fr);
+  column-gap: 3mm;
+  overflow: visible;
+}
+
+.cut-line {
+  width: 0;
+  border-left: 0.25mm dashed #7c8583;
+}
+
+.form-copy {
+  position: relative;
+  min-width: 0;
+  height: 194mm;
+  padding: 2.2mm 2.3mm 1.8mm;
+  overflow: visible;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 7.8pt;
+  line-height: 1.17;
+}
+
+.screen-copy-note {
+  position: absolute;
+  top: -7.2mm;
+  left: 50%;
+  z-index: 4;
+  margin: 0;
+  padding: 0.65mm 2mm;
+  color: #fff;
+  background: #1d625a;
+  border-radius: 999px;
+  font: 700 7pt/1 Arial, sans-serif;
+  transform: translateX(-50%);
+}
+
+.form-header {
+  margin-bottom: 3.2mm;
+}
+
+.unit-line {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: start;
+  gap: 2mm;
+  padding-bottom: 1.3mm;
+  border-bottom: 0.35mm solid #111;
+}
+
+.unit-line strong {
+  font-size: 12.2pt;
+  letter-spacing: -0.03em;
+}
+
+.unit-line span {
+  font-size: 6.7pt;
+  line-height: 1.15;
+}
+
+.institution-line {
+  display: grid;
+  grid-template-columns: 1.15fr repeat(4, 1fr);
+  align-items: center;
+  gap: 1.4mm;
+  min-height: 17mm;
+  padding: 2mm 1mm 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 5.8pt;
+  font-weight: 700;
+  line-height: 1.04;
+  text-align: center;
+}
+
+.sus-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2mm;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14pt;
+}
+
+.sus-mark i {
+  position: relative;
+  display: inline-block;
+  width: 9mm;
+  height: 3.2mm;
+  background: #111;
+}
+
+.sus-mark i::after {
+  position: absolute;
+  inset: -2.9mm 2.9mm;
+  content: '';
+  background: #111;
+}
+
+.form-title {
+  margin: 2.5mm 0 4mm;
+  font-size: 11.5pt;
+  font-style: italic;
+  text-align: center;
+}
+
+.legal-form p {
+  margin: 1.8mm 0;
+  font-weight: 700;
+}
+
+.field-row {
+  display: flex;
+  align-items: end;
+  gap: 1.2mm;
+  min-height: 7mm;
+  margin: 0.7mm 0;
+}
+
+.field-label {
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.form-control,
+.mirror-value {
+  display: block;
+  min-width: 0;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 6.3mm;
+  padding: 0.65mm 0.8mm 0.35mm;
+  overflow: visible;
+  color: #000;
+  background: transparent;
+  border: 0;
+  border-bottom: 0.28mm solid #111;
+  border-radius: 0;
+  font: 700 8.2pt/1.1 Arial, Helvetica, sans-serif;
+}
+
+.is-editable .form-control {
+  background: linear-gradient(to bottom, transparent 70%, rgba(255, 231, 165, 0.32));
+}
+
+.mirror-value:empty::after {
+  color: #a0a0a0;
+  content: '\00a0';
+}
+
+.inline-grid {
+  display: grid;
+  gap: 1.5mm;
+}
+
+.inline-grid-atestado {
+  grid-template-columns: 1.35fr 0.95fr 1.2fr;
+}
+
+.inline-grid .field-row {
+  align-items: start;
+  flex-direction: column;
+  gap: 0;
+}
+
+.signature-block {
+  width: 76%;
+  margin: 5.3mm auto 0;
+  text-align: center;
+}
+
+.signature-block span {
+  display: block;
+  height: 5mm;
+  border-bottom: 0.28mm solid #111;
+}
+
+.signature-block strong {
+  display: block;
+  margin-top: 0.8mm;
+  font-size: 7.2pt;
+}
+
+.signature-note {
+  margin: 0.4mm 0 1mm !important;
+  font-size: 5.3pt;
+  text-align: center;
+}
+
+.source-note {
+  margin-top: 3mm;
+  padding: 1.6mm 2mm;
+  border: 0.35mm solid #111;
+  font-size: 5.7pt;
+  line-height: 1.08;
+}
+
+.source-note p {
+  margin: 0.45mm 0;
+}
+
+.source-code {
+  margin: 0.5mm 0 0 !important;
+  font-size: 5.2pt;
+  text-align: right;
+}
+
+.compact-title {
+  margin: 1.2mm 0 1.8mm;
+  font-size: 8.2pt;
+  font-style: normal;
+  line-height: 1.08;
+}
+
+.encaminhamento-body {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 2.2mm;
+}
+
+.referral-section {
+  padding: 1.4mm 1.8mm;
+  border: 0.35mm solid #111;
+  border-radius: 2.2mm;
+}
+
+.referral-section .field-row {
+  min-height: 4.6mm;
+  margin: 0.15mm 0;
+}
+
+.referral-section .form-control,
+.referral-section .mirror-value {
+  height: 4.6mm;
+  padding-top: 0.15mm;
+  padding-bottom: 0.15mm;
+  font-size: 6.6pt;
+}
+
+.referral-identification {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.referral-identification .field-row {
+  flex-direction: row;
+  align-items: end;
+}
+
+.referral-section textarea.form-control,
+.referral-section .mirror-value.textarea-2,
+.referral-section .mirror-value.textarea-3 {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border: 0.28mm solid #999;
+  resize: none;
+}
+
+.referral-section .textarea-2 {
+  height: 9.5mm;
+}
+
+.referral-section .textarea-3 {
+  height: 12mm;
+}
+
+.fixed-observation {
+  margin: 0.5mm 0 !important;
+  font-size: 6.2pt;
+  text-align: right;
+}
+
+.fixed-form-line,
+.fixed-form-box {
+  padding: 0.8mm 1mm;
+  font-size: 6.2pt;
+}
+
+.fixed-form-line {
+  border-bottom: 0.28mm solid #111;
+}
+
+.fixed-form-box {
+  min-height: 12mm;
+  border: 0.28mm solid #777;
+}
+
+.referral-section .signature-block {
+  width: 68%;
+  margin-top: 1.2mm;
+}
+
+.referral-section .signature-block span {
+  height: 2.6mm;
+}
+
+.referral-section .signature-block strong {
+  font-size: 5.1pt;
+}
+
+.counter-referral {
+  padding-top: 1.2mm;
+}
+
+.exames-body {
+  display: flex;
+  min-height: 160mm;
+  flex-direction: column;
+}
+
+.exames-main-title {
+  margin-top: 3mm;
+  margin-bottom: 5mm;
+  font-style: normal;
+}
+
+.exames-subtitle {
+  margin: 9mm 0 8mm;
+  font-size: 11pt;
+  text-align: center;
+}
+
+.exam-list {
+  margin: 0 0 7mm 10mm;
+  padding-left: 3mm;
+  font-size: 9.4pt;
+  font-weight: 700;
+  line-height: 1.23;
+}
+
+.exames-body .request-field {
+  height: 15mm;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border: 0.28mm solid #999;
+  resize: none;
+}
+
+.form-footer-row {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  align-items: end;
+  gap: 4mm;
+  margin-top: auto;
+}
+
+.form-footer-row .signature-block {
+  width: 100%;
+  margin: 0;
+}
+
+.free-exams-document {
+  display: flex;
+  min-height: 160mm;
+  flex-direction: column;
+}
+
+.free-exams-identification {
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: end;
+}
+
+.free-exams-identification .field-row {
+  flex-direction: column;
+  align-items: start;
+}
+
+.textarea-large {
+  height: 32mm;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border: 0.28mm solid #999;
+  resize: none;
+}
+
+.free-exams-document .field-row:has(.textarea-large) {
+  align-items: stretch;
+  flex-direction: column;
+  margin-top: 3mm;
+}
+
+.text-request-document,
+.supplies-document {
+  display: flex;
+  min-height: 160mm;
+  flex-direction: column;
+}
+
+.request-title {
+  margin-top: 2mm;
+  font-style: normal;
+}
+
+.text-request-document > h3 {
+  margin: 5mm 0;
+  font-size: 11pt;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.request-paragraph {
+  margin: 2.2mm 0 !important;
+  font-size: 8pt;
+  line-height: 1.45;
+  text-align: justify;
+}
+
+.fixed-cid {
+  margin-top: 14mm !important;
+}
+
+.text-request-document .form-footer-row,
+.supplies-document .form-footer-row {
+  margin-top: auto;
+}
+
+.supply-items {
+  display: grid;
+  gap: 3mm;
+  margin: 5mm 7mm;
+}
+
+.supply-items .field-row {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.supply-items .form-control,
+.supply-items .mirror-value {
+  max-width: 25mm;
+}
+
+.choice-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6mm;
+  margin: 1.2mm 0;
+  font-weight: 700;
+}
+
+.choice-line input,
+.radio-group input {
+  width: 4mm;
+  height: 4mm;
+  margin: 0;
+  accent-color: #000;
+}
+
+.choice-mirror {
+  flex: 0 0 auto;
+  width: 4mm;
+  font-size: 10pt;
+  line-height: 1;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  min-width: 0;
+  margin: 1mm 0;
+  padding: 1mm 1.5mm;
+  border: 0.25mm solid #777;
+}
+
+.radio-group legend,
+.radio-group strong {
+  padding: 0 1mm;
+  font-weight: 800;
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8mm;
+}
+
+.mirror-radio {
+  min-height: 7mm;
+}
+
+.table-input,
+.table-mirror {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  min-height: 4.5mm;
+  padding: 0.35mm;
+  overflow: visible;
+  color: #000;
+  background: transparent;
+  border: 0;
+  font: 700 6pt/1 Arial, sans-serif;
+  text-align: center;
+}
+
+.table-document {
+  height: 100%;
+  min-height: 0;
+}
+
+.table-document-title {
+  margin: 1mm 0 2mm;
+  font-size: 9.2pt;
+  text-align: center;
+}
+
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.form-table th,
+.form-table td {
+  padding: 0;
+  border: 0.25mm solid #111;
+}
+
+.form-table th {
+  padding: 1.1mm 0.5mm;
+  font-size: 6.4pt;
+  line-height: 1.05;
+}
+
+.pa-table td {
+  position: relative;
+  height: 8.4mm;
+}
+
+.pa-table th:first-child,
+.pa-table td:first-child {
+  width: 19%;
+}
+
+.measurement-index {
+  position: absolute;
+  top: 0.6mm;
+  left: 0.7mm;
+  font-size: 5.2pt;
+}
+
+.pa-table .table-input,
+.pa-table .table-mirror {
+  padding-left: 4mm;
+}
+
+.insulin-document {
+  height: 100%;
+  color: #19354f;
+  background: #f7fafc;
+}
+
+.insulin-header {
+  margin: -2.2mm -2.3mm 2mm;
+  padding: 4mm 5mm;
+  color: #fff;
+  background: #193b5d;
+  border-left: 3mm solid #169286;
+}
+
+.insulin-header h2 {
+  margin: 0;
+  font-size: 12pt;
+  letter-spacing: 0.06em;
+}
+
+.insulin-header p {
+  margin: 1mm 0 0;
+  font-size: 6.5pt;
+}
+
+.insulin-identification {
+  display: grid;
+  grid-template-columns: 1.4fr 0.75fr 0.75fr;
+  gap: 1.5mm;
+}
+
+.insulin-identification .field-row {
+  align-items: start;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dose-schedule {
+  display: grid;
+  gap: 1.8mm;
+  margin: 2mm 0;
+}
+
+.dose-row {
+  display: grid;
+  grid-template-columns: 8mm minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2mm;
+  min-height: 22mm;
+  padding: 2mm 2.5mm;
+  background: #fff;
+  border: 0.25mm solid #c9d5df;
+  border-radius: 3mm;
+}
+
+.dose-number {
+  display: grid;
+  width: 7mm;
+  height: 7mm;
+  place-items: center;
+  color: #fff;
+  background: #173b5b;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.dose-period {
+  display: flex;
+  min-width: 34mm;
+  flex-direction: column;
+  gap: 1mm;
+}
+
+.dose-period strong {
+  font-size: 8pt;
+}
+
+.dose-period small {
+  color: #61778c;
+  font-size: 5.5pt;
+}
+
+.dose-fields {
+  display: flex;
+  gap: 1.4mm;
+}
+
+.dose-field {
+  display: grid;
+  grid-template-columns: 1fr 5mm;
+  align-items: end;
+  width: 31mm;
+  padding: 1.4mm;
+  border: 0.45mm solid #1870b5;
+  border-radius: 2.2mm;
+}
+
+.dose-field > span {
+  grid-column: 1 / -1;
+  color: #1870b5;
+  font-size: 5.8pt;
+  font-weight: 900;
+  text-align: center;
+}
+
+.dose-field .form-control,
+.dose-field .mirror-value {
+  height: 7mm;
+  text-align: center;
+}
+
+.dose-regular {
+  border-color: #ef6c28;
+}
+
+.dose-regular > span {
+  color: #ef6c28;
+}
+
+.insulin-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2mm;
+  padding: 2mm;
+  color: #234b58;
+  background: #e8f6f3;
+  border: 0.25mm solid #95cec6;
+  border-radius: 2mm;
+  font-size: 5.8pt;
+  font-weight: 700;
+}
+
+.insulin-types p {
+  margin: 0;
+}
+
+.hypo-box {
+  margin-top: 2mm;
+  padding: 2mm 2.5mm;
+  color: #3d2b21;
+  background: #fff0e7;
+  border: 0.25mm solid #efa56f;
+  border-radius: 2.5mm;
+}
+
+.hypo-box h3,
+.hypo-box p {
+  margin: 0 0 1mm;
+}
+
+.hypo-box h3 {
+  color: #e56225;
+  font-size: 7.8pt;
+}
+
+.hypo-box ol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5mm;
+  margin: 1mm 0;
+  padding-left: 5mm;
+  font-size: 5.4pt;
+  font-weight: 700;
+}
+
+.hypo-box > strong {
+  display: block;
+  margin: 1mm -2.5mm -2mm;
+  padding: 1.2mm;
+  color: #fff;
+  background: #d33b3b;
+  border-radius: 0 0 2mm 2mm;
+  font-size: 6pt;
+  text-align: center;
+}
+
+.empty-model-note {
+  margin: 0 0 2mm;
+  color: #42504e;
+  font-size: 5.8pt;
+  text-align: center;
+}
+
+.plan-identification {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 2mm;
+  margin-bottom: 2mm;
+}
+
+.plan-identification .field-row {
+  align-items: start;
+  flex-direction: column;
+  gap: 0;
+}
+
+.medication-table th:first-child {
+  width: 24%;
+}
+
+.medication-table th:last-child {
+  width: 19%;
+}
+
+.medication-table th {
+  font-size: 5.1pt;
+}
+
+.medication-table td {
+  height: 20mm;
+}
+
+.medication-table .table-input,
+.medication-table .table-mirror {
+  font-size: 5.4pt;
+  text-align: left;
+}
+
+.schedule-legend {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1mm;
+  margin-top: 2mm;
+  font-size: 5.2pt;
+  font-weight: 900;
+  text-align: center;
+}
+
+.glycemia-document {
+  padding-top: 1mm;
+}
+
+.glycemia-title {
+  margin: 0 0 3mm;
+  color: #168ba5;
+  font-size: 12pt;
+  text-align: center;
+}
+
+.glycemia-table th {
+  height: 15mm;
+  color: #4d8994;
+  font-size: 4.7pt;
+  font-style: italic;
+}
+
+.glycemia-table td {
+  height: 8.1mm;
+  border-color: #777;
+}
+
+.glycemia-table .table-input,
+.glycemia-table .table-mirror {
+  min-height: 0;
+  font-size: 4.8pt;
+}
+
+.basic-sus-header .institution-line {
+  border-bottom: 0.35mm solid #111;
+}
+
+.mrpa-document .field-row {
+  margin-bottom: 4mm;
+}
+
+.mrpa-table {
+  margin-bottom: 10mm;
+}
+
+.mrpa-table th {
+  height: 8mm;
+}
+
+.mrpa-table td {
+  height: 16mm;
+}
+
+.preset-prescription {
+  display: flex;
+  min-height: 160mm;
+  flex-direction: column;
+}
+
+.prescription-title {
+  margin-bottom: 3mm;
+  font-style: normal;
+}
+
+.prescription-sections {
+  margin-top: 2mm;
+}
+
+.prescription-section {
+  margin: 2.2mm 0;
+}
+
+.prescription-section > h3,
+.recommendations h3 {
+  margin: 1mm 0;
+  font-size: 7pt;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.prescription-section .choice-line {
+  margin-bottom: 0.2mm;
+  font-size: 6pt;
+}
+
+.prescription-item {
+  margin: 1mm 0 1.6mm;
+}
+
+.medicine-line {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: end;
+  gap: 1mm;
+  margin: 0;
+  font-size: 6.8pt;
+}
+
+.medicine-line > span {
+  border-bottom: 0.2mm dashed #333;
+}
+
+.dosage-line {
+  margin: 0.7mm 0 0;
+  font-size: 6.1pt;
+}
+
+.prescription-item > .field-row {
+  max-width: 52mm;
+  min-height: 5mm;
+  margin: 0.5mm 0;
+  font-size: 5.5pt;
+}
+
+.prescription-item > .field-row .form-control,
+.prescription-item > .field-row .mirror-value {
+  height: 4.8mm;
+  font-size: 6pt;
+}
+
+.item-subtitle {
+  margin: 1mm 0;
+  font-size: 6.1pt;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.inline-dose {
+  display: inline-block;
+  width: 25mm;
+  vertical-align: bottom;
+}
+
+.inline-dose .form-control,
+.inline-dose .mirror-value {
+  display: inline-block;
+  height: 4.5mm;
+}
+
+.recommendations {
+  margin-top: 1mm;
+  font-size: 5.5pt;
+}
+
+.recommendations ul {
+  margin: 1mm 0;
+  padding-left: 5mm;
+}
+
+.recommendations li {
+  margin: 0.6mm 0;
+}
+
+.prescription-footer {
+  margin-top: auto;
+}
+
+.special-prescription {
+  position: relative;
+  min-height: 160mm;
+}
+
+.special-copy-label {
+  margin: 0 0 1mm;
+  font-size: 6.2pt;
+  font-weight: 900;
+  text-align: right;
+}
+
+.issuer-box {
+  padding: 1.8mm;
+  border: 0.35mm solid #111;
+  font-size: 6pt;
+  text-align: center;
+}
+
+.issuer-box h3,
+.issuer-box p {
+  margin: 0.35mm 0;
+}
+
+.issuer-box strong {
+  display: block;
+  margin: 1mm 0;
+}
+
+.special-title {
+  margin: 3mm 0;
+  font-style: normal;
+}
+
+.special-patient-fields .field-row:has(.textarea-large) {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.special-patient-fields .textarea-large {
+  height: 42mm;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 6.2mm, #777 6.35mm, transparent 6.55mm);
+  border: 0;
+}
+
+.special-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5mm;
+  margin-top: 3mm;
+}
+
+.buyer-box,
+.supplier-box {
+  min-height: 45mm;
+  padding: 1.5mm;
+  border: 0.3mm solid #111;
+}
+
+.buyer-box h3,
+.supplier-box h3 {
+  margin: 0 0 1.5mm;
+  font-size: 6pt;
+  text-align: center;
+}
+
+.buyer-box .field-row {
+  min-height: 4.5mm;
+}
+
+.buyer-box .form-control,
+.buyer-box .mirror-value {
+  height: 4.2mm;
+  font-size: 6pt;
+}
+
+.supplier-box .signature-block {
+  width: 100%;
+  margin-top: 20mm;
+}
+
+.supplier-box p {
+  font-size: 5.5pt;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 1rem, 1220px);
+    padding-top: 1rem;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .privacy-badge {
+    max-width: 100%;
+  }
+
+  .toolbar {
+    align-items: stretch;
+    top: 0.25rem;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+  }
+
+  .toolbar-actions .button {
+    flex: 1;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    background: #fff;
+  }
+
+  body[data-impressao-bloqueada="true"] .print-sheet {
+    display: none;
+  }
+
+  body[data-impressao-bloqueada="true"]::after {
+    display: block;
+    padding: 20mm;
+    color: #000;
+    content: 'Impressão bloqueada. Use o botão Validar e imprimir do formulário.';
+    font: 700 16pt/1.4 Arial, sans-serif;
+  }
+
+  .skip-link,
+  .app-header,
+  .toolbar,
+  .app-alert,
+  .screen-copy-note {
+    display: none !important;
+  }
+
+  .app-shell,
+  .paper-viewport {
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .print-sheet {
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    break-after: avoid;
+    break-before: avoid;
+    break-inside: avoid;
+    page-break-after: avoid;
+    page-break-before: avoid;
+    page-break-inside: avoid;
+  }
+
+  .is-editable .form-control {
+    background: transparent;
+  }
+}

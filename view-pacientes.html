@@ -1,0 +1,104 @@
+<!-- ============================================================================
+     view-pacientes.html — MIOLO da view "Pacientes e atendimentos" (F4')
+     ----------------------------------------------------------------------------
+     ORIGEM: pacientes.html (doador intacto, não tocado). Só o miolo do módulo —
+     sem documento/cabeçalho/corpo/appbar/scripts.
+     COSTURA (claude): entra dentro de <main id="patientsView" hidden> no hub;
+     motor: js/pacientes-view.js (raiz escopada nesses IDs).
+     MUDANÇAS vs doador (detalhe e evidência em RELATORIO-KIMI-F4.md):
+       1. Botões "Exportar cópia" / "Importar de um arquivo" + input de arquivo
+          estavam na appbar do doador (pacientes.html:20-22) → realocados nesta
+          linha de ações, mesmos IDs.
+       2. Aba "Dossiê do Orquestrador" (pacientes.html:16-19 e :104-108) REMOVIDA —
+          o dossiê já vive no hub (index-f2.html:258 #draOrqMount).
+       3. Link "← Hub" (pacientes.html:14) removido — navegação é do hub.
+       4. "Novo atendimento" virou <button> (era âncora com href montado em
+          pacientes.html:182) — navegação por window.HubNav no motor.
+       5. Sem CSS novo: classes f2-* já existentes cobrem tudo.
+     ============================================================================ -->
+
+  <!-- Aviso de primeira abertura: onde os dados ficam -->
+  <div class="f2-aviso" id="avisoPrivacidade" hidden>
+    <strong>Onde ficam os dados?</strong> Os dados ficam salvos <strong>neste computador, neste
+    navegador</strong>. Nada vai para a internet. Use sempre o mesmo navegador. Para trocar de
+    computador: toque em <strong>Exportar cópia</strong>, leve o arquivo e toque em
+    <strong>Importar</strong> no outro computador.
+    <div style="margin-top:10px"><button type="button" class="f2-btn f2-btn-secundario" id="btnAvisoOk">Entendi</button></div>
+  </div>
+
+  <!-- Ações de cópia de segurança (realocadas da appbar do doador) -->
+  <div class="f2-form-acoes" style="margin:0 0 12px">
+    <button type="button" class="f2-btn f2-btn-secundario" id="btnExportar">Exportar cópia</button>
+    <button type="button" class="f2-btn f2-btn-secundario" id="btnImportar">Importar de um arquivo</button>
+    <input type="file" id="inpArquivo" accept="application/json,.json" hidden>
+  </div>
+
+  <div class="f2-wrap" id="abaPacientes">
+
+    <div class="f2-card" id="cardLista">
+      <div class="f2-form" style="margin:0;background:transparent;padding:0">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input type="text" class="f2-busca" id="inpBusca" placeholder="Buscar paciente pelo nome…" autocomplete="off" style="flex:1;min-width:220px">
+          <button type="button" class="f2-btn f2-btn-primario" id="btnNovo">＋ Novo paciente</button>
+        </div>
+
+        <!-- Cadastro: só o nome é obrigatório -->
+        <div id="formNovo" hidden style="margin-top:12px;background:var(--f2-bg);border-radius:12px;padding:14px">
+          <label for="novoNome">Nome do paciente</label>
+          <input type="text" id="novoNome" autocomplete="off">
+          <label for="novoNasc">Nascimento <span class="f2-opcional">(opcional)</span></label>
+          <input type="date" id="novoNasc">
+          <label for="novoCns">Cartão SUS <span class="f2-opcional">(opcional)</span></label>
+          <input type="text" id="novoCns" autocomplete="off">
+          <div class="f2-form-erro" id="erroNovo" role="alert"></div>
+          <div class="f2-form-acoes">
+            <button type="button" class="f2-btn f2-btn-primario" id="btnSalvarNovo">Salvar paciente</button>
+            <button type="button" class="f2-btn f2-btn-secundario" id="btnCancelarNovo">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="f2-lista" id="listaPacientes"></div>
+
+      <div class="f2-dra-rodape" style="margin-top:16px">
+        <span class="f2-onde" id="infoStorage">Guardado neste computador, neste navegador.</span>
+        <button type="button" class="f2-btn f2-btn-perigo" id="btnApagarTudo">Apagar tudo</button>
+      </div>
+    </div>
+
+    <!-- Ficha do paciente (linha do tempo) -->
+    <div id="ficha" hidden>
+      <div class="f2-card">
+        <div class="f2-form" style="margin:0;background:transparent;padding:0">
+          <button type="button" class="f2-btn f2-btn-secundario" id="btnVoltarLista">← Voltar à lista</button>
+          <h2 id="fichaNome" style="margin:12px 0 2px"></h2>
+          <p style="margin:0"><span class="f2-pasta-selo">Pasta: por paciente</span></p>
+          <p id="fichaDetalhe" style="color:var(--f2-muted);margin:0 0 10px"></p>
+          <div class="f2-form-acoes">
+            <button type="button" class="f2-btn f2-btn-primario" id="btnNovoAtendimento">＋ Novo atendimento</button>
+            <button type="button" class="f2-btn f2-btn-secundario" id="btnEditarPac">Editar dados</button>
+            <button type="button" class="f2-btn f2-btn-perigo" id="btnApagarPac">Apagar paciente</button>
+          </div>
+          <div id="formEditar" hidden style="margin-top:12px;background:var(--f2-bg);border-radius:12px;padding:14px">
+            <label for="edNome">Nome do paciente</label>
+            <input type="text" id="edNome" autocomplete="off">
+            <label for="edNasc">Nascimento <span class="f2-opcional">(opcional)</span></label>
+            <input type="date" id="edNasc">
+            <label for="edCns">Cartão SUS <span class="f2-opcional">(opcional)</span></label>
+            <input type="text" id="edCns" autocomplete="off">
+            <div class="f2-form-erro" id="erroEditar" role="alert"></div>
+            <div class="f2-form-acoes">
+              <button type="button" class="f2-btn f2-btn-primario" id="btnSalvarEdicao">Salvar</button>
+              <button type="button" class="f2-btn f2-btn-secundario" id="btnCancelarEdicao">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="f2-card">
+        <h3 style="margin:0 0 6px">Linha do tempo</h3>
+        <p style="margin:0;color:var(--f2-muted);font-size:.92rem">Os atendimentos e receitas deste paciente, do mais recente ao mais antigo. Os nomes de doença abrem a pasta da doença.</p>
+        <div class="f2-tl" id="timeline"></div>
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,125 @@
+<!-- ============================================================================
+     view-atendimento.html — MIOLO da view "Atendimento — nota SOAP" (F4')
+     ----------------------------------------------------------------------------
+     ORIGEM: atendimento.html (doador intacto, não tocado). Só o miolo do módulo —
+     sem documento/cabeçalho/corpo/appbar/scripts.
+     COSTURA (claude): entra dentro de <main id="encounterView" hidden> no hub;
+     motor: js/atendimento-view.js (raiz escopada nesses IDs).
+     MUDANÇAS vs doador (detalhe e evidência em RELATORIO-KIMI-F4.md):
+       1. Título + "Imprimir" + "Salvar" estavam na appbar do doador
+          (atendimento.html:14-20) → realocados nesta linha de cabeçalho, mesmos
+          IDs. Os links "← Hub" / "Pacientes" (appbar) ficaram fora — navegação
+          é do hub.
+       2. h1 → h2 (hierarquia de headings sob o hub), mesmo id="tituloPagina".
+       3. A folha de impressão (#folha, atendimento.html:117) continua no fim do
+          miolo; no hub ela é roteada ao #printPortal pelo motor (f2.css:251).
+       4. Peso decimal pt-BR preservado: #triPeso é type="text" inputmode="decimal"
+          (fix do dia, atendimento.html:85).
+       5. Sem CSS novo: classes f2-* já existentes cobrem tudo.
+     ============================================================================ -->
+
+  <!-- Cabeçalho da view: título + ações (realocados da appbar do doador) -->
+  <div class="f2-card">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <h2 id="tituloPagina" style="margin:0;flex:1;min-width:220px">Novo atendimento</h2>
+      <button type="button" class="f2-btn f2-btn-secundario" id="btnImprimir">Imprimir</button>
+      <button type="button" class="f2-btn f2-btn-primario" id="btnSalvar">Salvar</button>
+    </div>
+  </div>
+
+  <div class="f2-wrap">
+
+    <!-- Paciente: seletor + criar sem sair da tela -->
+    <div class="f2-card">
+      <div class="f2-form" style="margin:0;background:transparent;padding:0">
+        <label for="buscaPaciente">Buscar paciente</label>
+        <input type="search" class="f2-busca" id="buscaPaciente" placeholder="Digite nome, CNS ou CPF…" autocomplete="off" aria-controls="resPaciente" aria-expanded="false">
+        <div class="f2-chip-busca-resultados" id="resPaciente" role="listbox" aria-label="Pacientes encontrados" hidden></div>
+        <label for="selPaciente" style="margin-top:10px">Ou escolha na lista completa</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <select id="selPaciente" style="flex:1;min-width:220px;padding:12px 14px;font-size:1.05rem;border:1px solid var(--f2-line);border-radius:10px;font-family:inherit;background:#fff">
+            <option value="">— Escolha o paciente —</option>
+          </select>
+          <button type="button" class="f2-btn f2-btn-secundario" id="btnNovoPac">＋ Novo paciente</button>
+        </div>
+
+        <!-- Cadastro em linha: só o nome é obrigatório -->
+        <div id="novoPacForm" hidden style="margin-top:10px;background:var(--f2-bg);border-radius:12px;padding:14px">
+          <label for="npNome">Nome do paciente</label>
+          <input type="text" id="npNome" autocomplete="off">
+          <label for="npNasc">Nascimento <span class="f2-opcional">(opcional)</span></label>
+          <input type="date" id="npNasc">
+          <label for="npCns">Cartão SUS <span class="f2-opcional">(opcional)</span></label>
+          <input type="text" id="npCns" autocomplete="off">
+          <label for="npCpf">CPF <span class="f2-opcional">(opcional)</span></label>
+          <input type="text" id="npCpf" inputmode="numeric" autocomplete="off">
+          <div class="f2-form-erro" id="npErro" role="alert"></div>
+          <div class="f2-form-acoes">
+            <button type="button" class="f2-btn f2-btn-primario" id="npSalvar">Salvar paciente</button>
+            <button type="button" class="f2-btn f2-btn-secundario" id="npCancelar">Cancelar</button>
+          </div>
+        </div>
+
+        <div id="fichaPaciente" hidden style="margin-top:10px;background:var(--f2-bg);border-radius:12px;padding:14px">
+          <label for="inpCpf">CPF da ficha <span class="f2-opcional">(opcional — será guardado ao salvar o atendimento)</span></label>
+          <input type="text" id="inpCpf" inputmode="numeric" autocomplete="off">
+        </div>
+
+        <label for="inpData" style="margin-top:14px">Data e hora</label>
+        <input type="datetime-local" id="inpData">
+      </div>
+    </div>
+
+    <!-- Doenças vinculadas: chips com busca -->
+    <div class="f2-card">
+      <div class="f2-form" style="margin:0;background:transparent;padding:0">
+        <label for="inpDoenca">Doenças deste atendimento <span class="f2-opcional">(opcional — busque e toque para vincular)</span></label>
+        <input type="text" id="inpDoenca" placeholder="Ex.: ITU, asma, hipertensão…" autocomplete="off">
+        <div class="f2-chip-busca-resultados" id="resDoenca" hidden></div>
+        <div class="f2-chips" id="chipsDoenca" style="margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- SOAP nas 4 cores PEC -->
+    <div class="f2-soap">
+      <section class="f2-soap-bloco f2-soap-s">
+        <h3><span class="f2-letra">S</span> Subjetivo — o que o paciente conta</h3>
+        <textarea id="txS" placeholder="Queixa, história, sintomas relatados…"></textarea>
+      </section>
+      <section class="f2-soap-bloco f2-soap-o">
+        <h3><span class="f2-letra">O</span> Objetivo — o que você observa e mede</h3>
+        <p class="f2-cids-nota" id="avisoTriagemAnterior" hidden><strong>Valores da última consulta.</strong> Confira e ajuste antes de salvar.</p>
+        <div class="f2-triagem">
+          <div class="f2-tri-campo"><label for="triPeso">Peso (kg)</label><input type="text" id="triPeso" inputmode="decimal" autocomplete="off"></div>
+          <div class="f2-tri-campo"><label for="triAltura">Altura (cm)</label><input type="number" id="triAltura" min="0" step="1" inputmode="numeric"></div>
+          <div class="f2-tri-campo f2-tri-imc"><label for="triImc">IMC (automático)</label><input type="text" id="triImc" readonly tabindex="-1" placeholder="—"><span class="f2-tri-imc-classe" id="triImcClasse"></span></div>
+          <div class="f2-tri-campo"><label for="triCirc">Circ. abdominal (cm)</label><input type="number" id="triCirc" min="0" step="1" inputmode="numeric"></div>
+          <div class="f2-tri-campo"><label for="triGlic">Glicemia capilar</label><input type="number" id="triGlic" min="0" step="1" inputmode="numeric"></div>
+          <div class="f2-tri-campo"><label for="triPA">Pressão arterial</label><input type="text" id="triPA" placeholder="ex.: 120x80" autocomplete="off"></div>
+          <div class="f2-tri-campo"><label for="triOxi">Oximetria (%)</label><input type="number" id="triOxi" min="0" max="100" step="1" inputmode="numeric"></div>
+        </div>
+        <textarea id="txO" placeholder="Exame físico, sinais vitais, resultados…"></textarea>
+      </section>
+      <section class="f2-soap-bloco f2-soap-a">
+        <h3><span class="f2-letra">A</span> Avaliação — o seu raciocínio</h3>
+        <textarea id="txA" placeholder="Hipóteses, diagnóstico, gravidade…"></textarea>
+        <div class="f2-cids">
+          <h4>CIDs do paciente e das doenças vinculadas <span class="f2-cids-aviso">sugestões — conferir</span></h4>
+          <div id="cidSugestoes"></div>
+          <p class="f2-cids-nota">Somente os CIDs tocados pela médica serão guardados na ficha.</p>
+        </div>
+      </section>
+      <section class="f2-soap-bloco f2-soap-p">
+        <h3><span class="f2-letra">P</span> Plano — o que fica decidido</h3>
+        <textarea id="txP" placeholder="Prescrição, exames, orientações, retorno…"></textarea>
+      </section>
+    </div>
+
+    <div class="f2-form-acoes" style="margin-top:16px">
+      <button type="button" class="f2-btn f2-btn-primario" id="btnSalvar2">Salvar</button>
+      <button type="button" class="f2-btn f2-btn-secundario" id="btnApagar" hidden>Apagar atendimento</button>
+    </div>
+  </div>
+
+  <!-- Folha de impressão: escondida na tela; no hub, o motor a roteia ao #printPortal -->
+  <section class="f2-print-sheet" id="folha"></section>

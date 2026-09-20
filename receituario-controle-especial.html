@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receituário de Controle Especial — Anexo XVII (2 vias)</title>
+<style>
+  :root{
+    --ink:#000;
+    --line:.35mm solid #000;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ background:#3a3d42; }
+  body{ font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; color:var(--ink); }
+
+  /* ============ TOOLBAR (somente tela) ============ */
+  .toolbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    padding:12px 18px;
+    background:rgba(24,26,30,.92); backdrop-filter:blur(10px);
+    color:#e8e8ec; border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .toolbar h1{ font-size:14px; font-weight:600; letter-spacing:.02em; margin-right:auto; }
+  .toolbar h1 small{ display:block; font-size:11px; font-weight:400; color:#9a9aa3; margin-top:2px; }
+  .btn{
+    font:inherit; font-size:13px; font-weight:600;
+    padding:8px 16px; border-radius:9px; border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.08); color:#e8e8ec; cursor:pointer;
+  }
+  .btn.primary{ background:#0a84ff; border-color:#0a84ff; color:#fff; }
+  .btn:active{ transform:translateY(1px); }
+  .status{ width:100%; font-size:12px; color:#ffb84d; display:none; }
+  .status.show{ display:block; }
+
+  /* ============ FOLHA A4 PAISAGEM ============ */
+  .stage{ display:flex; justify-content:center; padding:22px 10px 60px; }
+  .sheet{
+    width:297mm; height:210mm; flex:0 0 auto;
+    background:#fff; box-shadow:0 8px 40px rgba(0,0,0,.45);
+    display:flex; position:relative;
+  }
+  .via{
+    width:148.5mm; height:210mm;
+    padding:8mm 7mm 7mm 7mm;
+    display:flex; flex-direction:column;
+  }
+  .cutline{
+    position:absolute; left:148.5mm; top:0; height:210mm; width:0;
+    border-left:.25mm dashed #777;
+  }
+  .cutline::before{
+    content:"\2702"; position:absolute; top:2mm; left:-2.2mm;
+    font-size:3.4mm; color:#777; background:#fff; line-height:1;
+  }
+
+  /* ============ DOCUMENTO ============ */
+  .doc-title{
+    text-align:center; font-size:12.5pt; font-weight:700;
+    letter-spacing:.08em; text-transform:uppercase;
+  }
+  .via-tag{
+    text-align:center; font-size:7pt; letter-spacing:.14em;
+    color:#000; margin-top:1mm; font-weight:600;
+  }
+
+  .top{ display:flex; gap:3mm; margin-top:2.5mm; }
+  .emitente{
+    flex:1 1 62%; border:var(--line); padding:2mm 2.5mm 2.2mm;
+  }
+  .box-label{
+    font-size:6.8pt; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  }
+  .vias-box{
+    flex:1 1 38%; border:var(--line); padding:2mm 2.5mm;
+    display:flex; flex-direction:column; justify-content:center; gap:1.6mm;
+  }
+  .vias-box p{ font-size:7.6pt; font-weight:700; line-height:1.25; }
+
+  .frow{ display:flex; align-items:flex-end; gap:2mm; margin-top:1.6mm; }
+  .frow .lbl{ font-size:7.4pt; white-space:nowrap; padding-bottom:.4mm; }
+  .field{
+    font:inherit; font-size:9.5pt; color:var(--ink);
+    border:0; border-bottom:var(--line); background:transparent;
+    width:100%; min-width:0; padding:0 0 .4mm 0; border-radius:0;
+    outline:none;
+  }
+  .field:focus{ background:#fffbe0; }
+  .field.miss{ background:#ffe3e3; }
+  .w-sm{ flex:0 0 16mm; } .w-md{ flex:0 0 26mm; } .w-lg{ flex:1 1 auto; }
+
+  .pac{ margin-top:2.6mm; }
+
+  .rx{ margin-top:2.6mm; flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
+  .rx .box-label{ font-size:8pt; }
+  .rx textarea{
+    flex:1 1 auto; width:100%; resize:none; border:0; outline:none;
+    font:inherit; font-size:10.5pt; line-height:1.5; color:var(--ink);
+    background:transparent; padding:1.2mm 0 0 0; overflow:hidden;
+  }
+  .rx textarea:focus{ background:#fffbe0; }
+  .rx textarea.miss{ background:#ffe3e3; }
+  .rx textarea.overflow{ background:#ffe3e3; }
+
+  .sign{ display:flex; gap:6mm; align-items:flex-end; margin-top:2mm; }
+  .sign .date{ flex:0 0 40mm; }
+  .sign .sig{ flex:1 1 auto; text-align:center; }
+  .sigline{ border-top:var(--line); padding-top:.8mm; font-size:7pt; letter-spacing:.03em; }
+
+  .bottom{ display:flex; gap:3mm; margin-top:3mm; }
+  .comprador,.fornecedor{ border:var(--line); padding:2mm 2.5mm 2.2mm; }
+  .comprador{ flex:1 1 56%; }
+  .fornecedor{ flex:1 1 44%; display:flex; flex-direction:column; }
+  .blank{ border-bottom:var(--line); height:4.6mm; flex:1 1 auto; }
+  .frow.static .lbl{ font-size:7pt; }
+  .frow.static .blank{ height:4.2mm; }
+  .fornecedor .spacer{ flex:1 1 auto; min-height:8mm; }
+  .fornecedor .sigline{ margin-top:1mm; }
+  .fornecedor .fdate{ font-size:7pt; margin-top:1.6mm; }
+
+  /* Via 2 = espelho somente leitura */
+  .via[data-via="2"] .field,
+  .via[data-via="2"] textarea{ pointer-events:none; }
+
+  /* ============ IMPRESSÃO ============ */
+  @media print{
+    @page{ size:A4 landscape; margin:0; }
+    html,body{ background:#fff; }
+    .toolbar{ display:none !important; }
+    .stage{ display:block; padding:0; }
+    .sheet{ box-shadow:none; width:297mm; height:210mm; }
+    .field:focus,.rx textarea:focus{ background:transparent; }
+    .field.miss,.rx textarea.miss,.rx textarea.overflow{ background:transparent; }
+  }
+
+  /* Tela pequena: permitir rolagem horizontal */
+  @media screen and (max-width:1200px){
+    .stage{ justify-content:flex-start; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <h1>Receituário de Controle Especial — Anexo XVII (Port. SVS/MS 344/1998)
+    <small>Preencha a 1ª via (esquerda) — a 2ª via espelha automaticamente. Comprador e fornecedor: preenchidos pela farmácia. Carimbo e assinatura: à mão. Prescreva por DCB, com quantidade em algarismos e por extenso.</small>
+  </h1>
+  <button class="btn" id="btnClear" type="button">Limpar</button>
+  <button class="btn primary" id="btnPrint" type="button">Imprimir</button>
+  <div class="status" id="status" role="alert"></div>
+</div>
+
+<noscript><p style="color:#fff;text-align:center;padding:20px">Este documento requer JavaScript para o espelhamento da 2ª via.</p></noscript>
+
+<div class="stage">
+  <div class="sheet" id="sheet">
+    <div class="cutline" aria-hidden="true"></div>
+  </div>
+</div>
+
+<template id="via-tpl">
+  <section class="via">
+    <div class="doc-title">Receituário de Controle Especial</div>
+    <div class="via-tag" data-slot="viatag"></div>
+
+    <div class="top">
+      <div class="emitente">
+        <div class="box-label">Identificação do Emitente</div>
+        <div class="frow"><span class="lbl">Nome completo:</span><input class="field w-lg" data-f="emit_nome" data-req="1" autocomplete="off"></div>
+        <div class="frow">
+          <span class="lbl">CRM:</span><input class="field w-md" data-f="emit_crm" data-req="1" autocomplete="off">
+          <span class="lbl">UF:</span><input class="field w-sm" data-f="emit_uf" data-req="1" autocomplete="off">
+        </div>
+        <div class="frow"><span class="lbl">Instituição:</span><input class="field w-lg" data-f="emit_inst" autocomplete="off"><span class="lbl">CNES:</span><input class="field w-md" data-f="emit_cnes" autocomplete="off"></div>
+        <div class="frow"><span class="lbl">Endereço completo e telefone:</span><input class="field w-lg" data-f="emit_end" data-req="1" autocomplete="off"></div>
+        <div class="frow">
+          <span class="lbl">Cidade:</span><input class="field w-lg" data-f="emit_cidade" data-req="1" autocomplete="off">
+          <span class="lbl">UF:</span><input class="field w-sm" data-f="emit_cidade_uf" data-req="1" autocomplete="off">
+        </div>
+      </div>
+      <div class="vias-box">
+        <p>1ª VIA — RETENÇÃO DA FARMÁCIA OU DROGARIA</p>
+        <p>2ª VIA — ORIENTAÇÃO AO PACIENTE</p>
+      </div>
+    </div>
+
+    <div class="pac">
+      <div class="frow"><span class="lbl">Paciente:</span><input class="field w-lg" data-f="pac_nome" data-req="1" autocomplete="off"></div>
+      <div class="frow"><span class="lbl">Endereço:</span><input class="field w-lg" data-f="pac_end" data-req="1" autocomplete="off"></div>
+    </div>
+
+    <div class="rx">
+      <div class="box-label">Prescrição:</div>
+      <textarea data-f="rx" data-req="1" spellcheck="false" autocomplete="off"></textarea>
+    </div>
+
+    <div class="sign">
+      <div class="date frow"><span class="lbl">Data:</span><input class="field" data-f="data" data-req="1" autocomplete="off" style="text-align:center"></div>
+      <div class="sig"><div class="sigline">Assinatura do prescritor (carimbo com CRM)</div></div>
+    </div>
+
+    <div class="bottom">
+      <div class="comprador">
+        <div class="box-label">Identificação do Comprador</div>
+        <div class="frow static"><span class="lbl">Nome:</span><span class="blank"></span></div>
+        <div class="frow static"><span class="lbl">Ident. (CPF/RG):</span><span class="blank"></span><span class="lbl">Órg. emissor:</span><span class="blank" style="flex:0 0 18mm"></span></div>
+        <div class="frow static"><span class="lbl">End.:</span><span class="blank"></span></div>
+        <div class="frow static"><span class="lbl">Cidade:</span><span class="blank"></span><span class="lbl">UF:</span><span class="blank" style="flex:0 0 9mm"></span></div>
+        <div class="frow static"><span class="lbl">Telefone:</span><span class="blank"></span></div>
+      </div>
+      <div class="fornecedor">
+        <div class="box-label">Identificação do Fornecedor</div>
+        <div class="spacer"></div>
+        <div class="sigline">Assinatura do farmacêutico</div>
+        <div class="fdate">Data: ______ / ______ / __________</div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+(function(){
+  "use strict";
+  var sheet = document.getElementById('sheet');
+  var tpl = document.getElementById('via-tpl');
+  var status = document.getElementById('status');
+
+  function buildVia(n){
+    var frag = tpl.content.cloneNode(true);
+    var via = frag.querySelector('.via');
+    via.setAttribute('data-via', String(n));
+    via.querySelector('[data-slot="viatag"]').textContent =
+      n === 1 ? '1ª VIA' : '2ª VIA';
+    if(n === 2){
+      via.querySelectorAll('.field, textarea').forEach(function(el){
+        el.readOnly = true; el.tabIndex = -1; el.setAttribute('aria-hidden','true');
+      });
+    }
+    return via;
+  }
+
+  var via1 = buildVia(1);
+  var via2 = buildVia(2);
+  sheet.insertBefore(via1, sheet.firstChild);
+  sheet.appendChild(via2);
+
+  function f1(key){ return via1.querySelector('[data-f="'+key+'"]'); }
+  function f2(key){ return via2.querySelector('[data-f="'+key+'"]'); }
+  var keys = Array.prototype.map.call(via1.querySelectorAll('[data-f]'), function(el){ return el.getAttribute('data-f'); });
+
+  function mirror(key){ f2(key).value = f1(key).value; }
+  function mirrorAll(){ keys.forEach(mirror); checkOverflow(); }
+
+  via1.addEventListener('input', function(e){
+    var k = e.target.getAttribute && e.target.getAttribute('data-f');
+    if(k){ e.target.classList.remove('miss'); mirror(k); if(k==='rx') checkOverflow(); }
+  });
+
+  /* Máscara leve de data: dd/mm/aaaa */
+  var dataEl = f1('data');
+  dataEl.addEventListener('input', function(){
+    var v = dataEl.value.replace(/[^\d]/g,'').slice(0,8);
+    if(v.length > 4) v = v.slice(0,2)+'/'+v.slice(2,4)+'/'+v.slice(4);
+    else if(v.length > 2) v = v.slice(0,2)+'/'+v.slice(2);
+    dataEl.value = v; mirror('data');
+  });
+
+  function today(){
+    var d = new Date();
+    var p = function(x){ return (x<10?'0':'')+x; };
+    return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear();
+  }
+
+  function checkOverflow(){
+    var t1 = f1('rx'), t2 = f2('rx');
+    var over = t1.scrollHeight > t1.clientHeight + 1;
+    t1.classList.toggle('overflow', over);
+    t2.classList.toggle('overflow', over);
+    if(over){
+      status.textContent = 'Atenção: a prescrição excede a área imprimível da via. Reduza o texto — o excedente NÃO será impresso.';
+      status.classList.add('show');
+    } else if(status.textContent.indexOf('excede') !== -1){
+      status.textContent = ''; status.classList.remove('show');
+    }
+    return over;
+  }
+
+  function clearAll(){
+    keys.forEach(function(k){
+      f1(k).value = ''; f2(k).value = '';
+      f1(k).classList.remove('miss','overflow');
+      f2(k).classList.remove('miss','overflow');
+    });
+    f1('data').value = today(); mirror('data');
+    status.textContent = ''; status.classList.remove('show');
+  }
+
+  document.getElementById('btnClear').addEventListener('click', function(){
+    if(confirm('Limpar todos os campos?')) clearAll();
+  });
+
+  document.getElementById('btnPrint').addEventListener('click', function(){
+    var missing = [];
+    var names = { emit_nome:'Nome do emitente', emit_crm:'CRM', emit_uf:'UF do CRM',
+      emit_end:'Endereço/telefone do emitente', emit_cidade:'Cidade', emit_cidade_uf:'UF',
+      pac_nome:'Nome do paciente', pac_end:'Endereço do paciente', rx:'Prescrição', data:'Data' };
+    keys.forEach(function(k){
+      var el = f1(k);
+      if(el.getAttribute('data-req') && !el.value.trim()){
+        el.classList.add('miss'); missing.push(names[k] || k);
+      }
+    });
+    mirrorAll();
+    if(checkOverflow()){
+      alert('A prescrição excede a área imprimível. Reduza o texto antes de imprimir.');
+      return;
+    }
+    if(missing.length){
+      status.textContent = 'Campos obrigatórios vazios: ' + missing.join(', ') + '.';
+      status.classList.add('show');
+      if(!confirm('Campos obrigatórios vazios:\n\n• ' + missing.join('\n• ') + '\n\nUma receita de controle especial incompleta pode ser recusada pela farmácia. Imprimir mesmo assim?')) return;
+    }
+    window.print();
+  });
+
+  /* Sempre iniciar em branco (inclusive ao voltar do cache do navegador) */
+  window.addEventListener('pageshow', function(){ clearAll(); });
+  clearAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "id": "./",
+  "name": "Receituários Orquestrador",
+  "short_name": "Receituários",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf8f1",
+  "theme_color": "#0f766e",
+  "icons": [{"src": "icone-app.png", "sizes": "any", "type": "image/png", "purpose": "any"}]
+}
