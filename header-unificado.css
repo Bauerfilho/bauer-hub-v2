@@ -1,0 +1,29 @@
+/* As faixas permanecem no DOM original e recebem o mesmo deslocamento. */
+@media screen {
+  body.header-unificado-pronto > header.appbar,
+  body.header-unificado-pronto #workspaceView > .workspace-toolbar {
+    transform: translateY(var(--header-deslocamento, 0px)); /* Move cabeçalho e doença em conjunto. */
+    transition: transform .34s cubic-bezier(.22,.61,.36,1), box-shadow .34s ease; /* Preserva o movimento original. */
+    will-change: transform; /* Prepara somente as duas faixas para a animação. */
+  }
+
+  body.header-unificado-pronto #workspaceView > .workspace-toolbar {
+    top: var(--header-altura, 70px); /* Encosta na altura real do cabeçalho, inclusive após resize. */
+  }
+
+  body.header-unificado-pronto > header.appbar.appbar--raised {
+    box-shadow: 0 10px 28px -16px rgba(21,24,29,.32); /* Mantém a sombra original durante a leitura. */
+  }
+
+  body.header-sem-transicao > header.appbar,
+  body.header-sem-transicao #workspaceView > .workspace-toolbar {
+    transition: none; /* Troca de vista e foco restauram o topo imediatamente. */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body.header-unificado-pronto > header.appbar,
+    body.header-unificado-pronto #workspaceView > .workspace-toolbar {
+      transition: none; /* Mantém a navegação sem animação quando solicitado no sistema. */
+    }
+  }
+}

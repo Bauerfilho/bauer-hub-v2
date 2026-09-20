@@ -1,0 +1,67 @@
+{
+  "base": "http://127.0.0.1:8931",
+  "original": "http://127.0.0.1:8934",
+  "baseline": "7fc911c",
+  "casos": [
+    {
+      "entrada": "index.html",
+      "largura": 1440,
+      "altura": 900,
+      "lateral": "HTML e geometria preservados",
+      "pixelsLateral": "idênticos",
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index.html",
+      "largura": 390,
+      "altura": 844,
+      "lateral": "HTML e geometria preservados",
+      "pixelsLateral": "não aplicável",
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index.html",
+      "largura": 320,
+      "altura": 568,
+      "lateral": "HTML e geometria preservados",
+      "pixelsLateral": "não aplicável",
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index.html",
+      "topicos": 121,
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index-f2.html",
+      "largura": 1440,
+      "altura": 900,
+      "lateral": "HTML e geometria preservados",
+      "pixelsLateral": "idênticos",
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index-f2.html",
+      "largura": 390,
+      "altura": 844,
+      "lateral": "HTML e geometria preservados",
+      "pixelsLateral": "não aplicável",
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index-f2.html",
+      "largura": 320,
+      "altura": 568,
+      "lateral": "HTML e geometria preservados",
+      "pixelsLateral": "não aplicável",
+      "estado": "PASS"
+    },
+    {
+      "entrada": "index-f2.html",
+      "topicos": 121,
+      "estado": "PASS"
+    }
+  ],
+  "erros": [],
+  "estado": "PASS"
+}
