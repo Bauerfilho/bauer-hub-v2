@@ -70,6 +70,8 @@ window.F2 = (() => {
      [Histórico] [Meus esquemas] [SOAP]. Cada botão troca a view do corpo da
      seção; "Meus esquemas" é a view original (padrão ao abrir a doença).
      ========================================================================== */
+  let soapEditado = false; // Só sinaliza edição; nenhum campo sai da memória do módulo.
+  window.OrqPWA?.registerGuard('soap', () => !soapEditado);
   let visaoAtual = 'esquemas'; // 'esquemas' | 'historico' | 'soap'
 
   function renderizarSecao() {
@@ -95,6 +97,7 @@ window.F2 = (() => {
 
     html += '</section>';
     mount.innerHTML = html;
+    soapEditado = false; // A navegação explícita já substituiu o formulário anterior.
     if (visaoAtual === 'soap') ligarFormSoap();
   }
 
@@ -392,6 +395,11 @@ window.F2 = (() => {
     const resPac = mount.querySelector('#f2SoapPacRes');
     const inpCpf = mount.querySelector('#f2SoapCpf');
     const formSoap = mount.querySelector('.f2-soap-form');
+    // Inclui seleção de CID, marcação e preenchimento programático pelos botões.
+    ['input', 'change'].forEach(tipo => formSoap.addEventListener(tipo, () => { soapEditado = true; }));
+    formSoap.addEventListener('click', ev => {
+      if (ev.target.closest('[data-cid],[data-tipo],[data-local],[data-soap-paciente],[data-f2s="hoje"]')) soapEditado = true;
+    }, true);
     let cidsConfirmados = [];
     marcTipo = ''; marcLocal = ''; // marcações zeram a cada render da view
 

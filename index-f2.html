@@ -8,6 +8,10 @@
   <title>Receituários Orquestrador</title>
   <link rel="icon" href="icone-app.png" type="image/png">
   <link rel="apple-touch-icon" href="icone-app.png">
+  <!-- Identidade da publicação e atualização segura dentro desta mesma janela. -->
+  <meta name="orq-release" content="__PWA_RELEASE__">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script src="js/pwa-update.js"></script>
   <style>
     :root {
       --ink:#172033; --muted:#667085; --line:#d8dee9; --paper:#fff;
@@ -1122,6 +1126,8 @@ function backHub(){if(window.OrquestratorDocs)OrquestratorDocs.restaurar();if(wi
        presa a uma doença — o paciente multi-CID soma esquemas de várias doenças
        e monta UMA folha. Cada item guarda a doença de origem (topicId). */
     state.compose={items:[]};
+    // A atualização aguarda o descarte explícito dos rascunhos e da receita composta.
+    window.OrqPWA?.registerGuard('receita',()=>!state.dirty&&!state.drafts.size&&!state.orientationDrafts.size&&!state.documentTypeOverrides.size&&!state.compose.items.length&&!$('#composeTray .compose-livre-editor'));
     const COMPOSE_PREFIX='__compose__';
     function composeItems(){return state.compose.items}
     function ensureComposeTopic(){if(!state.compose)state.compose={items:[]}}

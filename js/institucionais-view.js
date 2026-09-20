@@ -9,6 +9,9 @@
   // Todo estado clínico vive apenas nesta estrutura em memória.
   const estadoPorDocumento = new Map();
   let documentoAtivo = null;
+  // Entradas vazias criadas pelo render não contam; valores digitados sobrevivem à troca de documento.
+  escopoGlobal.OrqPWA?.registerGuard('institucionais', () =>
+    ![...estadoPorDocumento.values()].some(campos => Object.values(campos).some(v => v !== '' && v !== false && v != null)));
 
   const elementos = {
     alerta: documentoHtml.getElementById('f1-alerta'),

@@ -27,6 +27,8 @@
   let doencasSel = [];        // ids dos tópicos vinculados
   let cidsSel = [];           // CIDs confirmados pela médica neste atendimento
   let sujo = false;           // guarda de rascunho
+  // Mesmo oculta, a view conserva o rascunho em memória e bloqueia a atualização.
+  window.OrqPWA?.registerGuard('atendimento', () => !sujo && (!booted || $('#novoPacForm').hidden));
   let booted = false;
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }

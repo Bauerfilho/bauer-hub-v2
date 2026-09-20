@@ -1,0 +1,38 @@
+{
+  "estado": "PASS",
+  "casos_unicos": 16,
+  "principal": {
+    "path": "qa-sincronizado/resultado.json",
+    "pass": 15
+  },
+  "complemento": {
+    "path": "qa-index-e-selo/resultado.json",
+    "pass": 4
+  },
+  "controle_negativo": {
+    "path": "qa-controle-negativo/resultado.json",
+    "resultado": "Mutante sem veto detectado: SW ativou apesar da janela insegura"
+  },
+  "automatico_real": "Reconexao context.setOffline(false) dispara online real; nenhuma chamada OrqPWA.check/recheck apos reconectar; HTML N+1 confirmado na mesma pagina em index.html e index-f2.html.",
+  "multiaba": "Em cada guarda, segunda aba segura solicita ativacao; aba com rascunho veta. Corrida pos-voto confirma antigo HTML e assets ate limpar.",
+  "provas_descartadas": "qa-inicial, qa-rodada-2 e qa-rodada-3 foram falso positivo por predicate async em waitForFunction; substituido por polling Node await evaluate. Nao usar como defeito confirmado de producao.",
+  "fonte_final_sha256": {
+    "index.html": "f3db4372eb2033ee0e1c78c6ac9e27f3084dae6403bfca46af7c076c2df3130d",
+    "index-f2.html": "c2bf01c842eeb6267b30a6d66dde2b1b35cb82c9f4982167b30bd2d3a9fc2695",
+    "js/pwa-update.js": "923868c3b22be5c3fdc18e5303560fe41e87af49f38eac8f8d3397d8a771cfa6",
+    "js/atendimento-view.js": "e684155bb539f78786aa5a0b636edb2515f1595580f6977334917bfde2d05710",
+    "js/dram.js": "d9333dc4105d2a87c6884589a7b623482b1536792dfacfbcb06ad515839df2ef",
+    "js/guias-view.js": "8c53cb553303f3d27965041f79a613147d87ad0ee21a1605cc1d9a49ad410025",
+    "js/institucionais-view.js": "7e9fe9a9252cac209d5725d1b193a7bc62e1ac46c84e5001115ee56220065cbe",
+    "js/pacientes-view.js": "667100ae21f7bb59ab2fd8c3b1e9ea3523ad7a01000b4f38c16608001f9a8352",
+    "manifest.webmanifest": "8cec16911f95fd99a62352cdee6cc57b0232c8e4a9ab491e92a269a467f71aa6",
+    "scripts/build-pwa.py": "ed8c561e7168c6d18e2a0b3867827a159ffe76b6ddc868a5b3a952cb6c80ba9d",
+    "sw.js": "e9402801882d1ef2119ed9d2c7d36c937cfdc9ce18e90a5f8d38b27aeead2a6d",
+    "tests/pwa-update.cjs": "a735de37725aaafaa3ec61365b9885fb60752489c7cdf2068174e285c222c131"
+  },
+  "limites": [
+    "Nao aciona impressora real: beforeprint/afterprint exercitados por eventos no navegador isolado.",
+    "Nenhum perfil, dado, senha ou janela do operador usado.",
+    "Evidencia de atualizacao em Chromium headless, nao na instancia pessoal instalada do operador."
+  ]
+}

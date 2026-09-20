@@ -20,6 +20,8 @@
   const DB = window.F2DB;
   let aberto = null;  // id do paciente com ficha aberta
   let booted = false;
+  // Salvar ou cancelar fecha o formulário; trocar de view não autoriza perder edição.
+  window.OrqPWA?.registerGuard('pacientes', () => !booted || ($('#formNovo').hidden && $('#formEditar').hidden));
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
   function avisar(msg) {

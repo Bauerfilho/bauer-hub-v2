@@ -113,6 +113,8 @@
     const MARKERS=[{shape:'circle',color:'#d99800'},{shape:'square',color:'#e34b3f'},{shape:'triangle',color:'#0f887f'},{shape:'diamond',color:'#4057a8'}];
     const state={catalog:'guides',selectedId:'routine',mode:'conventional',copies:1,bw:false,editorVisible:true,patient:{id:'',name:'',date:today(),caregiver:''},drafts:{},teach:{medicine:false,amount:false,timing:false}};
 
+    let guiaEditado=false; // Rascunhos e opções permanecem exclusivamente nesta memória.
+    window.OrqPWA?.registerGuard('guias',()=>!guiaEditado);
     const VIEW=document.getElementById('documentsView');
     /* G1 (30/08): motor GLOBAL — os nós do guia podem ser adotados pelo leitor da doença (zero ID duplicado, auditado) */
     const $=selector=>document.querySelector(selector);
@@ -444,14 +446,24 @@
     }
     function selectLocalPatient(id){
       const patient=localPatientById(id);if(!patient)return;
+      guiaEditado=true;
       state.patient.id=patient.id;state.patient.name=patient.nome;state.patient.date=state.patient.date||today();hidePatientSuggestions();renderEditor();renderPreview();showToast('Ficha local vinculada ao guia.');
     }
     function clearPatient(){
       if(!confirm('Limpar nome, data e todos os dados preenchidos neste atendimento?'))return;
+      guiaEditado=false;
       state.patient={id:'',name:'',date:'',caregiver:''};state.drafts={};state.teach={medicine:false,amount:false,timing:false};ensureDraft(currentTemplate());hidePatientSuggestions();renderEditor();renderPreview();showToast('Dados do atendimento apagados da memória.');
     }
 
     function wire(){
+      // A delegação acompanha os editores quando são movidos para dentro da doença.
+      const campos='#patientName,#patientDate,#caregiver,#dynamicEditor,#preview [data-bind],.check-list [data-teach]';
+      ['input','change'].forEach(tipo=>document.addEventListener(tipo,e=>{
+        if(e.target.closest(campos)&&guiaAtivo())guiaEditado=true;
+      },true));
+      document.addEventListener('click',e=>{
+        if(e.target.closest('.copies button,#bwBtn,.segmented [data-mode],[data-add-med],[data-remove-med]')&&guiaAtivo())guiaEditado=true;
+      },true);
       $('#searchIcon').innerHTML=icon('search');$('#readIcon').innerHTML=icon('book');$('#visualIcon').innerHTML=icon('eye');$('#bwIcon').innerHTML=icon('contrast');$('#personIcon').innerHTML=icon('person');$('#checkIcon').innerHTML=icon('check');$('#printIcon').innerHTML=icon('print');
       (e=>{if(e)e.addEventListener('click',()=>setEditorVisible(!state.editorVisible))})($('#editorToggle'));setEditorVisible(true);
       $('#catalogToggle').addEventListener('click',()=>setCatalogVisible(!state.catalogVisible));
