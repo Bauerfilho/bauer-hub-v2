@@ -1,9 +1,46 @@
 # Atualização automática dentro do aplicativo
 
 O aplicativo instalado carrega `https://bauerfilho.github.io/bauer-hub-v2/`.
-A publicação passa a ser feita pelo workflow `.github/workflows/pages.yml`.
-Cada push em `main` gera uma edição identificada pelo SHA do commit, sem edição
-manual de número de versão.
+A publicação usa o Pages nativo, a partir da branch `gh-pages`. O pacote é gerado
+localmente por `scripts/publish-pages.py` e identificado pelo SHA de `main`, sem
+edição manual de número de versão. O aplicativo continua detectando as edições
+publicadas automaticamente.
+
+Em 20/09/2026, a execução GitHub Actions `35527440675` foi recusada antes de qualquer
+etapa porque a conta apresentou bloqueio de faturamento. O workflow automático
+foi retirado para não produzir novas falhas a cada push. Nenhuma configuração
+de cobrança foi alterada. **Enquanto esse bloqueio existir, push em `main` sozinho
+não publica o PWA**: execute o comando abaixo após o push.
+A retirada do workflow permanece mesmo se o faturamento for regularizado; voltar
+a publicar por Actions exige sua reintrodução e a troca explícita da origem do Pages.
+
+## Publicação
+
+Na raiz do repositório, com Git e GitHub CLI já disponíveis e autenticados:
+
+```sh
+python3 scripts/publish-pages.py --wait 120
+```
+
+O script exige checkout limpo e `HEAD` igual ao commit atual de `origin/main`.
+Valida que `origin` é `Bauerfilho/bauer-hub-v2`, gera o pacote em pasta temporária,
+acrescenta um commit ao histórico existente de `gh-pages` e usa push normal,
+sem force. Mudança concorrente da fonte ou da branch de publicação interrompe
+a operação. Arquivos temporários e relatório ficam preservados no caminho
+informado ao final; o checkout original não é substituído.
+Variáveis `GIT_*` herdadas são removidas para impedir redirecionamento acidental
+do índice ou da árvore de trabalho. A autenticação do GitHub CLI e os arquivos
+normais de configuração do Git continuam disponíveis.
+
+Depois, configura o Pages nativo para `gh-pages` na raiz e solicita um build uma
+única vez. Se o push já iniciou um build e a API responder HTTP 409, acompanha
+o build existente. `--wait` limita a observação; sem essa opção, apenas informa
+o estado atual. Um build ainda em fila não é apresentado como entrega concluída.
+
+Confira a propriedade `version` em
+`https://bauerfilho.github.io/bauer-hub-v2/release.json`: ela deve ser igual ao SHA
+de `main` publicado. A confirmação do build e a confirmação HTTP são verificações
+distintas. O script não altera cobrança, hooks, autorizações ou domínio do site.
 
 ## Funcionamento
 
