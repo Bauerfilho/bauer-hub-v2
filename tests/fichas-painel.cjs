@@ -111,6 +111,21 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     const folhaAp = await p.evaluate(l => { const cps = [...document.querySelectorAll('#recipePrint .rx-copy .rx-body[data-field="prescription"]')].map(e => e.textContent);
       const H = window.__HUB_TEST__; return { iguais: cps.length === 2 && cps[0] === cps[1] && H.syncCheck(), tem: !!cps[0] && cps[0].includes(l.split('\n')[0]), cabe1folha: !H.overflow() }; }, linhaAp);
     passa('receita montada traz a apresentação nas 2 vias idênticas, em 1 folha', folhaAp.iguais && folhaAp.tem && folhaAp.cabe1folha, JSON.stringify(folhaAp));
+    /* 2b'. letra grande vira ÍNDICE + partes por faixa (build-apresentacoes.py, 26/09): a 1ª e a última chave de TODA parte
+       têm de chegar pelo índice — prova as duas bordas de cada faixa, em todas as letras divididas */
+    const partes = await p.evaluate(async () => {
+      const corpo = t => JSON.parse(t.slice(t.indexOf(',', t.indexOf('ORQ_APRES_PUT(')) + 1, t.lastIndexOf(')}catch')));
+      const r = { letras: 0, partes: 0, chaves: 0, falhas: [] };
+      for (const l of 'abcdefghijklmnopqrstuvwxyz') {
+        const idx = corpo(await (await fetch('js/apresentacoes/' + l + '.js')).text());
+        if (!Array.isArray(idx.__partes)) continue; r.letras++;
+        for (const [, pid] of idx.__partes) {
+          r.partes++; const ks = Object.keys(corpo(await (await fetch('js/apresentacoes/' + pid + '.js')).text()));
+          for (const k of [ks[0], ks[ks.length - 1]]) { r.chaves++; const lst = await window.OrqFichas.apresentacoesDe(k); if (!lst.length) r.falhas.push(pid + ':' + k); }
+        }
+      }
+      return r; });
+    passa('letras divididas: 1ª e última chave de cada parte chegam pelo índice', partes.letras > 0 && partes.falhas.length === 0, JSON.stringify(partes).slice(0, 240));
     /* 2c. REORGANIZAÇÃO (26/09, erros vistos na captura): ficha nunca passa da largura do painel; remédio COM ficha
        também oferece as outras apresentações do mercado (recolhidas); a dose não repete a frequência */
     await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(300);   /* a captura que mostrou o corte era de celular */
