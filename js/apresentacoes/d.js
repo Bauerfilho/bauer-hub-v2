@@ -1,2 +1,2 @@
 /* apresentações CMED (d) — gerado por build-apresentacoes.py; NÃO editar à mão. Fonte: tabela CMED 09/2026 (concentração e forma; posologia em branco). */
-(function(){try{window.ORQ_APRES_PUT&&window.ORQ_APRES_PUT("d",{"__partes":[["","d-1"],["diclofenaco","d-2"],["diclofenaco dietilamonio","d-3"],["diclofenaco potassico","d-4"],["diclofenaco resinato","d-5"],["diclofenaco sodico","d-6"],["difosfato de cloroquina","d-7"]]})}catch(e){}})();
+(function(){try{window.ORQ_APRES_PUT&&window.ORQ_APRES_PUT("d",{"__partes":[["","d-1"],["diclofenaco","d-2"],["diclofenaco dietilamonio","d-3"],["diclofenaco potassico","d-4"],["diclofenaco resinato","d-5"],["diclofenaco sodico","d-6"],["didrogesterona","d-7"]]})}catch(e){}})();
