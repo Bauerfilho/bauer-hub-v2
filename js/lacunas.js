@@ -221,6 +221,37 @@
       } catch (_) { /* idem */ }
     }
 
+    /* rede de segurança do ACENTO (tecla morta ´+a no WebKit, que o teste automático não simula): se o texto
+       composto caiu encostado em traços de uma lacuna ("__á_" ou "á___"), os traços somem e fica só o composto —
+       mesma regra de borda da digitação. Se o compositionstart já selecionou a lacuna, não há traço em volta e
+       nada acontece. Troca por comando de edição: entra no desfazer e dispara o input (2ª via espelha). */
+    function aoComporFim(e) {
+      try {
+        const dado = e.data || '';
+        if (!dado || /[_\s]/.test(dado)) return;
+        const el = campoDocumento(e.target);
+        if (el) setTimeout(() => repararAcento(el, dado), 0);
+      } catch (_) { /* idem */ }
+    }
+    function repararAcento(el, dado) {
+      try {
+        const controle = el.selectionStart !== undefined && typeof el.value === 'string';
+        const texto = controle ? el.value : el.textContent;
+        const off = controle ? el.selectionStart : offsetNoCampo(el);
+        if (off == null) return;
+        const ini = off - dado.length;
+        if (ini < 0 || texto.slice(ini, off) !== dado) return;
+        let a = ini, b = off;
+        while (a > 0 && texto[a - 1] === '_') a--;
+        while (b < texto.length && texto[b] === '_') b++;
+        if ((ini - a) + (b - off) < 3) return;          /* só traço de LACUNA (3+), nunca um "_" solto */
+        if (controle) el.setSelectionRange(a, b);
+        else { const r = ranger(el, a, b); if (!r) return; const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+        emInsercao = true;
+        try { document.execCommand('insertText', false, dado); } finally { emInsercao = false; }
+      } catch (_) { /* idem */ }
+    }
+
     /* ── impressão: envolver lacunas da CÓPIA em span.lacuna-pendente ─────── */
     const CONTAINER_VALOR = '[data-sync],[data-field],[data-bind],[data-mirror],.static-value,.mirror-value,.f1v-mirror,.table-mirror,.choice-mirror';
 
@@ -258,6 +289,7 @@
 
     document.addEventListener('beforeinput', aoDigitar, true);
     document.addEventListener('compositionstart', aoCompor, true);
+    document.addEventListener('compositionend', aoComporFim, true);
     document.addEventListener('paste', aoColar, true);
 
     window.OrqLacunas = Object.freeze({
