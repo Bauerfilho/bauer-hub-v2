@@ -111,6 +111,34 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     const folhaAp = await p.evaluate(l => { const cps = [...document.querySelectorAll('#recipePrint .rx-copy .rx-body[data-field="prescription"]')].map(e => e.textContent);
       const H = window.__HUB_TEST__; return { iguais: cps.length === 2 && cps[0] === cps[1] && H.syncCheck(), tem: !!cps[0] && cps[0].includes(l.split('\n')[0]), cabe1folha: !H.overflow() }; }, linhaAp);
     passa('receita montada traz a apresentação nas 2 vias idênticas, em 1 folha', folhaAp.iguais && folhaAp.tem && folhaAp.cabe1folha, JSON.stringify(folhaAp));
+    /* 2c. REORGANIZAÇÃO (26/09, erros vistos na captura): ficha nunca passa da largura do painel; remédio COM ficha
+       também oferece as outras apresentações do mercado (recolhidas); a dose não repete a frequência */
+    await p.setViewportSize({ width: 390, height: 844 }); await p.waitForTimeout(300);   /* a captura que mostrou o corte era de celular */
+    await buscar('diclof');
+    const dic = await p.evaluate(() => new Promise(ok => {
+      const btn = [...document.querySelectorAll('[data-orqa-med-pick]')].find(b => /^diclofenaco$/i.test(b.dataset.orqaMedPick));
+      if (!btn) return ok({ erro: 'diclofenaco fora da busca' });
+      if (btn.nextElementSibling && btn.nextElementSibling.classList.contains('orqa-fi-caixa')) btn.click();
+      const t0 = performance.now(); btn.click();
+      const esp = () => { const c = btn.nextElementSibling;
+        const pronto = c && c.querySelector('.orqa-fi') && c.querySelector('.orqa-ap-outras');
+        if (pronto || performance.now() - t0 > 3000) {
+          /* borda direita de cada ficha/linha × a do painel, e rolagem horizontal do painel (a ficha cresce com o conteúdo: medir nela mesma não vê o corte) */
+          const pn = document.getElementById('orqAssist'), dir = pn.getBoundingClientRect().right;
+          const larg = [...pn.querySelectorAll('.orqa-fi-caixa, .orqa-fi, .orqa-fi-lin')].map(e => e.getBoundingClientRect().right - dir)
+            .concat([...pn.querySelectorAll('*')].filter(e => getComputedStyle(e).overflowY !== 'visible').map(e => e.scrollWidth - e.clientWidth));
+          const dose = (c && c.querySelector('.orqa-fi-dose .orqa-fi-val') || {}).textContent || '';
+          const partes = dose.split(' · ').map(x => x.trim().toLowerCase()).filter(Boolean);
+          return ok({ ficha: !!(c && c.querySelector('.orqa-fi')), outras: c ? c.querySelectorAll('.orqa-ap-outras [data-orqa-ap-somar]').length : 0,
+            estouro: Math.max(0, ...larg), repete: partes.some((x, i) => partes.some((y, j) => i !== j && y.includes(x.replace(/^habitual /, '')))) });
+        }
+        setTimeout(esp, 10); };
+      esp();
+    }));
+    passa('diclofenaco: ficha + outras apresentações do mercado (CMED) recolhidas', dic.ficha && dic.outras > 0, JSON.stringify(dic));
+    passa('nenhuma ficha passa da largura do painel (sem texto cortado)', dic.estouro <= 1, `estouro ${dic.estouro}px`);
+    passa('a dose não repete a frequência já dita no habitual', dic.repete === false, JSON.stringify(dic));
+    await p.setViewportSize({ width: 1440, height: 900 }); await p.waitForTimeout(300);
     /* volta ao estado que os passos seguintes esperam: ficha da losartana aberta */
     await buscar('losar');
     await p.evaluate(() => { const b = [...document.querySelectorAll('[data-orqa-med-pick]')].find(x => /losartana pot/i.test(x.dataset.orqaMedPick)); if (b && !(b.nextElementSibling && b.nextElementSibling.classList.contains('orqa-fi-caixa'))) b.click(); });

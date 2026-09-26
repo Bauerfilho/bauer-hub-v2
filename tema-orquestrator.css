@@ -175,8 +175,8 @@ body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
 /* ── FICHA do medicamento no painel (25/09): mesmo molde do painel — cartão branco, filete areia, ouro nos
       destaques, ação principal preta com filete dourado. Nada editável aqui: a escrita vai para a receita. ── */
 .orqa-item[aria-expanded="true"]{border-color:var(--ouro-vivo);background:#fffdf6;border-bottom-left-radius:4px;border-bottom-right-radius:4px}
-.orqa-fi-caixa{display:grid;gap:8px;margin:-2px 0 6px;padding:10px;border:1px solid var(--ouro-linha);border-top:0;border-radius:0 0 10px 10px;background:#fffdf8}
-.orqa-fi{display:grid;gap:7px;padding:10px;border:1px solid #e4ddcd;border-radius:10px;background:#fff}
+.orqa-fi-caixa{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:8px;margin:-2px 0 6px;padding:10px;border:1px solid var(--ouro-linha);border-top:0;border-radius:0 0 10px 10px;background:#fffdf8}
+.orqa-fi{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;max-width:100%;gap:7px;padding:10px;border:1px solid #e4ddcd;border-radius:10px;background:#fff}
 .orqa-fi-cab{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;line-height:1.3}
 .orqa-fi-cab strong{font-size:12.5px;color:#1c2430;margin-right:2px}
 .orqa-fi-selo{color:#8a6a12;background:#fbf3dc}
@@ -187,8 +187,14 @@ body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
 .orqa-ap:hover,.orqa-ap:focus-visible{border-color:var(--ouro-linha);background:#fff;outline:none;box-shadow:0 0 0 2px rgba(201,162,39,.25)}
 .orqa-ap-slot:empty{display:none}
 .orqa-fi-rename{border-color:var(--ouro-linha);box-shadow:inset 0 0 0 1px rgba(201,162,39,.18)}
-.orqa-fi-lin{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:11px;line-height:1.4}
+.orqa-fi-lin{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px;font-size:11px;line-height:1.4}
 .orqa-fi-rot{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#5b6472;padding-top:2px}
+.orqa-fi-val,.orqa-fi-rx-t,.orqa-fi-al li,.orqa-fi-chip{min-width:0;overflow-wrap:anywhere;word-break:normal}   /* palavra longa (nome de arquivo, URL) nunca empurra a coluna para fora do painel */
+.orqa-fi-longo summary{cursor:pointer;list-style:none}
+.orqa-fi-longo summary::-webkit-details-marker{display:none}
+.orqa-fi-longo summary b{color:var(--ouro);font-weight:800;white-space:nowrap}
+.orqa-fi-longo[open] summary{display:none}
+.orqa-ap-outras{margin-top:2px}
 .orqa-fi-val small{display:block;margin-top:2px;font-size:9px;color:#8a93a3;line-height:1.3}
 .orqa-fi-dose .orqa-fi-val{font-weight:700;color:#1c2430}
 .orqa-fi-gest .orqa-fi-rot{color:#8a5a12}
