@@ -142,14 +142,14 @@
       if (!lista || !lista.length) return '';
       if (sobFicha) {   /* remédio COM ficha: as demais apresentações do mercado ficam recolhidas, sem competir com as linhas prontas */
         const k0 = fold(nome); apVistas[k0] = lista;
-        const chip0 = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap" data-orqa-ap-somar="${esc(k0)}|${i}" `
+        const chip0 = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap${a[2] && a[2].length ? ' orqa-ap-pronta' : ''}" data-orqa-ap-somar="${esc(k0)}|${i}" `
           + `title="Soma à receita no formato; a posologia fica em branco para a médica">${esc(a[0])}</button>`;
         return `<details class="orqa-fi-mais orqa-ap-outras"><summary>outras apresentações do mercado (CMED) · ${lista.length}</summary>`
           + `<div class="orqa-ap-cab">toque para somar à receita no formato, com a posologia em branco</div>`
           + `<div class="orqa-fi-aps">${lista.map(chip0).join('')}</div></details>`;
       }
       const k = fold(nome); apVistas[k] = lista;
-      const chip = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap" data-orqa-ap-somar="${esc(k)}|${i}" `
+      const chip = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap${a[2] && a[2].length ? ' orqa-ap-pronta' : ''}" data-orqa-ap-somar="${esc(k)}|${i}" `
         + `title="Soma à receita no formato; a posologia fica em branco para a médica">${esc(a[0])}</button>`;
       const vis = lista.slice(0, 8), extra = lista.slice(8);
       return '<div class="orqa-ap-cab">Apresentações (CMED) — toque para somar à receita no formato, com a posologia em branco</div>'
@@ -162,7 +162,8 @@
     function ap(alvo) {
       const j = String(alvo).lastIndexOf('|'); const l = apVistas[String(alvo).slice(0, j)];
       const a = l && l[Number(String(alvo).slice(j + 1))];
-      return a ? { texto: a[1], tipo: 'simple' } : null;
+      return a ? { texto: a[1], tipo: 'simple',   /* a[2]: esboço da bula por indicação [indicação, faixa, doenças do app, linha, fonte] */
+        indicacoes: (a[2] || []).map(([ind, faixa, topicos, linha, fonte]) => ({ ind, faixa, topicos: topicos || [], linha, fonte })) } : null;
     }
 
     global.OrqFichas = Object.freeze({ tem, fichasDe, render, rx, carregarLote, fold, apresentacoesDe, apRender, ap,
