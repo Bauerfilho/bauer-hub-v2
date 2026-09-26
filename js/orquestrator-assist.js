@@ -73,6 +73,33 @@
     return [...mapa.entries()];
   }
 
+  /* ═══ BUSCA DE CID — vale a RELEVÂNCIA, nunca a posição na lista ═══
+     O defeito antigo: filtrar por `includes` e cortar os 8 primeiros. Como a base vem ordenada
+     por código (A00…Z99), "pie" entregava B36.2 Piedra branca e Y57.4 exciPIEntes antes de
+     N11.0 Pielonefrite — Piedra está na posição 2.554 da lista, Pielonefrite na 7.178.
+     A regra agora: os 14.233 códigos competem em pé de igualdade. Pontua-se a QUALIDADE do
+     encontro, ordena-se, e só então corta. Empate preserva a ordem do código (sort estável). */
+  function scoreCid(codigo, descricao, q) {
+    const c = fold(codigo), d = fold(descricao);
+    if (!d.includes(q) && !c.includes(q)) return 0;  /* saída barata: descarta ~99% antes de fatiar palavra */
+    if (c === q) return 1000;                                          /* N11.0 digitado inteiro */
+    if (c.startsWith(q)) return 900;                                   /* N11 → N11.0, N11.1… */
+    /* iniciar QUALQUER palavra vale o mesmo: "Nefropatia" não é mais relevante que
+       "Síndrome NEFrótica" só por estar na primeira posição. Separar os dois casos fazia
+       "nef" perder as síndromes nefrítica/nefrótica — regressão pega no gate de 25/09. */
+    if (d.split(/[^a-z0-9]+/).some(p => p.startsWith(q))) return 500;
+    if (d.includes(q) || c.includes(q)) return 50;                     /* no meio: exciPIEntes */
+    return 0;                                                          /* não encontra */
+  }
+  function porRelevancia(pares, q, teto) {
+    return pares
+      .map(par => [par, scoreCid(par[0], par[1], q)])
+      .filter(([, s]) => s > 0)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, teto)
+      .map(([par]) => par);
+  }
+
   /* ═══ TODOS OS DOCUMENTOS — catálogo em gavetas (ordem do dono, 30/08: documentos SÓ no Orquestrator) ═══
      Unidade: derivada em runtime de F1Registro.todos() — nada hardcoded, doc novo entra sozinho ("Outros" se sem grupo).
      Guias/registros: espelho 1:1 do catálogo do js/guias-view.js (a fonte é lá; toda ação tem guard runtime). */
@@ -241,6 +268,9 @@
         <section class="orqa-sec"><h4>Buscar CID <span class="orqa-conferir">sugestões — conferir</span></h4>
           <input type="search" class="orqa-busca" data-orqa-cid placeholder="Código ou descrição…" autocomplete="off">
           <div class="orqa-res" data-orqa-cid-res></div></section>
+        <section class="orqa-sec"><h4>Buscar medicamento <span class="orqa-conferir">sugestões — conferir</span></h4>
+          <input type="search" class="orqa-busca" data-orqa-med placeholder="Genérico ou marca… ex.: dipi, losar, ozem" autocomplete="off">
+          <div class="orqa-res" data-orqa-med-res></div></section>
         <section class="orqa-sec"><h4>Buscar paciente <span class="orqa-conferir">CPF ou nome</span></h4>
           <input type="search" class="orqa-busca" data-orqa-pac placeholder="CPF ou nome…" autocomplete="off">
           <div class="orqa-res" data-orqa-pac-res></div></section>
@@ -290,7 +320,7 @@
   }
   function aoEsc(ev) { if (ev.key === 'Escape') fechar(); }
 
-  let tNotas = null, tCid = null, tPac = null;
+  let tNotas = null, tCid = null, tPac = null, tMed = null;
   function aoDigitar(ev) {
     const el = ev.target;
     if (el.hasAttribute && el.hasAttribute('data-orqa-campo')) {
@@ -315,11 +345,32 @@
         const res = painel.querySelector('[data-orqa-cid-res]');
         if (!q) { res.innerHTML = ''; return; }
         /* sugestões da doença primeiro (seladas), depois o CID-10 COMPLETO oficial (DATASUS, offline) */
-        const sug = cidsTodos().filter(([c, d]) => fold(c + ' ' + d).includes(q)).slice(0, 4);
+        const sug = porRelevancia(cidsTodos(), q, 4);
         const vistos = new Set(sug.map(([c]) => c));
-        const geral = q.length >= 2 ? (global.CID10 || []).filter(([c, d]) => !vistos.has(c) && fold(c + ' ' + d).includes(q)).slice(0, 8) : [];
+        const geral = q.length >= 2 ? porRelevancia((global.CID10 || []).filter(([c]) => !vistos.has(c)), q, 8) : [];
         const linha = (par, selo) => `<button type="button" class="orqa-item" data-orqa-cid-pick="${esc(par[0])} — ${esc(par[1])}"><strong>${esc(par[0])}</strong> ${esc(par[1])}${selo ? ' <span class="orqa-conferir">sugerido</span>' : ''}</button>`;
         res.innerHTML = (sug.map(x => linha(x, true)).join('') + geral.map(x => linha(x, false)).join('')) || '<div class="orqa-vazio">Nada encontrado no CID-10.</div>';
+      }, 250);
+    } else if (el.matches('[data-orqa-med]')) {
+      clearTimeout(tMed);
+      tMed = setTimeout(() => {
+        const res = painel.querySelector('[data-orqa-med-res]');
+        const achados = (global.MedsBusca ? global.MedsBusca.buscar(el.value, 8) : []);
+        if (!el.value.trim()) { res.innerHTML = ''; return; }
+        /* o que se insere é o GENÉRICO: é o que vai na folha (Lei 9.787/99).
+           A marca aparece só para a médica reconhecer o que está escolhendo. */
+        /* o pill .orqa-conferir não foi feito para texto longo: sem corte, classes como
+           "AGENTES BETABLOQUEADORES E OUTROS ANTI-HIPERTENSIVOS" vazam para fora da borda. */
+        const curto = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
+        res.innerHTML = achados.map(m => {
+          const porMarca = m.via === 'marca' && m.marcaCasada
+            ? ` <span class="orqa-conferir">${esc(curto(m.marcaCasada, 26))}</span>` : '';
+          const estoque = m.estoque === 'tem' ? ' <span class="orqa-conferir">na unidade</span>'
+                        : m.estoque === 'riscado' ? ' <span class="orqa-conferir">riscado na lista</span>' : '';
+          return `<button type="button" class="orqa-item" data-orqa-med-pick="${esc(m.generico)}" title="${esc(m.classe || '')}">`
+               + `<strong>${esc(m.generico)}</strong>${porMarca}${estoque}`
+               + `<br><span class="orqa-conferir">${esc(curto(m.classe, 34))}</span></button>`;
+        }).join('') || '<div class="orqa-vazio">Nada encontrado. Confira a grafia.</div>';
       }, 250);
     } else if (el.matches('[data-orqa-pac]')) {
       clearTimeout(tPac);
@@ -346,6 +397,8 @@
     if (docItem) { const i = docItem.dataset.orqaDoc.indexOf(':'); docAcao(docItem.dataset.orqaDoc.slice(0, i), docItem.dataset.orqaDoc.slice(i + 1)); return; }
     const cid = ev.target.closest('[data-orqa-cid-pick]');
     if (cid) { inserir(cid.dataset.orqaCidPick); return; }
+    const med = ev.target.closest('[data-orqa-med-pick]');
+    if (med) { inserir(med.dataset.orqaMedPick); return; }
     const pac = ev.target.closest('[data-orqa-pac-pick]');
     if (pac) { usarPaciente(pac.dataset.orqaPacPick); return; }
     const fav = ev.target.closest('[data-orqa-favoritar]');
