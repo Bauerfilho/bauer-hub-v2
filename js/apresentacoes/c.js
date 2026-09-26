@@ -1,2 +1,2 @@
 /* apresentações CMED (c) — gerado por build-apresentacoes.py; NÃO editar à mão. Fonte: tabela CMED 09/2026 (concentração e forma; posologia em branco). */
-(function(){try{window.ORQ_APRES_PUT&&window.ORQ_APRES_PUT("c",{"__partes":[["","c-1"],["cefalexina","c-2"],["ciclopirox olamina","c-3"],["cloridrato de biperideno","c-4"],["cloridrato de ondansetrona di-hidratado","c-5"]]})}catch(e){}})();
+(function(){try{window.ORQ_APRES_PUT&&window.ORQ_APRES_PUT("c",{"__partes":[["","c-1"],["cefalexina","c-2"],["ciclopirox olamina","c-3"],["cloridrato de biperideno","c-4"],["cloridrato de moxifloxacino","c-5"],["cloridrato de ziprasidona monoidratado","c-6"]]})}catch(e){}})();
