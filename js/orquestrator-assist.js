@@ -13,7 +13,7 @@
   const K = 'orqAssist';
   const db = () => global.F2DB || null;
   const esc = v => String(v ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
-  const fold = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const fold = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   function estado() {
     const meta = db() && db().meta && db().meta.ler ? (db().meta.ler() || {}) : {};
     const e = meta[K] || {};
@@ -32,7 +32,7 @@
   /* CERCA DE ESCRITA (ordem do dono, 25/09): o que vem de MEDICAMENTO ou FICHA só escreve em documento
      de receituário — corpo/campos da receita (1ª via), orientações da receita e item livre da receita composta.
      Busca do hub, SOAP, login, unidade, guias e documentos da unidade ficam intocados. */
-  const SEL_RECEITA = '#recipePrint .rx-copy [data-field], #orientationPrint [data-field]';
+  const SEL_RECEITA = '#recipePrint .rx-copy [data-field="prescription"], #orientationPrint [data-field="orientation"]';
   function ehCampoDeReceita(el) {
     return !!(el && el.closest && (el.closest(SEL_RECEITA) || (el.matches && el.matches('#composeTray .compose-livre-editor textarea'))));
   }
@@ -52,6 +52,9 @@
       }
     } else if (!alvo || !doc.contains(alvo)) { aviso('Toque antes no campo onde quer inserir.'); return false; }
     alvo.focus();
+    if (doc.activeElement !== alvo || !alvo.getClientRects().length) {   /* alvo escondido/sem foco: execCommand escreveria no foco atual */
+      aviso(opcoes && opcoes.somenteReceita ? 'A receita não está visível — abra a receita e toque no corpo dela.' : 'Toque antes no campo onde quer inserir.'); return false;
+    }
     if (alvo.isContentEditable) {
       doc.execCommand('insertText', false, texto);
     } else {
@@ -65,11 +68,12 @@
 
   /* "Somar à receita": entra pelo FUNIL de composição do próprio app (window.__HUB_COMPOSE__), herdando a lei do
      papel (1 folha, itens numerados), as 2 vias espelhadas, os rascunhos e o guarda de atualização da PWA. */
-  function somarReceita(texto) {
+  function somarReceita(linha) {
     const H = global.__HUB_COMPOSE__;
+    const texto = linha && linha.texto;
     if (!texto) return;
     if (!H || typeof H.adicionarLivre !== 'function') { aviso('A receita não está disponível nesta tela.'); return; }
-    const r = H.adicionarLivre(texto) || {};
+    const r = H.adicionarLivre(texto, { documentType: linha.tipo }) || {};
     aviso(r.msg || (r.ok ? 'Somado à receita do atendimento.' : 'Não foi possível somar.'));
   }
 
@@ -80,6 +84,7 @@
     if (prox && prox.classList.contains('orqa-fi-caixa')) { prox.remove(); btn.setAttribute('aria-expanded', 'false'); return; }
     const caixa = doc.createElement('div');
     caixa.className = 'orqa-fi-caixa';
+    caixa.setAttribute('aria-live', 'polite');
     btn.after(caixa); btn.setAttribute('aria-expanded', 'true');
     const semFicha = () => `<div class="orqa-vazio">Ficha em preparo — a transcrição da fonte oficial deste medicamento ainda não chegou.</div>`
       + `<button type="button" class="orqa-inserir" data-orqa-nome-cursor="${esc(nome)}"><span class="orqa-mini-logo" aria-hidden="true"></span>Inserir o nome na receita</button>`;
@@ -421,7 +426,7 @@
             ? ` <span class="orqa-conferir">${esc(curto(m.marcaCasada, 26))}</span>` : '';
           const estoque = m.estoque === 'tem' ? ' <span class="orqa-conferir">na unidade</span>'
                         : m.estoque === 'riscado' ? ' <span class="orqa-conferir">riscado na lista</span>' : '';
-          return `<button type="button" class="orqa-item" data-orqa-med-pick="${esc(m.generico)}" title="${esc(m.classe || '')}">`
+          return `<button type="button" class="orqa-item" aria-expanded="false" data-orqa-med-pick="${esc(m.generico)}" title="${esc(m.classe || '')}">`
                + `<strong>${esc(m.generico)}</strong>${porMarca}${estoque}`
                + `<br><span class="orqa-conferir">${esc(curto(m.classe, 34))}</span></button>`;
         }).join('') || '<div class="orqa-vazio">Nada encontrado. Confira a grafia.</div>';
@@ -454,9 +459,9 @@
     const med = ev.target.closest('[data-orqa-med-pick]');
     if (med) { abrirFicha(med); return; }
     const somar = ev.target.closest('[data-orqa-rx-somar]');
-    if (somar) { const [k, id] = somar.dataset.orqaRxSomar.split('|'); somarReceita(global.OrqFichas && global.OrqFichas.rx(k, id)); return; }
+    if (somar) { const [k, i] = somar.dataset.orqaRxSomar.split('|'); somarReceita(global.OrqFichas && global.OrqFichas.rx(k, i)); return; }
     const cursor = ev.target.closest('[data-orqa-rx-cursor]');
-    if (cursor) { const [k, id] = cursor.dataset.orqaRxCursor.split('|'); const t = global.OrqFichas && global.OrqFichas.rx(k, id); if (t) inserir(t, { somenteReceita: true }); return; }
+    if (cursor) { const [k, i] = cursor.dataset.orqaRxCursor.split('|'); const l = global.OrqFichas && global.OrqFichas.rx(k, i); if (l) inserir(l.texto, { somenteReceita: true }); return; }
     const nomeCur = ev.target.closest('[data-orqa-nome-cursor]');
     if (nomeCur) { inserir(nomeCur.dataset.orqaNomeCursor, { somenteReceita: true }); return; }
     const pac = ev.target.closest('[data-orqa-pac-pick]');

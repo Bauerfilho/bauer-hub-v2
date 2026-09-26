@@ -2,13 +2,14 @@
    Rodar (da raiz do repo): NODE_PATH=~/Projetos/Tangent/node_modules node tests/fichas-painel.cjs [index-f2.html]
    Sobe servidor local próprio (127.0.0.1), Chromium headless em janela própria, service worker bloqueado
    (o PWA/offline tem prova própria em tests/pwa-update.cjs). Critério binário por item; exit 0/1. */
-const { chromium } = require('playwright');
+const pw = require('playwright');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
 const RAIZ = path.resolve(__dirname, '..');
 const PAGINA = process.argv[2] || 'index-f2.html';
+const MOTOR = process.argv[3] || 'chromium';   /* chromium | webkit (o Safari do iPhone/iPad) */
 const PORTA = 8960 + Math.floor(Math.random() * 30);
 const PROVAS = path.join(RAIZ, 'provas-meds');
 const res = [];
@@ -17,7 +18,8 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
 (async () => {
   const srv = spawn('/usr/bin/python3', ['-m', 'http.server', String(PORTA), '--bind', '127.0.0.1'], { cwd: RAIZ, stdio: 'ignore' });
   await new Promise(r => setTimeout(r, 900));
-  const b = await chromium.launch({ channel: 'chrome', headless: true });
+  const b = MOTOR === 'webkit' ? await pw.webkit.launch({ headless: true }) : await pw.chromium.launch({ channel: 'chrome', headless: true });
+  console.log(`  motor: ${MOTOR}`);
   const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
   const p = await ctx.newPage();
   const erros = [];
@@ -76,7 +78,7 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
 
     /* 2. Somar à receita → funil de composição → 1 folha, 2 vias idênticas */
     const antes = await p.evaluate(() => window.__HUB_COMPOSE__.itens());
-    const linha = await p.evaluate(() => { const b = document.querySelector('[data-orqa-rx-somar]'); const [k, id] = b.dataset.orqaRxSomar.split('|'); b.click(); return window.OrqFichas.rx(k, id); });
+    const linha = await p.evaluate(() => { const b = document.querySelector('[data-orqa-rx-somar]'); const [k, i] = b.dataset.orqaRxSomar.split('|'); b.click(); return window.OrqFichas.rx(k, i).texto; });
     const depois = await p.evaluate(() => window.__HUB_COMPOSE__.itens());
     passa('Somar à receita põe a linha na bandeja do atendimento', depois === antes + 1, `${antes}→${depois}`);
     await p.evaluate(() => window.__HUB_COMPOSE__.montar()); await p.waitForTimeout(700);
@@ -100,7 +102,7 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     const noCursor = await p.evaluate(() => {
       const rx = document.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"][contenteditable]');
       rx.focus(); const s = getSelection(); s.selectAllChildren(rx); s.collapseToEnd();
-      const b = document.querySelector('[data-orqa-rx-cursor]'); const [k, id] = b.dataset.orqaRxCursor.split('|'); const t = window.OrqFichas.rx(k, id);
+      const b = document.querySelector('[data-orqa-rx-cursor]'); const [k, i] = b.dataset.orqaRxCursor.split('|'); const t = window.OrqFichas.rx(k, i).texto;
       const n0 = rx.textContent.split(t.split('\n')[0]).length; b.click();
       return rx.textContent.split(t.split('\n')[0]).length > n0;
     });
@@ -108,11 +110,50 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     const orfao = await p.evaluate(() => {
       const sel = document.querySelector('#regimenSelect'); if (!sel || sel.options.length < 2) return null;
       sel.value = sel.options[sel.options.length - 1].value; sel.dispatchEvent(new Event('change', { bubbles: true }));   /* renderRecipe → nó antigo órfão */
-      const b = document.querySelector('[data-orqa-rx-cursor]'); const [k, id] = b.dataset.orqaRxCursor.split('|'); const t = window.OrqFichas.rx(k, id);
+      const b = document.querySelector('[data-orqa-rx-cursor]'); const [k, i] = b.dataset.orqaRxCursor.split('|'); const t = window.OrqFichas.rx(k, i).texto;
       b.click(); const rx = document.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"][contenteditable]');
       return !!rx && rx.textContent.includes(t.split('\n')[0].slice(0, 20));
     });
     passa('depois de trocar o esquema (folha recriada), "no cursor" reencontra a receita', orfao === true, orfao === null ? 'sem 2º esquema' : '');
+
+    /* 4b. revisão (auditor ≠ autor): a ÚLTIMA linha escreve exatamente ela — antes, id repetido trocava o texto */
+    await buscar('losar');
+    await p.evaluate(() => { const b = [...document.querySelectorAll('[data-orqa-med-pick]')].find(x => /losartana pot/i.test(x.dataset.orqaMedPick)); if (!b.nextElementSibling || !b.nextElementSibling.classList.contains('orqa-fi-caixa')) b.click(); });
+    await p.waitForTimeout(300);
+    const ultima = await p.evaluate(() => {
+      const bs = [...document.querySelectorAll('[data-orqa-rx-cursor]')]; const b = bs[bs.length - 1]; const [k, i] = b.dataset.orqaRxCursor.split('|');
+      const esperado = window.OrqFichas.rx(k, i).texto, visto = b.closest('.orqa-fi-rx').querySelector('.orqa-fi-rx-t b').textContent;
+      const rx = document.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"][contenteditable]');
+      rx.focus(); const s = getSelection(); s.selectAllChildren(rx); s.collapseToEnd(); const antes = rx.textContent; b.click();
+      return { mesmo: esperado.split('\n')[0] === visto, entrou: rx.textContent.length > antes.length && rx.textContent.includes(visto), n: bs.length };
+    });
+    passa('a última linha pronta escreve exatamente o texto clicado', ultima.mesmo && ultima.entrou, JSON.stringify(ultima));
+
+    /* 4c. cerca: foco no NOME do paciente (cabeçalho da receita) → nada escrito */
+    const cab = await p.evaluate(() => { const f = document.querySelector('#recipePrint .rx-copy .field-value[data-field="name"][contenteditable]'); if (!f) return null;
+      f.focus(); const v0 = f.textContent; document.querySelector('[data-orqa-rx-cursor]').click(); return f.textContent === v0; });
+    passa('cerca: nome do paciente (cabeçalho) fica intocado', cab === true, cab === null ? 'campo nome ausente' : '');
+
+    /* 4d. cenário do iPhone: receita escondida + foco preso na busca do painel + clique sem roubar foco → nada escrito */
+    const ios = await p.evaluate(() => {
+      const rx = document.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"][contenteditable]'); rx.focus();
+      const ws = document.querySelector('#workspaceView'); ws.hidden = true;
+      const busca = document.querySelector('[data-orqa-med]'); busca.focus(); const v0 = busca.value, r0 = rx.textContent;
+      document.querySelector('[data-orqa-rx-cursor]').click();          /* .click() de JS não move o foco (como o toque no Safari) */
+      const ok = busca.value === v0 && rx.textContent === r0; ws.hidden = false; return ok;
+    });
+    passa('cerca: receita escondida + foco na busca do painel → nada é escrito (Safari/iOS)', ios === true);
+
+    /* 4e. Somar sem doença aberta → recusado (antes: item invisível que travava a atualização da PWA) */
+    const hub = await p.evaluate(() => { const ws = document.querySelector('#workspaceView'); ws.hidden = true; const n = window.__HUB_COMPOSE__.itens();
+      const r = window.__HUB_COMPOSE__.adicionarLivre('Teste 1 mg/comprimido — 30 comprimidos/mês.\nTomar 1 comprimido, via oral, 1 vez ao dia.'); ws.hidden = false;
+      return { ok: r.ok, igual: window.__HUB_COMPOSE__.itens() === n }; });
+    passa('Somar sem receita aberta é recusado e nada entra na bandeja', hub.ok === false && hub.igual, JSON.stringify(hub));
+
+    /* 4f. tipo de receita viaja com a linha (controle especial) */
+    const tipo = await p.evaluate(() => { const r = window.__HUB_COMPOSE__.adicionarLivre('Fármaco controlado teste 10 mg/comprimido — 30 comprimidos/mês.\nTomar 1 comprimido, via oral, à noite.', { documentType: 'control-special' });
+      const it = window.__HUB_TEST__.state.compose.items; return { ok: r.ok, tipo: it[it.length - 1].documentType, aviso: /controlada/.test(r.msg || '') }; });
+    passa('controle especial: o tipo chega ao item e o aviso aparece', tipo.ok && tipo.tipo === 'control-special' && tipo.aviso, JSON.stringify(tipo));
 
     /* 5. princípio sem ficha → comportamento antigo intacto (nome, só na receita) */
     await buscar('dipi');
@@ -127,7 +168,7 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     fs.mkdirSync(PROVAS, { recursive: true });
     for (const [w, h, nome] of [[1440, 900, 'desktop'], [900, 1100, 'tablet'], [390, 844, 'celular']]) {
       await p.setViewportSize({ width: w, height: h }); await p.waitForTimeout(250);
-      const painel = await p.$('#orqAssist'); if (painel) await painel.screenshot({ path: path.join(PROVAS, `ficha-painel-${nome}.png`) });
+      const painel = await p.$('#orqAssist'); if (painel) await painel.screenshot({ path: path.join(PROVAS, `ficha-painel-${MOTOR}-${nome}.png`) });
     }
     passa('zero erro de página/console', erros.length === 0, erros.join(' | ').slice(0, 300));
   } catch (e) {
