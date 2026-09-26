@@ -26,10 +26,16 @@ const pw = require('playwright');
           linhas: a.querySelectorAll('[data-orqa-rx-somar]').length, caminho: /\/Users\/|_brutos/.test(document.body.innerHTML) }; });
       };
       const lo = await ficha('losar', 'losartana pot');
+      /* remédio sem ficha: as apresentações CMED têm de aparecer sob o aviso */
+      await p.fill('[data-orqa-med]', 'diazep');
+      await p.waitForFunction(() => [...document.querySelectorAll('[data-orqa-med-pick]')].some(x => /^diazepam$/i.test(x.dataset.orqaMedPick)), null, { timeout: 10000 });
+      await p.evaluate(() => [...document.querySelectorAll('[data-orqa-med-pick]')].find(x => /^diazepam$/i.test(x.dataset.orqaMedPick)).click());
+      await p.waitForSelector('[data-orqa-ap-somar]', { timeout: 15000 });
+      const apN = await p.evaluate(() => document.querySelectorAll('[data-orqa-ap-somar]').length);
       const r = await p.evaluate(() => ({ versao: document.querySelector('meta[name="orq-release"]')?.content?.slice(0, 7), guardas: window.OrqPWA ? window.OrqPWA.status().guards.length : 0 }));
-      const ok = lo.linhas > 0 && !lo.caminho && r.guardas === 6 && !erros.length && r.versao === (process.env.ESPERADA || r.versao);
+      const ok = lo.linhas > 0 && apN > 0 && !lo.caminho && r.guardas === 6 && !erros.length && r.versao === (process.env.ESPERADA || r.versao);
       if (!ok) falhou++;
-      console.log(`  ${ok ? '✅' : '🔴'} ${motor.padEnd(8)} versão ${r.versao} · losartana ${lo.linhas} linhas · caminho local ${lo.caminho ? 'VAZOU' : 'nenhum'} · ${r.guardas}/6 guardas · erros: ${erros.length ? erros.join(' | ') : 'nenhum'}`);
+      console.log(`  ${ok ? '✅' : '🔴'} ${motor.padEnd(8)} versão ${r.versao} · losartana ${lo.linhas} linhas · diazepam ${apN} apresentações · caminho local ${lo.caminho ? 'VAZOU' : 'nenhum'} · ${r.guardas}/6 guardas · erros: ${erros.length ? erros.join(' | ') : 'nenhum'}`);
     } catch (e) { falhou++; console.log(`  🔴 ${motor} ${String(e).split('\n')[0].slice(0, 160)}`); await p.screenshot({ path: `/tmp/fichas-no-ar-${motor}.png` }); }
     await b.close();
   }
