@@ -136,7 +136,8 @@
         + (extra.length ? `<details class="orqa-fi-mais"><summary>mais ${extra.length} apresentações</summary>`
           + `<div class="orqa-fi-aps">${extra.map((a, i) => chip(a, i + 8)).join('')}</div></details>` : '');
     }
-    /* linha de apresentação pela POSIÇÃO → {texto, tipo}; o tipo de receita é decisão da médica (o app avisa controlado) */
+    /* linha de apresentação pela POSIÇÃO → {texto, tipo}. Entra como receita simples: o tipo de receituário é decisão da
+       médica — o app só avisa os controlados que o seu padrão reconhece, não todos. */
     function ap(alvo) {
       const j = String(alvo).lastIndexOf('|'); const l = apVistas[String(alvo).slice(0, j)];
       const a = l && l[Number(String(alvo).slice(j + 1))];

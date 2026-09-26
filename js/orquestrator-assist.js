@@ -71,7 +71,7 @@
   function somarReceita(linha) {
     const H = global.__HUB_COMPOSE__;
     const texto = linha && linha.texto;
-    if (!texto) return;
+    if (!texto) { aviso('Esta linha não está mais disponível — reabra o remédio na busca.'); return; }
     if (!H || typeof H.adicionarLivre !== 'function') { aviso('A receita não está disponível nesta tela.'); return; }
     const r = H.adicionarLivre(texto, { documentType: linha.tipo }) || {};
     aviso(r.msg || (r.ok ? 'Somado à receita do atendimento.' : 'Não foi possível somar.'));
