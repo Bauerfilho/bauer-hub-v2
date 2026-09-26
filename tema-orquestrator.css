@@ -182,6 +182,10 @@ body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
 .orqa-fi-selo{color:#8a6a12;background:#fbf3dc}
 .orqa-fi-aps{display:flex;flex-wrap:wrap;gap:4px}
 .orqa-fi-chip{font-size:10px;line-height:1.2;padding:3px 7px;border-radius:999px;border:1px solid #e4ddcd;background:#faf7f0;color:#3a4250}
+.orqa-ap-cab{font-size:9.5px;font-weight:800;color:#5b6472;margin:6px 0 4px}
+.orqa-ap{cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,background .15s}
+.orqa-ap:hover,.orqa-ap:focus-visible{border-color:var(--ouro-linha);background:#fff;outline:none;box-shadow:0 0 0 2px rgba(201,162,39,.25)}
+.orqa-ap-slot:empty{display:none}
 .orqa-fi-rename{border-color:var(--ouro-linha);box-shadow:inset 0 0 0 1px rgba(201,162,39,.18)}
 .orqa-fi-lin{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:11px;line-height:1.4}
 .orqa-fi-rot{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#5b6472;padding-top:2px}

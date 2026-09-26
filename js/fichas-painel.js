@@ -103,7 +103,47 @@
         + '<div class="orqa-fi-pe">Transcrição de fonte oficial, conferida por dois braços e auditada. <b>A decisão é sempre da médica.</b></div>';
     }
 
-    global.OrqFichas = Object.freeze({ tem, fichasDe, render, rx, carregarLote, fold,
+    /* APRESENTAÇÕES (tabela CMED) para o remédio que ainda não tem ficha: concentração + forma, e a linha no formato do
+       app com a posologia EM BRANCO (js/apresentacoes/<letra>.js, gerado por build-apresentacoes.py). Pedaço por letra
+       inicial, carregado 1× e memoizado, no mesmo molde das fichas; entra no precache do PWA e abre offline. */
+    const apCache = Object.create(null), apVoo = Object.create(null), apVistas = Object.create(null);
+    global.ORQ_APRES_PUT = function (letra, mapa) { if (typeof letra === 'string' && mapa && typeof mapa === 'object') apCache[letra] = mapa; };
+    function carregarAp(letra) {
+      if (apCache[letra]) return Promise.resolve(apCache[letra]);
+      if (apVoo[letra]) return apVoo[letra];
+      apVoo[letra] = new Promise((ok, falha) => {
+        const s = doc.createElement('script');
+        s.src = raiz() + 'apresentacoes/' + encodeURIComponent(letra) + '.js';
+        s.async = true;
+        s.onload = () => { delete apVoo[letra]; apCache[letra] ? ok(apCache[letra]) : falha(new Error('pedaço vazio: ' + letra)); };
+        s.onerror = () => { delete apVoo[letra]; s.remove(); falha(new Error('pedaço não carregou: ' + letra)); };
+        doc.head.appendChild(s);
+      });
+      return apVoo[letra];
+    }
+    function apresentacoesDe(nome) {
+      const k = fold(nome), letra = /^[a-z]/.test(k) ? k[0] : '_';
+      return carregarAp(letra).then(m => m[k] || []).catch(() => []);
+    }
+    function apRender(nome, lista) {
+      if (!lista || !lista.length) return '';
+      const k = fold(nome); apVistas[k] = lista;
+      const chip = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap" data-orqa-ap-somar="${esc(k)}|${i}" `
+        + `title="Soma à receita no formato; a posologia fica em branco para a médica">${esc(a[0])}</button>`;
+      const vis = lista.slice(0, 8), extra = lista.slice(8);
+      return '<div class="orqa-ap-cab">Apresentações (CMED) — toque para somar à receita no formato, com a posologia em branco</div>'
+        + `<div class="orqa-fi-aps">${vis.map(chip).join('')}</div>`
+        + (extra.length ? `<details class="orqa-fi-mais"><summary>mais ${extra.length} apresentações</summary>`
+          + `<div class="orqa-fi-aps">${extra.map((a, i) => chip(a, i + 8)).join('')}</div></details>` : '');
+    }
+    /* linha de apresentação pela POSIÇÃO → {texto, tipo}; o tipo de receita é decisão da médica (o app avisa controlado) */
+    function ap(alvo) {
+      const j = String(alvo).lastIndexOf('|'); const l = apVistas[String(alvo).slice(0, j)];
+      const a = l && l[Number(String(alvo).slice(j + 1))];
+      return a ? { texto: a[1], tipo: 'simple' } : null;
+    }
+
+    global.OrqFichas = Object.freeze({ tem, fichasDe, render, rx, carregarLote, fold, apresentacoesDe, apRender, ap,
       versao: () => (global.ORQ_FICHAS_INDICE && global.ORQ_FICHAS_INDICE.v) || null });
   } catch (e) { /* nunca derrubar o carregamento da página */ }
 })(window, document);

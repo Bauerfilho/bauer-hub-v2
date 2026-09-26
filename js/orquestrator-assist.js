@@ -87,9 +87,16 @@
     caixa.setAttribute('aria-live', 'polite');
     btn.after(caixa); btn.setAttribute('aria-expanded', 'true');
     const semFicha = () => `<div class="orqa-vazio">Ficha em preparo — a transcrição da fonte oficial deste medicamento ainda não chegou.</div>`
+      + '<div class="orqa-ap-slot"></div>'
       + `<button type="button" class="orqa-inserir" data-orqa-nome-cursor="${esc(nome)}"><span class="orqa-mini-logo" aria-hidden="true"></span>Inserir o nome na receita</button>`;
     const F = global.OrqFichas;
-    if (!F || !F.tem(nome)) { caixa.innerHTML = semFicha(); return; }
+    /* sem ficha: as apresentações da CMED entram no lugar reservado, sem travar a abertura (pedaço carrega depois) */
+    const mostrarSemFicha = () => {
+      caixa.innerHTML = semFicha();
+      const slot = caixa.querySelector('.orqa-ap-slot');
+      if (slot && F && F.apresentacoesDe) F.apresentacoesDe(nome).then(l => { if (slot.isConnected) slot.innerHTML = F.apRender(nome, l); });
+    };
+    if (!F || !F.tem(nome)) { mostrarSemFicha(); return; }
     caixa.innerHTML = '<div class="orqa-vazio">Abrindo a ficha…</div>';
     const trazerAVista = () => {   /* rola SÓ o painel (nunca a página) até o item; suave, ou seco se pedem menos movimento */
       const rol = btn.closest('.orqa-rolagem'); if (!rol) return;
@@ -97,8 +104,8 @@
       const seco = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
       rol.scrollTo({ top: alvoTopo, behavior: seco ? 'auto' : 'smooth' });
     };
-    F.fichasDe(nome).then(fs => { if (caixa.isConnected) { caixa.innerHTML = fs.length ? F.render(fs) : semFicha(); trazerAVista(); } })
-      .catch(() => { if (caixa.isConnected) caixa.innerHTML = semFicha(); });
+    F.fichasDe(nome).then(fs => { if (caixa.isConnected) { if (fs.length) caixa.innerHTML = F.render(fs); else mostrarSemFicha(); trazerAVista(); } })
+      .catch(() => { if (caixa.isConnected) mostrarSemFicha(); });
   }
   function textoSelecionadoOuCampo() {
     const sel = String(doc.getSelection() || '').trim();
@@ -462,6 +469,8 @@
     if (somar) { const [k, i] = somar.dataset.orqaRxSomar.split('|'); somarReceita(global.OrqFichas && global.OrqFichas.rx(k, i)); return; }
     const cursor = ev.target.closest('[data-orqa-rx-cursor]');
     if (cursor) { const [k, i] = cursor.dataset.orqaRxCursor.split('|'); const l = global.OrqFichas && global.OrqFichas.rx(k, i); if (l) inserir(l.texto, { somenteReceita: true }); return; }
+    const apSomar = ev.target.closest('[data-orqa-ap-somar]');
+    if (apSomar) { somarReceita(global.OrqFichas && global.OrqFichas.ap(apSomar.dataset.orqaApSomar)); return; }
     const nomeCur = ev.target.closest('[data-orqa-nome-cursor]');
     if (nomeCur) { inserir(nomeCur.dataset.orqaNomeCursor, { somenteReceita: true }); return; }
     const pac = ev.target.closest('[data-orqa-pac-pick]');

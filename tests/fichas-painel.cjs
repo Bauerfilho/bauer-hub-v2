@@ -88,6 +88,34 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     const dup = await p.evaluate(() => { const b = document.querySelector('[data-orqa-rx-somar]'); const n = window.__HUB_COMPOSE__.itens(); b.click(); return window.__HUB_COMPOSE__.itens() === n; });
     passa('a mesma linha não entra duas vezes', dup);
 
+    /* 2b. SEM FICHA → apresentações da CMED (formatador determinístico) → soma NO FORMATO, posologia em branco */
+    await buscar('diazep');
+    const semf = await p.evaluate(() => new Promise(ok => {
+      const btn = [...document.querySelectorAll('[data-orqa-med-pick]')].find(b => /^diazepam$/i.test(b.dataset.orqaMedPick));
+      if (!btn) return ok({ erro: 'diazepam fora da busca' });
+      if (btn.nextElementSibling && btn.nextElementSibling.classList.contains('orqa-fi-caixa')) btn.click();
+      const t0 = performance.now(); btn.click();
+      const esp = () => { const c = btn.nextElementSibling; const chips = c ? c.querySelectorAll('[data-orqa-ap-somar]') : [];
+        if (chips.length) return ok({ ms: performance.now() - t0, chips: chips.length, aviso: /Ficha em preparo/.test(c.textContent), nome: !!c.querySelector('[data-orqa-nome-cursor]') });
+        if (performance.now() - t0 > 3000) return ok({ erro: 'sem apresentações em 3 s' }); setTimeout(esp, 5); };
+      esp();
+    }));
+    passa('sem ficha: apresentações da CMED sob o aviso, com o "só o nome" de reserva', semf.chips > 0 && semf.aviso && semf.nome, JSON.stringify(semf));
+    passa('apresentações frias < 150 ms (inclui carregar o pedaço)', semf.ms >= 0 && semf.ms < 150, (semf.ms || -1).toFixed(1) + ' ms');
+    const antesAp = await p.evaluate(() => window.__HUB_COMPOSE__.itens());
+    const linhaAp = await p.evaluate(() => { const b = document.querySelector('[data-orqa-ap-somar]'); b.click(); return window.OrqFichas.ap(b.dataset.orqaApSomar).texto; });
+    const depoisAp = await p.evaluate(() => window.__HUB_COMPOSE__.itens());
+    const [cabAp, posAp] = String(linhaAp).split('\n');
+    passa('apresentação entra pela bandeja no formato, sem número de dose', depoisAp === antesAp + 1 && /^Diazepam \d/.test(cabAp) && / — ______\.$/.test(cabAp) && /___/.test(posAp) && !/\d/.test(posAp), JSON.stringify(linhaAp));
+    await p.evaluate(() => window.__HUB_COMPOSE__.montar()); await p.waitForTimeout(700);
+    const folhaAp = await p.evaluate(l => { const cps = [...document.querySelectorAll('#recipePrint .rx-copy .rx-body[data-field="prescription"]')].map(e => e.textContent);
+      const H = window.__HUB_TEST__; return { iguais: cps.length === 2 && cps[0] === cps[1] && H.syncCheck(), tem: !!cps[0] && cps[0].includes(l.split('\n')[0]), cabe1folha: !H.overflow() }; }, linhaAp);
+    passa('receita montada traz a apresentação nas 2 vias idênticas, em 1 folha', folhaAp.iguais && folhaAp.tem && folhaAp.cabe1folha, JSON.stringify(folhaAp));
+    /* volta ao estado que os passos seguintes esperam: ficha da losartana aberta */
+    await buscar('losar');
+    await p.evaluate(() => { const b = [...document.querySelectorAll('[data-orqa-med-pick]')].find(x => /losartana pot/i.test(x.dataset.orqaMedPick)); if (b && !(b.nextElementSibling && b.nextElementSibling.classList.contains('orqa-fi-caixa'))) b.click(); });
+    await p.waitForSelector('[data-orqa-rx-cursor]', { timeout: 5000 });
+
     /* 3. CERCA: foco fora da receita → "no cursor" não escreve nada */
     const cerca = await p.evaluate(() => {
       const fora = [...document.querySelectorAll('input[type="text"],input[type="search"],input:not([type]),textarea')].find(e => e.offsetParent && !e.closest('#orqAssist') && !e.closest('#recipePrint,#orientationPrint,#composeTray'));

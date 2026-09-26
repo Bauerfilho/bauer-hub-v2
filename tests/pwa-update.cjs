@@ -28,6 +28,7 @@ function publicar() {
   // Fichas do Orquestrator (25/09): índice, carregador, busca e pedaços precisam estar no pacote para abrir offline.
   for (const n of ['js/fichas-painel.js', 'js/fichas/_indice.js', 'js/meds-index.js', 'js/meds-busca.js']) assert.ok(nomes.includes(n), `faltou no pacote: ${n}`);
   assert.ok(nomes.some(n => /^js\/fichas\/[A-Z0-9]+\.js$/.test(n)), 'nenhum pedaço de ficha no pacote');
+  assert.ok(nomes.includes('js/apresentacoes/d.js'), 'apresentações CMED fora do pacote (js/apresentacoes/d.js)');
   assert.ok(!nomes.includes('sw.js'), 'O worker gerado não pode integrar seu próprio manifesto');
   assert.ok(!nomes.some(n => /(^|\/)(tests|backups|\.git)\//.test(n)));
   for (const ativo of manifesto.assets) {
@@ -400,6 +401,8 @@ async function testar() {
     // Um pedaço de ficha carregado sob demanda abre OFFLINE (servido pelo precache).
     const fichasOffline = await pagina.evaluate(async () => { try { const a = await window.OrqFichas.carregarLote('C08'); return a.length; } catch (e) { return 'ERRO ' + e.message; } });
     assert.ok(typeof fichasOffline === 'number' && fichasOffline > 0, `pedaço de ficha offline: ${fichasOffline}`);
+    const apOffline = await pagina.evaluate(async () => { try { const l = await window.OrqFichas.apresentacoesDe('Diazepam'); return l.length; } catch (e) { return 'ERRO ' + e.message; } });
+    assert.ok(typeof apOffline === 'number' && apOffline > 0, `apresentações CMED offline: ${apOffline}`);
     const outra = await contexto.newPage();
     await outra.goto(`${origem}/index.html?test=1`);
     await pronta(outra);
