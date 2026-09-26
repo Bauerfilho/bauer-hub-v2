@@ -144,6 +144,35 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     passa('diclofenaco reúne as fichas de todos os lotes (nada escondido no índice)', dic.fichas >= 2, `${dic.fichas} fichas`);
     passa('a dose não repete a frequência já dita no habitual', dic.repete === false, JSON.stringify(dic));
     await p.setViewportSize({ width: 1440, height: 900 }); await p.waitForTimeout(300);
+    /* 2d. ESBOÇO DE POSOLOGIA por indicação (dados SINTÉTICOS de teste — não clínicos): casa com a doença aberta → direto;
+       sem casamento → a médica escolhe; "sem posologia" → esqueleto. Substitui o mapa da letra 'd' (os passos seguintes não usam 'd'). */
+    const esb = await p.evaluate(async () => {
+      const t = window.__HUB_COMPOSE__.topico(); const itens = () => window.__HUB_TEST__.state.compose.items.map(i => i.text);
+      const esq = n => `Diazepam ${n} mg, comprimido — ______.\nTomar ______, via oral, de ___ em ___ horas, por ___ dias.`;
+      window.ORQ_APRES_PUT('d', { diazepam: [
+        ['5 mg · comprimido', esq(5), [['INDICAÇÃO TESTE A', 'adulto', [t], 'Diazepam 5 mg, comprimido — 20 comprimidos.\nTomar TESTE-A.', 'fonte teste'],
+                                        ['INDICAÇÃO TESTE B', 'adulto', [], 'Diazepam 5 mg, comprimido — 20 comprimidos.\nTomar TESTE-B.', 'fonte teste']]],
+        ['10 mg · comprimido', esq(10), [['INDICAÇÃO TESTE C', 'adulto', [], 'Diazepam 10 mg, comprimido — 20 comprimidos.\nTomar TESTE-C.', 'fonte teste'],
+                                         ['INDICAÇÃO TESTE D', 'pediatrico', [], 'Diazepam 10 mg, comprimido — 20 comprimidos.\nDar TESTE-D.', 'fonte teste']]]] });
+      const el = document.querySelector('[data-orqa-med]'); el.value = 'diazep'; el.dispatchEvent(new Event('input', { bubbles: true }));
+      await new Promise(r => setTimeout(r, 450));
+      const btn = [...document.querySelectorAll('[data-orqa-med-pick]')].find(b => /^diazepam$/i.test(b.dataset.orqaMedPick));
+      if (btn.nextElementSibling && btn.nextElementSibling.classList.contains('orqa-fi-caixa')) btn.click();
+      btn.click(); await new Promise(r => setTimeout(r, 300));
+      const chips = () => [...btn.nextElementSibling.querySelectorAll('[data-orqa-ap-somar]')];
+      const r = { marca: chips().filter(c => c.classList.contains('orqa-ap-pronta')).length };
+      chips()[0].click(); r.auto = itens().some(x => x.includes('TESTE-A')); r.semEscolha = !document.querySelector('.orqa-ap-escolha');
+      chips()[1].click(); const box = document.querySelector('.orqa-ap-escolha');
+      r.escolhas = box ? box.querySelectorAll('[data-orqa-ap-ind]').length : 0; r.pediatrico = !!box && /pediátrico/.test(box.textContent);
+      box && box.querySelector('[data-orqa-ap-ind="0"]').click(); r.escolhida = itens().some(x => x.includes('TESTE-C')); r.fechou = !document.querySelector('.orqa-ap-escolha');
+      chips()[1].click(); const box2 = document.querySelector('.orqa-ap-escolha'); box2 && box2.querySelector('[data-orqa-ap-ind="-1"]').click();
+      r.branco = itens().some(x => x.startsWith('Diazepam 10 mg, comprimido — ______.'));
+      return r;
+    });
+    passa('esboço: chips com posologia pronta ganham a marca', esb.marca === 2, JSON.stringify(esb));
+    passa('esboço: indicação ligada à doença aberta entra direto, sem perguntar', esb.auto && esb.semEscolha, JSON.stringify(esb));
+    passa('esboço: sem casamento, a médica escolhe (2 indicações + "em branco") e a escolhida entra', esb.escolhas === 3 && esb.pediatrico && esb.escolhida && esb.fechou, JSON.stringify(esb));
+    passa('esboço: "sem posologia" entra o esqueleto em branco', esb.branco, JSON.stringify(esb));
     /* volta ao estado que os passos seguintes esperam: ficha da losartana aberta */
     await buscar('losar');
     await p.evaluate(() => { const b = [...document.querySelectorAll('[data-orqa-med-pick]')].find(x => /losartana pot/i.test(x.dataset.orqaMedPick)); if (b && !(b.nextElementSibling && b.nextElementSibling.classList.contains('orqa-fi-caixa'))) b.click(); });

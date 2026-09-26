@@ -77,6 +77,30 @@
     aviso(r.msg || (r.ok ? 'Somado à receita do atendimento.' : 'Não foi possível somar.'));
   }
 
+  /* ESBOÇO DE POSOLOGIA (bula oficial, por indicação; decisão do dono 26/09): a bula não sabe a doença — o app sabe.
+     Uma indicação ligada à doença aberta → entra direto. Várias, ou nenhuma que case → a médica escolhe (ou "em branco").
+     Sem esboço → o esqueleto em branco de sempre. Tudo pelo funil da receita (somarReceita). */
+  function escolherPosologia(chip) {
+    const F = global.OrqFichas; const linha = F && F.ap(chip.dataset.orqaApSomar);
+    if (!linha) { somarReceita(null); return; }
+    const inds = linha.indicacoes || [];
+    if (!inds.length) { somarReceita(linha); return; }
+    const H = global.__HUB_COMPOSE__; const t = H && typeof H.topico === 'function' ? H.topico() : null;
+    const casam = t ? inds.filter(i => i.topicos.indexOf(t) >= 0) : [];
+    if (casam.length === 1) { somarReceita({ texto: casam[0].linha, tipo: linha.tipo }); return; }
+    const prox = chip.nextElementSibling;
+    if (prox && prox.classList.contains('orqa-ap-escolha')) { prox.remove(); return; }
+    const lista = casam.length > 1 ? casam : inds;
+    const box = doc.createElement('div');
+    box.className = 'orqa-ap-escolha';
+    box.innerHTML = '<div class="orqa-ap-cab">Esboço da bula — escolha a indicação; confira e ajuste na receita</div>'
+      + lista.map((i, k) => `<button type="button" class="orqa-ap-ind" data-orqa-ap-ind="${k}">${esc(i.ind)}${i.faixa === 'pediatrico' ? ' · pediátrico' : ''}`
+        + `${i.fonte ? `<small>${esc(i.fonte)}</small>` : ''}</button>`).join('')
+      + '<button type="button" class="orqa-ap-ind orqa-ap-branco" data-orqa-ap-ind="-1">sem posologia (em branco)</button>';
+    box._escolha = { lista, linha };
+    chip.after(box);
+  }
+
   /* a FICHA abre sob o item da busca (acordeão); sem ficha ainda → o nome, só dentro da receita */
   function abrirFicha(btn) {
     const nome = btn.dataset.orqaMedPick;
@@ -476,8 +500,14 @@
     if (somar) { const [k, i] = somar.dataset.orqaRxSomar.split('|'); somarReceita(global.OrqFichas && global.OrqFichas.rx(k, i)); return; }
     const cursor = ev.target.closest('[data-orqa-rx-cursor]');
     if (cursor) { const [k, i] = cursor.dataset.orqaRxCursor.split('|'); const l = global.OrqFichas && global.OrqFichas.rx(k, i); if (l) inserir(l.texto, { somenteReceita: true }); return; }
+    const apInd = ev.target.closest('[data-orqa-ap-ind]');
+    if (apInd) {
+      const box = apInd.closest('.orqa-ap-escolha'); const k = Number(apInd.dataset.orqaApInd);
+      const esc0 = box && box._escolha; if (!esc0) return;
+      somarReceita({ texto: k < 0 ? esc0.linha.texto : esc0.lista[k].linha, tipo: esc0.linha.tipo }); box.remove(); return;
+    }
     const apSomar = ev.target.closest('[data-orqa-ap-somar]');
-    if (apSomar) { somarReceita(global.OrqFichas && global.OrqFichas.ap(apSomar.dataset.orqaApSomar)); return; }
+    if (apSomar) { escolherPosologia(apSomar); return; }
     const nomeCur = ev.target.closest('[data-orqa-nome-cursor]');
     if (nomeCur) { inserir(nomeCur.dataset.orqaNomeCursor, { somenteReceita: true }); return; }
     const pac = ev.target.closest('[data-orqa-pac-pick]');

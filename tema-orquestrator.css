@@ -195,6 +195,13 @@ body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
 .orqa-fi-longo summary b{color:var(--ouro);font-weight:800;white-space:nowrap}
 .orqa-fi-longo[open] summary{display:none}
 .orqa-ap-outras{margin-top:2px}
+.orqa-ap-pronta::after{content:'';display:inline-block;width:6px;height:6px;margin-left:5px;border-radius:50%;background:var(--ouro);vertical-align:middle}   /* posologia pronta (esboço da bula) */
+.orqa-ap-escolha{flex-basis:100%;display:grid;gap:4px;padding:7px;margin:2px 0 4px;border:1px solid var(--ouro-linha);border-radius:9px;background:#fff}
+.orqa-ap-escolha .orqa-ap-cab{margin:0 0 2px}
+.orqa-ap-ind{text-align:left;font:inherit;font-size:10.5px;line-height:1.3;padding:6px 8px;border-radius:7px;border:1px solid #e4ddcd;background:#faf7f0;color:#1c2430;cursor:pointer;overflow-wrap:anywhere}
+.orqa-ap-ind:hover,.orqa-ap-ind:focus-visible{border-color:var(--ouro-linha);background:#fff;outline:none;box-shadow:0 0 0 2px rgba(201,162,39,.25)}
+.orqa-ap-ind small{display:block;margin-top:2px;font-size:9px;color:#8a93a3}
+.orqa-ap-branco{color:#5b6472;font-style:italic}
 .orqa-fi-val small{display:block;margin-top:2px;font-size:9px;color:#8a93a3;line-height:1.3}
 .orqa-fi-dose .orqa-fi-val{font-weight:700;color:#1c2430}
 .orqa-fi-gest .orqa-fi-rot{color:#8a5a12}
