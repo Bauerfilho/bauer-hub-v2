@@ -42,11 +42,14 @@
     }
 
     /* todas as variantes (sal / liberação / denominação) de um nome da busca; as com linha pronta primeiro */
+    /* o índice traz [[lote, [chaves]], …]: um nome pode ter fichas em vários lotes (formato antigo [lote, [chaves]] ainda aceito) */
     function fichasDe(nome) {
       const e = entrada(nome);
       if (!e) return Promise.resolve([]);
-      return carregarLote(e[0]).then(arr => e[1].map(k => arr.find(f => f.k === k)).filter(Boolean)
-        .sort((a, b) => (b.rx.length > 0) - (a.rx.length > 0) || (!!b.d) - (!!a.d)));
+      const pares = typeof e[0] === 'string' ? [e] : e;
+      return Promise.all(pares.map(([lote, chaves]) => carregarLote(lote).then(arr => chaves.map(k => arr.find(f => f.k === k)))))
+        .then(grupos => [].concat(...grupos).filter(Boolean)
+          .sort((a, b) => (b.rx.length > 0) - (a.rx.length > 0) || (!!b.d) - (!!a.d)));
     }
 
     /* linha pela POSIÇÃO na ficha (imune a id repetido entre braços) → {texto, tipo} */

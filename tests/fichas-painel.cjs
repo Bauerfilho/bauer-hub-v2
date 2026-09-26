@@ -127,16 +127,21 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
           const pn = document.getElementById('orqAssist'), dir = pn.getBoundingClientRect().right;
           const larg = [...pn.querySelectorAll('.orqa-fi-caixa, .orqa-fi, .orqa-fi-lin')].map(e => e.getBoundingClientRect().right - dir)
             .concat([...pn.querySelectorAll('*')].filter(e => getComputedStyle(e).overflowY !== 'visible').map(e => e.scrollWidth - e.clientWidth));
-          const dose = (c && c.querySelector('.orqa-fi-dose .orqa-fi-val') || {}).textContent || '';
-          const partes = dose.split(' · ').map(x => x.trim().toLowerCase()).filter(Boolean);
-          return ok({ ficha: !!(c && c.querySelector('.orqa-fi')), outras: c ? c.querySelectorAll('.orqa-ap-outras [data-orqa-ap-somar]').length : 0,
-            estouro: Math.max(0, ...larg), repete: partes.some((x, i) => partes.some((y, j) => i !== j && y.includes(x.replace(/^habitual /, '')))) });
+          /* texto VISÍVEL da dose em cada ficha: o resumo quando há "ler tudo" (o completo fica oculto), sem o rótulo da fonte */
+          const visivel = v => { const d = v.cloneNode(true); d.querySelectorAll('small').forEach(x => x.remove());
+            const det = d.querySelector('details'); return (det ? det.querySelector('summary').textContent.replace(/… ler tudo$/, '') : d.textContent).trim(); };
+          const repete = [...(c ? c.querySelectorAll('.orqa-fi-dose .orqa-fi-val') : [])].map(visivel).some(dose => {
+            const partes = dose.split(' · ').map(x => x.trim().toLowerCase().replace(/^(habitual|máx\.|inicial) /, '')).filter(x => x.length > 3);
+            return partes.some((x, i) => partes.some((y, j) => i !== j && y.includes(x))); });
+          return ok({ ficha: !!(c && c.querySelector('.orqa-fi')), fichas: c ? c.querySelectorAll('.orqa-fi').length : 0,
+            outras: c ? c.querySelectorAll('.orqa-ap-outras [data-orqa-ap-somar]').length : 0, estouro: Math.max(0, ...larg), repete });
         }
         setTimeout(esp, 10); };
       esp();
     }));
     passa('diclofenaco: ficha + outras apresentações do mercado (CMED) recolhidas', dic.ficha && dic.outras > 0, JSON.stringify(dic));
     passa('nenhuma ficha passa da largura do painel (sem texto cortado)', dic.estouro <= 1, `estouro ${dic.estouro}px`);
+    passa('diclofenaco reúne as fichas de todos os lotes (nada escondido no índice)', dic.fichas >= 2, `${dic.fichas} fichas`);
     passa('a dose não repete a frequência já dita no habitual', dic.repete === false, JSON.stringify(dic));
     await p.setViewportSize({ width: 1440, height: 900 }); await p.waitForTimeout(300);
     /* volta ao estado que os passos seguintes esperam: ficha da losartana aberta */
