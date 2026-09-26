@@ -77,6 +77,8 @@ async function versão(p = pagina) {
 }
 async function pronta(p = pagina) {
   await p.waitForFunction(() => window.OrqPWA && window.HubNav && window.F2DB, null, { timeout: 20000 });
+  // Os guardas das views registram logo após os globais: esperar por eles (o critério continua os 6 exatos).
+  await p.waitForFunction(obr => { const s = window.OrqPWA && window.OrqPWA.status(); return !!s && obr.every(g => s.guards.includes(g)); }, obrigatorias, { timeout: 20000 }).catch(() => {});
   assert.deepEqual((await status(p)).guards.sort(), [...obrigatorias].sort());
 }
 async function esperarVersao(version, p = pagina) {
