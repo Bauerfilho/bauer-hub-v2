@@ -66,11 +66,47 @@
     return true;
   }
 
+  /* ABREVIAÇÃO DE CONSULTÓRIO (decisão do dono 26/09): a 1ª linha do remédio respeita a largura da caixa da receita.
+     Só abrevia quando NÃO cabe, e na ordem dele — forma (comp., cáps., susp., sol.) → liberação (LP) → revestido
+     (rev.) → quantidade (comp.) —, parando no 1º passo que já cabe. A linha que cabe não muda; a posologia (2ª linha)
+     nunca é tocada. Qualquer falha devolve o texto original (o painel nunca quebra a receita). */
+  let pincel = null;
+  function larguraReceita() {
+    const el = doc.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"]');
+    if (!el || !el.clientWidth) return null;
+    const cs = global.getComputedStyle(el);
+    pincel = pincel || doc.createElement('canvas').getContext('2d');
+    pincel.font = cs.font || `${cs.fontSize} ${cs.fontFamily}`;
+    const util = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    return util - pincel.measureText('10- ').width;   /* reserva o número do item */
+  }
+  function abreviarLinha(texto) {
+    try {
+      const [cab, ...resto] = String(texto || '').split('\n');
+      const largura = larguraReceita();
+      const cabe = s => largura == null || pincel.measureText(s).width <= largura;
+      if (!cab || cabe(cab)) return texto;
+      const i = cab.indexOf(' — ');
+      let antes = i < 0 ? cab : cab.slice(0, i), depois = i < 0 ? '' : cab.slice(i);
+      const passos = [
+        () => { antes = antes.replace(/,\s+(?=(comprimidos?|c[áa]psulas?|suspens[ãa]o|solu[çc][ãa]o)\b)/i, ' ')
+          .replace(/\bcomprimidos?\b/gi, 'comp.').replace(/\bc[áa]psulas?\b/gi, 'cáps.')
+          .replace(/\bsuspens[ãa]o\b/gi, 'susp.').replace(/\bsolu[çc][ãa]o\b/gi, 'sol.'); },
+        () => { antes = antes.replace(/\s+de\s+libera[çc][ãa]o\s+prolongada\b/gi, ' LP').replace(/\blibera[çc][ãa]o\s+prolongada\b/gi, 'LP'); },
+        () => { antes = antes.replace(/\brevestid[oa]s?\b/gi, 'rev.'); },
+        () => { depois = depois.replace(/\bcomprimidos?\b/gi, 'comp.').replace(/\bc[áa]psulas?\b/gi, 'cáps.'); },
+      ];
+      let linha = cab;
+      for (const passo of passos) { passo(); linha = (antes + depois).replace(/\.\.+/g, '.'); if (cabe(linha)) break; }
+      return [linha, ...resto].join('\n');
+    } catch (_) { return texto; }
+  }
+
   /* "Somar à receita": entra pelo FUNIL de composição do próprio app (window.__HUB_COMPOSE__), herdando a lei do
      papel (1 folha, itens numerados), as 2 vias espelhadas, os rascunhos e o guarda de atualização da PWA. */
   function somarReceita(linha) {
     const H = global.__HUB_COMPOSE__;
-    const texto = linha && linha.texto;
+    const texto = linha && linha.texto && abreviarLinha(linha.texto);
     if (!texto) { aviso('Esta linha não está mais disponível — reabra o remédio na busca.'); return; }
     if (!H || typeof H.adicionarLivre !== 'function') { aviso('A receita não está disponível nesta tela.'); return; }
     const r = H.adicionarLivre(texto, { documentType: linha.tipo }) || {};
@@ -499,7 +535,7 @@
     const somar = ev.target.closest('[data-orqa-rx-somar]');
     if (somar) { const [k, i] = somar.dataset.orqaRxSomar.split('|'); somarReceita(global.OrqFichas && global.OrqFichas.rx(k, i)); return; }
     const cursor = ev.target.closest('[data-orqa-rx-cursor]');
-    if (cursor) { const [k, i] = cursor.dataset.orqaRxCursor.split('|'); const l = global.OrqFichas && global.OrqFichas.rx(k, i); if (l) inserir(l.texto, { somenteReceita: true }); return; }
+    if (cursor) { const [k, i] = cursor.dataset.orqaRxCursor.split('|'); const l = global.OrqFichas && global.OrqFichas.rx(k, i); if (l) inserir(abreviarLinha(l.texto), { somenteReceita: true }); return; }
     const apInd = ev.target.closest('[data-orqa-ap-ind]');
     if (apInd) {
       const box = apInd.closest('.orqa-ap-escolha'); const k = Number(apInd.dataset.orqaApInd);
@@ -555,5 +591,5 @@
       if (d) d.open = true;
     }
   }
-  global.OrqAssist = Object.freeze({ abrir, fechar, mostrar, inserir, contexto });
+  global.OrqAssist = Object.freeze({ abrir, fechar, mostrar, inserir, contexto, abreviarLinha });
 })(window, document);

@@ -241,7 +241,8 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
       const esperado = window.OrqFichas.rx(k, i).texto, visto = b.closest('.orqa-fi-rx').querySelector('.orqa-fi-rx-t b').textContent;
       const rx = document.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"][contenteditable]');
       rx.focus(); const s = getSelection(); s.selectAllChildren(rx); s.collapseToEnd(); const antes = rx.textContent; b.click();
-      return { mesmo: esperado.split('\n')[0] === visto, entrou: rx.textContent.length > antes.length && rx.textContent.includes(visto), n: bs.length };
+      const entra = window.OrqAssist.abreviarLinha(esperado).split('\n')[0];   /* a linha certa, na forma que cabe na caixa (abreviação 26/09) */
+      return { mesmo: esperado.split('\n')[0] === visto, entrou: rx.textContent.length > antes.length && rx.textContent.includes(entra), n: bs.length };
     });
     passa('a última linha pronta escreve exatamente o texto clicado', ultima.mesmo && ultima.entrou, JSON.stringify(ultima));
 
@@ -286,6 +287,17 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
       await p.setViewportSize({ width: w, height: h }); await p.waitForTimeout(250);
       const painel = await p.$('#orqAssist'); if (painel) await painel.screenshot({ path: path.join(PROVAS, `ficha-painel-${MOTOR}-${nome}.png`) });
     }
+    /* ABREVIAÇÃO DE CONSULTÓRIO (26/09): só quando a 1ª linha não cabe na caixa da receita; posologia intocada */
+    const abrev = await p.evaluate(() => {
+      const A = window.OrqAssist && window.OrqAssist.abreviarLinha; if (!A) return { erro: 'sem abreviarLinha' };
+      const el = document.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"]'); if (!el) return { erro: 'sem receita' };
+      const longa = 'Ibuprofeno 600 mg, comprimido revestido de liberação prolongada — 60 comprimidos.\nTomar 600 mg (1 comprimido), via oral, de 12 em 12 horas.';
+      const w0 = el.style.width, r = {};
+      el.style.width = '120px'; const a = A(longa); r.estreita = a.split('\n')[0]; r.posIntacta = a.split('\n')[1] === longa.split('\n')[1];
+      el.style.width = '2400px'; r.larga = A(longa) === longa;
+      el.style.width = w0; return r; });
+    passa('abreviação: não cabe → "Ibuprofeno 600 mg comp. rev. LP — 60 comp."; cabe → intacta; posologia intocada',
+      abrev.estreita === 'Ibuprofeno 600 mg comp. rev. LP — 60 comp.' && abrev.posIntacta && abrev.larga, JSON.stringify(abrev));
     passa('zero erro de página/console', erros.length === 0, erros.join(' | ').slice(0, 300));
   } catch (e) {
     passa('execução da prova', false, String(e).slice(0, 200));
