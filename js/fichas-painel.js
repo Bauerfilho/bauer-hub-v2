@@ -10,7 +10,7 @@
   'use strict';
   try {
     const esc = v => String(v ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
-    const fold = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+    const fold = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
     const cache = Object.create(null);     /* lote → [fichas]  (memoizado: cada pedaço carrega uma vez) */
     const voo = Object.create(null);       /* lote → Promise em curso */
     const vistas = Object.create(null);    /* chave → ficha, para os botões acharem a linha pelo id */
@@ -49,10 +49,11 @@
         .sort((a, b) => (b.rx.length > 0) - (a.rx.length > 0) || (!!b.d) - (!!a.d)));
     }
 
-    function rx(chave, id) {
+    /* linha pela POSIÇÃO na ficha (imune a id repetido entre braços) → {texto, tipo} */
+    function rx(chave, i) {
       const f = vistas[chave];
-      const r = f && f.rx.find(x => x.id === id);
-      return r ? r.p : null;
+      const r = f && f.rx[Number(i)];
+      return r ? { texto: r.p, tipo: r.dt === 'receita_controle_especial' ? 'control-special' : 'simple' } : null;
     }
 
     const FORMA = f => String(f || '').replace(/comprimido revestido/i, 'comp. rev.').replace(/comprimido/i, 'comp.').replace(/cápsula/i, 'cáps.').replace(/solução injetável/i, 'sol. inj.');
@@ -74,12 +75,12 @@
       /* alertas: os de gravidade alta sempre à vista + 2 comuns; o resto num toque (a linha pronta não fica soterrada) */
       const altos = (f.al || []).filter(a => a.g === 'alta'), comuns = (f.al || []).filter(a => a.g !== 'alta');
       const li = a => `<li class="${a.g === 'alta' ? 'orqa-fi-alta' : ''}">${esc(a.t)}</li>`;
-      const extra = comuns.slice(2);
-      const al = altos.map(li).join('') + comuns.slice(0, 2).map(li).join('')
-        + (extra.length ? `</ul><details class="orqa-fi-mais"><summary>mais ${extra.length} aviso${extra.length > 1 ? 's' : ''}</summary><ul class="orqa-fi-al">${extra.map(li).join('')}` : '');
-      const linhas = (f.rx || []).map(r => {
+      const vis = altos.concat(comuns.slice(0, 2)), extra = comuns.slice(2);
+      const alertasHtml = (vis.length ? `<ul class="orqa-fi-al">${vis.map(li).join('')}</ul>` : '')
+        + (extra.length ? `<details class="orqa-fi-mais"><summary>mais ${extra.length} aviso${extra.length > 1 ? 's' : ''}</summary><ul class="orqa-fi-al">${extra.map(li).join('')}</ul></details>` : '');
+      const linhas = (f.rx || []).map((r, i) => {
         const [cab, ...resto] = String(r.p || '').split('\n');
-        const alvo = esc(f.k) + '|' + esc(r.id);
+        const alvo = esc(f.k) + '|' + i;
         return `<div class="orqa-fi-rx"><div class="orqa-fi-rx-t"><b>${esc(cab)}</b>${resto.length ? `<span>${esc(resto.join(' '))}</span>` : ''}</div>`
           + `<div class="orqa-fi-rx-acoes"><button type="button" class="orqa-inserir" data-orqa-rx-somar="${alvo}" title="Soma esta linha à receita do atendimento (1 folha, itens numerados)">`
           + `<span class="orqa-mini-logo" aria-hidden="true"></span>Somar à receita</button>`
@@ -90,7 +91,7 @@
           <span class="orqa-conferir orqa-fi-selo" title="Transcrito de fonte oficial e auditado; ainda não conferido pelo médico">não conferido pelo médico</span></header>
         ${ap ? `<div class="orqa-fi-aps">${ap}</div>` : ''}
         ${dose(f.d)}${linha('Ajuste renal', f.rn)}${linha('Ajuste hepático', f.hp)}${linha('Gestação', f.ge, 'orqa-fi-gest')}${linha('Amamentação', f.am)}${linha('Pediatria', f.pe)}
-        ${al ? `<ul class="orqa-fi-al">${al}</ul>${extra.length ? '</details>' : ''}` : ''}
+        ${alertasHtml}
         ${linhas ? `<div class="orqa-fi-rxs">${linhas}</div>`
                  : '<div class="orqa-vazio">Sem linha de receita pronta — a fonte oficial não cobre esta forma. Escreva à mão na receita.</div>'}
       </article>`;
