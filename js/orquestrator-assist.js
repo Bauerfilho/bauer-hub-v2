@@ -104,7 +104,14 @@
       const seco = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
       rol.scrollTo({ top: alvoTopo, behavior: seco ? 'auto' : 'smooth' });
     };
-    F.fichasDe(nome).then(fs => { if (caixa.isConnected) { if (fs.length) caixa.innerHTML = F.render(fs); else mostrarSemFicha(); trazerAVista(); } })
+    /* com ficha: as outras apresentações do mercado (CMED) entram recolhidas ao fim — ex.: a ficha do diclofenaco é do
+       Bexai (ácido, 35 mg); o sódico/potássico 50 mg ficam a um toque */
+    const mostrarFicha = fs => {
+      caixa.innerHTML = F.render(fs) + '<div class="orqa-ap-slot"></div>';
+      const slot = caixa.querySelector('.orqa-ap-slot');
+      if (slot && F.apresentacoesDe) F.apresentacoesDe(nome).then(l => { if (slot.isConnected) slot.innerHTML = F.apRender(nome, l, true); });
+    };
+    F.fichasDe(nome).then(fs => { if (caixa.isConnected) { if (fs.length) mostrarFicha(fs); else mostrarSemFicha(); trazerAVista(); } })
       .catch(() => { if (caixa.isConnected) mostrarSemFicha(); });
   }
   function textoSelecionadoOuCampo() {

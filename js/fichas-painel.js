@@ -42,11 +42,14 @@
     }
 
     /* todas as variantes (sal / liberação / denominação) de um nome da busca; as com linha pronta primeiro */
+    /* o índice traz [[lote, [chaves]], …]: um nome pode ter fichas em vários lotes (formato antigo [lote, [chaves]] ainda aceito) */
     function fichasDe(nome) {
       const e = entrada(nome);
       if (!e) return Promise.resolve([]);
-      return carregarLote(e[0]).then(arr => e[1].map(k => arr.find(f => f.k === k)).filter(Boolean)
-        .sort((a, b) => (b.rx.length > 0) - (a.rx.length > 0) || (!!b.d) - (!!a.d)));
+      const pares = typeof e[0] === 'string' ? [e] : e;
+      return Promise.all(pares.map(([lote, chaves]) => carregarLote(lote).then(arr => chaves.map(k => arr.find(f => f.k === k)))))
+        .then(grupos => [].concat(...grupos).filter(Boolean)
+          .sort((a, b) => (b.rx.length > 0) - (a.rx.length > 0) || (!!b.d) - (!!a.d)));
     }
 
     /* linha pela POSIÇÃO na ficha (imune a id repetido entre braços) → {texto, tipo} */
@@ -57,14 +60,24 @@
     }
 
     const FORMA = f => String(f || '').replace(/comprimido revestido/i, 'comp. rev.').replace(/comprimido/i, 'comp.').replace(/cápsula/i, 'cáps.').replace(/solução injetável/i, 'sol. inj.');
+    /* texto longo (transcrição literal) não soterra a ficha: começo à vista, o resto num toque */
+    const LONGO = 260;
+    function corpoLongo(t) {
+      if (t.length <= LONGO) return esc(t);
+      const ini = t.slice(0, LONGO + 1).replace(/\s+\S*$/, '');
+      return `<details class="orqa-fi-longo"><summary>${esc(ini)}<b> … ler tudo</b></summary>${esc(t)}</details>`;
+    }
     function linha(rotulo, v, cls) {
       if (!v || !v.t) return '';
       return `<div class="orqa-fi-lin${cls ? ' ' + cls : ''}"><span class="orqa-fi-rot">${esc(rotulo)}</span>`
-           + `<span class="orqa-fi-val">${esc(v.t)}${v.fo ? `<small>${esc(v.fo)}</small>` : ''}</span></div>`;
+           + `<span class="orqa-fi-val">${corpoLongo(String(v.t))}${v.fo ? `<small>${esc(v.fo)}</small>` : ''}</span></div>`;
     }
+    /* a frequência/inicial só aparecem se já não estiverem ditas no "habitual" (antes: "35 mg via oral, três vezes ao dia. oral, três vezes ao dia.") */
+    const dito = (parte, em) => !!parte && !!em && fold(em).replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').includes(fold(parte).replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim());
     function dose(d) {
       if (!d) return '';
-      const partes = [d.u && ('habitual ' + d.u), d.m && ('máx. ' + d.m), d.fr, d.i && ('inicial ' + d.i)].filter(Boolean);
+      const partes = [d.u && ('habitual ' + d.u), d.m && !dito(d.m, d.u) && ('máx. ' + d.m), d.fr && !dito(d.fr, d.u) && d.fr,
+        d.i && !dito(d.i, d.u) && ('inicial ' + d.i)].filter(Boolean);
       return partes.length ? linha('Dose adulto', { t: partes.join(' · '), fo: d.fo }, 'orqa-fi-dose') : '';
     }
 
@@ -125,8 +138,16 @@
       const k = fold(nome), letra = /^[a-z]/.test(k) ? k[0] : '_';
       return carregarAp(letra).then(m => m[k] || []).catch(() => []);
     }
-    function apRender(nome, lista) {
+    function apRender(nome, lista, sobFicha) {
       if (!lista || !lista.length) return '';
+      if (sobFicha) {   /* remédio COM ficha: as demais apresentações do mercado ficam recolhidas, sem competir com as linhas prontas */
+        const k0 = fold(nome); apVistas[k0] = lista;
+        const chip0 = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap" data-orqa-ap-somar="${esc(k0)}|${i}" `
+          + `title="Soma à receita no formato; a posologia fica em branco para a médica">${esc(a[0])}</button>`;
+        return `<details class="orqa-fi-mais orqa-ap-outras"><summary>outras apresentações do mercado (CMED) · ${lista.length}</summary>`
+          + `<div class="orqa-ap-cab">toque para somar à receita no formato, com a posologia em branco</div>`
+          + `<div class="orqa-fi-aps">${lista.map(chip0).join('')}</div></details>`;
+      }
       const k = fold(nome); apVistas[k] = lista;
       const chip = (a, i) => `<button type="button" class="orqa-fi-chip orqa-ap" data-orqa-ap-somar="${esc(k)}|${i}" `
         + `title="Soma à receita no formato; a posologia fica em branco para a médica">${esc(a[0])}</button>`;
