@@ -29,8 +29,28 @@
     if (el.matches && el.matches('input[type="text"],input[type="search"],input:not([type]),textarea,[contenteditable]')) alvo = el;
   });
 
-  function inserir(texto) {
-    if (!alvo || !doc.contains(alvo)) { aviso('Toque antes no campo onde quer inserir.'); return; }
+  /* CERCA DE ESCRITA (ordem do dono, 25/09): o que vem de MEDICAMENTO ou FICHA só escreve em documento
+     de receituário — corpo/campos da receita (1ª via), orientações da receita e item livre da receita composta.
+     Busca do hub, SOAP, login, unidade, guias e documentos da unidade ficam intocados. */
+  const SEL_RECEITA = '#recipePrint .rx-copy [data-field], #orientationPrint [data-field]';
+  function ehCampoDeReceita(el) {
+    return !!(el && el.closest && (el.closest(SEL_RECEITA) || (el.matches && el.matches('#composeTray .compose-livre-editor textarea'))));
+  }
+  let alvoEraReceita = false;
+  doc.addEventListener('focusin', ev => { if (ev.target === alvo) alvoEraReceita = ehCampoDeReceita(alvo); });
+  function corpoDaReceita() {   /* renderRecipe() recria a folha: o alvo antigo vira nó órfão — reencontrar a 1ª via */
+    const rx = doc.querySelector('#recipePrint .rx-copy .rx-body[data-field="prescription"][contenteditable]:not([contenteditable="false"])');
+    return rx && rx.getClientRects().length ? rx : null;
+  }
+
+  function inserir(texto, opcoes) {
+    if (opcoes && opcoes.somenteReceita) {
+      if (!(alvo && doc.contains(alvo) && ehCampoDeReceita(alvo))) {
+        const rx = (alvo && !doc.contains(alvo) && alvoEraReceita) ? corpoDaReceita() : null;
+        if (!rx) { aviso('Toque no corpo da receita para inserir no cursor — ou use “Somar à receita”.'); return false; }
+        alvo = rx; alvoEraReceita = true;
+      }
+    } else if (!alvo || !doc.contains(alvo)) { aviso('Toque antes no campo onde quer inserir.'); return false; }
     alvo.focus();
     if (alvo.isContentEditable) {
       doc.execCommand('insertText', false, texto);
@@ -40,6 +60,40 @@
       alvo.selectionStart = alvo.selectionEnd = i + texto.length;
       alvo.dispatchEvent(new Event('input', { bubbles: true }));
     }
+    return true;
+  }
+
+  /* "Somar à receita": entra pelo FUNIL de composição do próprio app (window.__HUB_COMPOSE__), herdando a lei do
+     papel (1 folha, itens numerados), as 2 vias espelhadas, os rascunhos e o guarda de atualização da PWA. */
+  function somarReceita(texto) {
+    const H = global.__HUB_COMPOSE__;
+    if (!texto) return;
+    if (!H || typeof H.adicionarLivre !== 'function') { aviso('A receita não está disponível nesta tela.'); return; }
+    const r = H.adicionarLivre(texto) || {};
+    aviso(r.msg || (r.ok ? 'Somado à receita do atendimento.' : 'Não foi possível somar.'));
+  }
+
+  /* a FICHA abre sob o item da busca (acordeão); sem ficha ainda → o nome, só dentro da receita */
+  function abrirFicha(btn) {
+    const nome = btn.dataset.orqaMedPick;
+    const prox = btn.nextElementSibling;
+    if (prox && prox.classList.contains('orqa-fi-caixa')) { prox.remove(); btn.setAttribute('aria-expanded', 'false'); return; }
+    const caixa = doc.createElement('div');
+    caixa.className = 'orqa-fi-caixa';
+    btn.after(caixa); btn.setAttribute('aria-expanded', 'true');
+    const semFicha = () => `<div class="orqa-vazio">Ficha em preparo — a transcrição da fonte oficial deste medicamento ainda não chegou.</div>`
+      + `<button type="button" class="orqa-inserir" data-orqa-nome-cursor="${esc(nome)}"><span class="orqa-mini-logo" aria-hidden="true"></span>Inserir o nome na receita</button>`;
+    const F = global.OrqFichas;
+    if (!F || !F.tem(nome)) { caixa.innerHTML = semFicha(); return; }
+    caixa.innerHTML = '<div class="orqa-vazio">Abrindo a ficha…</div>';
+    const trazerAVista = () => {   /* rola SÓ o painel (nunca a página) até o item; suave, ou seco se pedem menos movimento */
+      const rol = btn.closest('.orqa-rolagem'); if (!rol) return;
+      const alvoTopo = rol.scrollTop + btn.getBoundingClientRect().top - rol.getBoundingClientRect().top - 8;
+      const seco = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      rol.scrollTo({ top: alvoTopo, behavior: seco ? 'auto' : 'smooth' });
+    };
+    F.fichasDe(nome).then(fs => { if (caixa.isConnected) { caixa.innerHTML = fs.length ? F.render(fs) : semFicha(); trazerAVista(); } })
+      .catch(() => { if (caixa.isConnected) caixa.innerHTML = semFicha(); });
   }
   function textoSelecionadoOuCampo() {
     const sel = String(doc.getSelection() || '').trim();
@@ -71,6 +125,33 @@
     const mapa = new Map();
     for (const lista of Object.values(por)) for (const par of lista) if (!mapa.has(par[0])) mapa.set(par[0], par[1]);
     return [...mapa.entries()];
+  }
+
+  /* ═══ BUSCA DE CID — vale a RELEVÂNCIA, nunca a posição na lista ═══
+     O defeito antigo: filtrar por `includes` e cortar os 8 primeiros. Como a base vem ordenada
+     por código (A00…Z99), "pie" entregava B36.2 Piedra branca e Y57.4 exciPIEntes antes de
+     N11.0 Pielonefrite — Piedra está na posição 2.554 da lista, Pielonefrite na 7.178.
+     A regra agora: os 14.233 códigos competem em pé de igualdade. Pontua-se a QUALIDADE do
+     encontro, ordena-se, e só então corta. Empate preserva a ordem do código (sort estável). */
+  function scoreCid(codigo, descricao, q) {
+    const c = fold(codigo), d = fold(descricao);
+    if (!d.includes(q) && !c.includes(q)) return 0;  /* saída barata: descarta ~99% antes de fatiar palavra */
+    if (c === q) return 1000;                                          /* N11.0 digitado inteiro */
+    if (c.startsWith(q)) return 900;                                   /* N11 → N11.0, N11.1… */
+    /* iniciar QUALQUER palavra vale o mesmo: "Nefropatia" não é mais relevante que
+       "Síndrome NEFrótica" só por estar na primeira posição. Separar os dois casos fazia
+       "nef" perder as síndromes nefrítica/nefrótica — regressão pega no gate de 25/09. */
+    if (d.split(/[^a-z0-9]+/).some(p => p.startsWith(q))) return 500;
+    if (d.includes(q) || c.includes(q)) return 50;                     /* no meio: exciPIEntes */
+    return 0;                                                          /* não encontra */
+  }
+  function porRelevancia(pares, q, teto) {
+    return pares
+      .map(par => [par, scoreCid(par[0], par[1], q)])
+      .filter(([, s]) => s > 0)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, teto)
+      .map(([par]) => par);
   }
 
   /* ═══ TODOS OS DOCUMENTOS — catálogo em gavetas (ordem do dono, 30/08: documentos SÓ no Orquestrator) ═══
@@ -241,6 +322,9 @@
         <section class="orqa-sec"><h4>Buscar CID <span class="orqa-conferir">sugestões — conferir</span></h4>
           <input type="search" class="orqa-busca" data-orqa-cid placeholder="Código ou descrição…" autocomplete="off">
           <div class="orqa-res" data-orqa-cid-res></div></section>
+        <section class="orqa-sec"><h4>Buscar medicamento <span class="orqa-conferir">sugestões — conferir</span></h4>
+          <input type="search" class="orqa-busca" data-orqa-med placeholder="Genérico ou marca… ex.: dipi, losar, ozem" autocomplete="off">
+          <div class="orqa-res" data-orqa-med-res></div></section>
         <section class="orqa-sec"><h4>Buscar paciente <span class="orqa-conferir">CPF ou nome</span></h4>
           <input type="search" class="orqa-busca" data-orqa-pac placeholder="CPF ou nome…" autocomplete="off">
           <div class="orqa-res" data-orqa-pac-res></div></section>
@@ -290,7 +374,7 @@
   }
   function aoEsc(ev) { if (ev.key === 'Escape') fechar(); }
 
-  let tNotas = null, tCid = null, tPac = null;
+  let tNotas = null, tCid = null, tPac = null, tMed = null;
   function aoDigitar(ev) {
     const el = ev.target;
     if (el.hasAttribute && el.hasAttribute('data-orqa-campo')) {
@@ -315,11 +399,32 @@
         const res = painel.querySelector('[data-orqa-cid-res]');
         if (!q) { res.innerHTML = ''; return; }
         /* sugestões da doença primeiro (seladas), depois o CID-10 COMPLETO oficial (DATASUS, offline) */
-        const sug = cidsTodos().filter(([c, d]) => fold(c + ' ' + d).includes(q)).slice(0, 4);
+        const sug = porRelevancia(cidsTodos(), q, 4);
         const vistos = new Set(sug.map(([c]) => c));
-        const geral = q.length >= 2 ? (global.CID10 || []).filter(([c, d]) => !vistos.has(c) && fold(c + ' ' + d).includes(q)).slice(0, 8) : [];
+        const geral = q.length >= 2 ? porRelevancia((global.CID10 || []).filter(([c]) => !vistos.has(c)), q, 8) : [];
         const linha = (par, selo) => `<button type="button" class="orqa-item" data-orqa-cid-pick="${esc(par[0])} — ${esc(par[1])}"><strong>${esc(par[0])}</strong> ${esc(par[1])}${selo ? ' <span class="orqa-conferir">sugerido</span>' : ''}</button>`;
         res.innerHTML = (sug.map(x => linha(x, true)).join('') + geral.map(x => linha(x, false)).join('')) || '<div class="orqa-vazio">Nada encontrado no CID-10.</div>';
+      }, 250);
+    } else if (el.matches('[data-orqa-med]')) {
+      clearTimeout(tMed);
+      tMed = setTimeout(() => {
+        const res = painel.querySelector('[data-orqa-med-res]');
+        const achados = (global.MedsBusca ? global.MedsBusca.buscar(el.value, 8) : []);
+        if (!el.value.trim()) { res.innerHTML = ''; return; }
+        /* o que se insere é o GENÉRICO: é o que vai na folha (Lei 9.787/99).
+           A marca aparece só para a médica reconhecer o que está escolhendo. */
+        /* o pill .orqa-conferir não foi feito para texto longo: sem corte, classes como
+           "AGENTES BETABLOQUEADORES E OUTROS ANTI-HIPERTENSIVOS" vazam para fora da borda. */
+        const curto = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
+        res.innerHTML = achados.map(m => {
+          const porMarca = m.via === 'marca' && m.marcaCasada
+            ? ` <span class="orqa-conferir">${esc(curto(m.marcaCasada, 26))}</span>` : '';
+          const estoque = m.estoque === 'tem' ? ' <span class="orqa-conferir">na unidade</span>'
+                        : m.estoque === 'riscado' ? ' <span class="orqa-conferir">riscado na lista</span>' : '';
+          return `<button type="button" class="orqa-item" data-orqa-med-pick="${esc(m.generico)}" title="${esc(m.classe || '')}">`
+               + `<strong>${esc(m.generico)}</strong>${porMarca}${estoque}`
+               + `<br><span class="orqa-conferir">${esc(curto(m.classe, 34))}</span></button>`;
+        }).join('') || '<div class="orqa-vazio">Nada encontrado. Confira a grafia.</div>';
       }, 250);
     } else if (el.matches('[data-orqa-pac]')) {
       clearTimeout(tPac);
@@ -346,6 +451,14 @@
     if (docItem) { const i = docItem.dataset.orqaDoc.indexOf(':'); docAcao(docItem.dataset.orqaDoc.slice(0, i), docItem.dataset.orqaDoc.slice(i + 1)); return; }
     const cid = ev.target.closest('[data-orqa-cid-pick]');
     if (cid) { inserir(cid.dataset.orqaCidPick); return; }
+    const med = ev.target.closest('[data-orqa-med-pick]');
+    if (med) { abrirFicha(med); return; }
+    const somar = ev.target.closest('[data-orqa-rx-somar]');
+    if (somar) { const [k, id] = somar.dataset.orqaRxSomar.split('|'); somarReceita(global.OrqFichas && global.OrqFichas.rx(k, id)); return; }
+    const cursor = ev.target.closest('[data-orqa-rx-cursor]');
+    if (cursor) { const [k, id] = cursor.dataset.orqaRxCursor.split('|'); const t = global.OrqFichas && global.OrqFichas.rx(k, id); if (t) inserir(t, { somenteReceita: true }); return; }
+    const nomeCur = ev.target.closest('[data-orqa-nome-cursor]');
+    if (nomeCur) { inserir(nomeCur.dataset.orqaNomeCursor, { somenteReceita: true }); return; }
     const pac = ev.target.closest('[data-orqa-pac-pick]');
     if (pac) { usarPaciente(pac.dataset.orqaPacPick); return; }
     const fav = ev.target.closest('[data-orqa-favoritar]');

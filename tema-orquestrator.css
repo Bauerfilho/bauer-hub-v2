@@ -172,6 +172,40 @@ body.tema-Orquestrador .orq-topic{border-color:rgba(201,162,39,.6)}
 .orqa-vazio{font-size:10.5px;color:#8a93a3;padding:4px 2px}
 .orqa-pe{padding:10px 16px;border-top:1px solid rgba(176,138,62,.3);font-size:9.5px;color:#6b7280;background:#faf6ec}
 
+/* ── FICHA do medicamento no painel (25/09): mesmo molde do painel — cartão branco, filete areia, ouro nos
+      destaques, ação principal preta com filete dourado. Nada editável aqui: a escrita vai para a receita. ── */
+.orqa-item[aria-expanded="true"]{border-color:var(--ouro-vivo);background:#fffdf6;border-bottom-left-radius:4px;border-bottom-right-radius:4px}
+.orqa-fi-caixa{display:grid;gap:8px;margin:-2px 0 6px;padding:10px;border:1px solid var(--ouro-linha);border-top:0;border-radius:0 0 10px 10px;background:#fffdf8}
+.orqa-fi{display:grid;gap:7px;padding:10px;border:1px solid #e4ddcd;border-radius:10px;background:#fff}
+.orqa-fi-cab{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;line-height:1.3}
+.orqa-fi-cab strong{font-size:12.5px;color:#1c2430;margin-right:2px}
+.orqa-fi-selo{color:#8a6a12;background:#fbf3dc}
+.orqa-fi-aps{display:flex;flex-wrap:wrap;gap:4px}
+.orqa-fi-chip{font-size:10px;line-height:1.2;padding:3px 7px;border-radius:999px;border:1px solid #e4ddcd;background:#faf7f0;color:#3a4250}
+.orqa-fi-rename{border-color:var(--ouro-linha);box-shadow:inset 0 0 0 1px rgba(201,162,39,.18)}
+.orqa-fi-lin{display:grid;grid-template-columns:96px 1fr;gap:8px;font-size:11px;line-height:1.4}
+.orqa-fi-rot{font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#5b6472;padding-top:2px}
+.orqa-fi-val small{display:block;margin-top:2px;font-size:9px;color:#8a93a3;line-height:1.3}
+.orqa-fi-dose .orqa-fi-val{font-weight:700;color:#1c2430}
+.orqa-fi-gest .orqa-fi-rot{color:#8a5a12}
+.orqa-fi-al{margin:0;padding:0 0 0 16px;display:grid;gap:3px;font-size:10.5px;color:#3a4250;line-height:1.35}
+.orqa-fi-al .orqa-fi-alta{color:#9a2a1c;font-weight:700}
+.orqa-fi-mais{font-size:10.5px;color:#3a4250}
+.orqa-fi-mais summary{cursor:pointer;font-weight:800;font-size:10px;color:var(--ouro);list-style:none;padding:2px 0}
+.orqa-fi-mais summary::-webkit-details-marker{display:none}
+.orqa-fi-mais[open] summary{margin-bottom:4px}
+.orqa-fi-rxs{display:grid;gap:6px;border-top:1px dashed rgba(176,138,62,.35);padding-top:8px}
+.orqa-fi-rx{display:grid;gap:6px;padding:8px;border-radius:9px;background:#faf7f0;border:1px solid #efe8d8}
+.orqa-fi-rx-t{font-size:11px;line-height:1.4;color:#1c2430}
+.orqa-fi-rx-t b{display:block;font-weight:800}
+.orqa-fi-rx-t span{display:block;color:#3a4250}
+.orqa-fi-rx-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.orqa-fi-cursor{min-height:32px;padding:0 10px;border-radius:8px;border:1px solid #d8d2c4;background:#fff;color:#3a4250;font-weight:700;font-size:10.5px;cursor:pointer}
+.orqa-fi-cursor:hover{border-color:var(--ouro-vivo)}
+.orqa-fi-pe{font-size:9.5px;color:#6b7280;line-height:1.35;padding:0 2px}
+@media (prefers-reduced-motion:no-preference){.orqa-fi-caixa{animation:orqaFiAbre .14s ease-out}}
+@keyframes orqaFiAbre{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+
 /* ── Categorias do Orquestrator (extra do dono, 30/08): botão preto+símbolo dourado na bandeja
       + popover estilo menu-de-comandos — preto, rolagem, acentos ouro. ── */
 .orq-par-montar{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}

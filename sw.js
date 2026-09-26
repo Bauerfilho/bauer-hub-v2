@@ -1,7 +1,7 @@
 /* Atualização autoral: uma edição só fica utilizável depois da conferência completa. */
 'use strict';
-const VERSION = 'efda69550990851363819f7a77a61ff9266f5fc3';
-const MANIFEST_HASH = 'b641a01408cbd2ad630aca5241cdcf4e945c9fd9c9cf816a61db963e19795db2';
+const VERSION = 'afd117cc5654b55218b971eb692ceccf2faf61ca';
+const MANIFEST_HASH = 'b1693425418251563d3f3099db01bc21f083ddb0f6bcc3da1fbc30b210a4013b';
 const BASE = new URL(self.registration.scope);
 const PREFIX = 'orq-receituarios:' + encodeURIComponent(BASE.pathname) + ':';
 const CACHE = PREFIX + VERSION;
