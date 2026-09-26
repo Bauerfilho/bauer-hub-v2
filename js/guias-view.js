@@ -405,6 +405,7 @@
       const template=currentTemplate(),orientation=state.catalog==='extras'?(template.orientation||'portrait'):'portrait';
       const portal=$doc('#printPortal');portal.dataset.orientation=orientation;portal.innerHTML=copies.join('');
       portal.querySelectorAll('[contenteditable]').forEach(field=>field.removeAttribute('contenteditable'));
+      try{window.OrqLacunas&&OrqLacunas.transformarParaImpressao(portal)}catch(_){/* a folha sai como antes se o módulo faltar */}
       $doc('#dynamicPageStyle').textContent=orientation==='landscape'?'@media print{@page{size:A4 landscape;margin:0}}':'@media print{@page{size:A4 portrait;margin:0}}';
       window.__printDelegado=true;
       requestAnimationFrame(()=>window.print());
@@ -486,7 +487,18 @@
       });
       $('#preview').addEventListener('input',e=>{const field=e.target.closest('[data-bind]');if(!field)return;let text=(field.innerText!==undefined?field.innerText:field.textContent).replace(/\r/g,'');if(!field.classList.contains('multiline'))text=text.replace(/\s*\n+\s*/g,' ');setStateFromBinding(field.dataset.bind,text);syncBoundSurfaces(field.dataset.bind,field)});
       $('#preview').addEventListener('keydown',e=>{const field=e.target.closest('[contenteditable][data-bind]');if(field&&!field.classList.contains('multiline')&&e.key==='Enter')e.preventDefault()});
-      $('#preview').addEventListener('paste',e=>{const field=e.target.closest('[contenteditable][data-bind]');if(!field)return;e.preventDefault();let text=(e.clipboardData||window.clipboardData).getData('text/plain');if(!field.classList.contains('multiline'))text=text.replace(/\s+/g,' ');if(insertPlainText(text))field.dispatchEvent(new Event('input',{bubbles:true}))});
+      $('#preview').addEventListener('paste',e=>{
+        const field=e.target.closest('[contenteditable][data-bind]');if(!field)return;
+        /* Um guia pode estar adotado dentro do #workspaceView (palco da doença,
+           orquestrator-guias.js): lá o paste do hub (#workspaceView:1120) também
+           escuta ESTE evento. Insertamos aqui, previnimos e marcamos; o hub vê a
+           marca e só previne — sem a inserção dupla do achado #30. */
+        let text=(e.clipboardData||window.clipboardData).getData('text/plain');
+        if(!field.classList.contains('multiline'))text=text.replace(/\s+/g,' ');
+        if(insertPlainText(text))field.dispatchEvent(new Event('input',{bubbles:true}));
+        e.preventDefault();
+        try{Object.defineProperty(e,'__lacunasPasteOk',{value:true})}catch(_){e.__lacunasPasteOk=true}
+      });
       $$('.check-list [data-teach]').forEach(input=>input.addEventListener('change',e=>{state.teach[e.target.dataset.teach]=e.target.checked;renderPreview()}));
       $$('.copies button').forEach(button=>button.addEventListener('click',()=>{state.copies=Number(button.dataset.copies);$$('.copies button').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});renderPreview()}));
       $$('[data-print]').forEach(button=>button.addEventListener('click',()=>preparePrint(button.dataset.print)));

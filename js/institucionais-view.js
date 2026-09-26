@@ -725,17 +725,6 @@
     elementos.formulario.querySelectorAll('[data-campo]').forEach((controle) => {
       controle.addEventListener('input', () => sincronizarControle(controle));
       controle.addEventListener('change', () => sincronizarControle(controle));
-      controle.addEventListener('paste', (evento) => {
-        if (!evento.clipboardData || controle instanceof HTMLSelectElement) {
-          return;
-        }
-        evento.preventDefault();
-        const texto = evento.clipboardData.getData('text/plain');
-        const inicio = controle.selectionStart ?? controle.value.length;
-        const fim = controle.selectionEnd ?? controle.value.length;
-        controle.setRangeText(texto, inicio, fim, 'end');
-        controle.dispatchEvent(new Event('input', { bubbles: true }));
-      });
     });
   }
 
@@ -894,6 +883,7 @@
     host.appendChild(sheet);
     portal.innerHTML = '';
     portal.appendChild(host);
+    try { escopoGlobal.OrqLacunas && escopoGlobal.OrqLacunas.transformarParaImpressao(portal); } catch (_) { /* papel como antes */ }
     const orientacao = documentoAtivo.orientacaoFonte === 'retrato' ? 'portrait' : 'landscape';
     portal.dataset.orientation = orientacao;
     const estilo = documentoHtml.getElementById('dynamicPageStyle');

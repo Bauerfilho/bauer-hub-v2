@@ -29,6 +29,7 @@ function publicar() {
   for (const n of ['js/fichas-painel.js', 'js/fichas/_indice.js', 'js/meds-index.js', 'js/meds-busca.js']) assert.ok(nomes.includes(n), `faltou no pacote: ${n}`);
   assert.ok(nomes.some(n => /^js\/fichas\/[A-Z0-9]+\.js$/.test(n)), 'nenhum pedaço de ficha no pacote');
   assert.ok(nomes.includes('js/apresentacoes/d.js'), 'apresentações CMED fora do pacote (js/apresentacoes/d.js)');
+  assert.ok(nomes.includes('js/lacunas.js'), 'lacunas fora do pacote (js/lacunas.js): a tag carregaria 404 e a escrita/impressão voltariam ao nativo em silêncio');
   assert.ok(!nomes.includes('sw.js'), 'O worker gerado não pode integrar seu próprio manifesto');
   assert.ok(!nomes.some(n => /(^|\/)(tests|backups|\.git)\//.test(n)));
   for (const ativo of manifesto.assets) {

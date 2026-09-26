@@ -198,6 +198,12 @@
       #printPortal[data-mode="orientation"] .portrait-sheet{display:block!important;width:210mm!important;height:297mm!important}
       .field-value:focus,.rx-body:focus,.orientation-body:focus{background:transparent!important;box-shadow:none!important}
       .rx-copy{border-right:.2mm dashed #999!important}
+      /* Lacunas (js/lacunas.js): na CÓPIA impressa a lacuna editável fica invisível
+         mantendo o exato espaço — os traços continuam lá, só não levam tinta.
+         Regra única cobre todos os contêineres reais do portal (receita/orientação
+         nos 2 vias, guias, institucionais e o cabeçalho espelhado da 2ª via);
+         a decisão editável-vs-fixo fica no transform (só contêineres de valor). */
+      #printPortal .lacuna-pendente{color:transparent!important}
       *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
     }
   </style>
@@ -1076,7 +1082,7 @@ function backHub(){if(window.OrquestratorDocs)OrquestratorDocs.restaurar();if(wi
     function validDate(value){const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value.trim());if(!m)return false;const d=new Date(+m[3],+m[2]-1,+m[1]);return d.getFullYear()===+m[3]&&d.getMonth()===+m[2]-1&&d.getDate()===+m[1]}
     function validatePrint(){if(state.mode!=='topic'||!state.regimen||state.tab==='notes'){showDialog('Impressão indisponível','<p>Abra uma receita ou orientação antes de imprimir.</p>',false);return false}syncAll();fitEditors();const errors=[],warnings=renderFlags(),body=currentPrescription();if(!state.patient.name.trim())errors.push('Preencha o nome do paciente.');if(!validDate(state.patient.date))errors.push('Preencha uma data válida no formato DD/MM/AAAA.');if(state.tab==='recipe'&&isSpecial(state.regimen)&&!state.patient.address.trim())errors.push('Preencha o endereço do paciente na receita de controle especial.');if(state.tab==='recipe'&&!body.trim())errors.push('A prescrição está vazia.');if(state.tab==='orientation'&&!$('#orientationPrint .orientation-body')?.innerText.trim())errors.push('As orientações estão vazias.');if(state.tab==='recipe'&&!mirrorCheck())errors.push('A 2ª via não está idêntica à 1ª via. Volte à edição para sincronizar.');if(hasOverflow())errors.push(`Há ${overflowElements().length} campo(s) com texto cortado ou fora da área de impressão.`);if(state.tab==='recipe'&&/\bPeso\b|Peso\/|x\s*Peso|Déficit Fe|quantidade não informada|12\/21|pela noite por\.|\?\s*$/im.test(body))errors.push('A prescrição ainda contém marcador, cálculo, quantidade ou frase não resolvida.');if(errors.length){showDialog('Impressão bloqueada',`<p>Corrija antes de imprimir:</p><ul>${errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`,false);return false}if(warnings.length){showDialog('Revisar antes de imprimir',`<p>Este esquema contém avisos do documento-fonte ou pontos que exigem individualização.</p><ul>${warnings.map(w=>`<li>${esc(flagLabel(w))}</li>`).join('')}</ul><p><strong>Confirme somente após revisar indicação, dose, via, duração, quantidade, alergias e contraindicações.</strong></p>`,true);return false}return true}
     function showDialog(title,html,canConfirm){$('#dialogTitle').textContent=title;$('#dialogContent').innerHTML=html;$('#dialogConfirm').hidden=!canConfirm;$('#qualityDialog').showModal()}
-    function preparePrintDocument(){syncAll();fitEditors();const mode=state.tab==='orientation'?'orientation':'recipe',source=activeSheet(),portal=$('#printPortal');portal.dataset.mode=mode;portal.innerHTML=source?source.outerHTML:'';$('#dynamicPageStyle').textContent=mode==='orientation'?'@media print{@page{size:A4 portrait;margin:0}}':'@media print{@page{size:A4 landscape;margin:0}}'}
+    function preparePrintDocument(){syncAll();fitEditors();const mode=state.tab==='orientation'?'orientation':'recipe',source=activeSheet(),portal=$('#printPortal');portal.dataset.mode=mode;portal.innerHTML=source?source.outerHTML:'';try{window.OrqLacunas&&OrqLacunas.transformarParaImpressao(portal)}catch(_){/* impressão sem o transform: o papel sai como antes */}$('#dynamicPageStyle').textContent=mode==='orientation'?'@media print{@page{size:A4 portrait;margin:0}}':'@media print{@page{size:A4 landscape;margin:0}}'}
     function prepareDirectPrintNotice(){const portal=$('#printPortal');portal.dataset.mode='orientation';portal.innerHTML='<section class="print-blocked-page"><div><h1>Impressão não liberada</h1><p>Por segurança, feche esta prévia e use o botão <strong>Imprimir</strong> do hub. Ele valida paciente, data, espelhamento, campos cortados e pendências do esquema.</p></div></section>';$('#dynamicPageStyle').textContent='@media print{@page{size:A4 portrait;margin:0}}'}
     function doPrint(){state.printAuthorized=true;preparePrintDocument();setTimeout(()=>window.print(),30)}
     function requestPrint(){if(validatePrint())doPrint()}
@@ -1114,7 +1120,16 @@ function backHub(){if(window.OrquestratorDocs)OrquestratorDocs.restaurar();if(wi
     $('#dialogCancel').onclick=()=>$('#qualityDialog').close();$('#dialogConfirm').onclick=()=>{$('#qualityDialog').close();doPrint()};
     $('#workspaceView').addEventListener('input',e=>{const el=e.target.closest('[contenteditable]');if(!el||!state.regimen)return;const key=el.dataset.field;if(key==='prescription'){state.drafts.set(state.regimen.id,el.innerText);refreshDocumentTypeSelect()}else if(key==='orientation')state.orientationDrafts.set(state.regimen.id,el.innerText);else if(key){const clean=el.innerText.replace(/[\r\n]+/g,' ').replace(/\s{2,}/g,' ');state.patient[key]=clean;if(el.innerText!==clean)el.textContent=clean}syncAll(el);fitEditors();renderFlags();state.dirty=true});
     $('#workspaceView').addEventListener('keydown',e=>{if(e.target.closest('.field-value')&&e.key==='Enter')e.preventDefault()});
-    $('#workspaceView').addEventListener('paste',e=>{const el=e.target.closest('[contenteditable]');if(!el)return;e.preventDefault();let plain=(e.clipboardData||window.clipboardData).getData('text/plain');if(el.classList.contains('field-value'))plain=plain.replace(/\s+/g,' ');if(insertPlainText(plain))el.dispatchEvent(new Event('input',{bubbles:true}))});
+    $('#workspaceView').addEventListener('paste',e=>{
+      const el=e.target.closest('[contenteditable]');if(!el)return;
+      /* Palco: guia adotado já inseriu este paste (guias-view.js marcou o evento) —
+         só previne; fora do palco, o fluxo de sempre (insert + input sintético). */
+      if(e.__lacunasPasteOk){e.preventDefault();return}
+      let plain=(e.clipboardData||window.clipboardData).getData('text/plain');
+      if(el.classList.contains('field-value'))plain=plain.replace(/\s+/g,' ');
+      if(insertPlainText(plain))el.dispatchEvent(new Event('input',{bubbles:true}));
+      e.preventDefault();
+    });
     window.addEventListener('resize',fitPages);window.addEventListener('beforeprint',()=>{if(window.__printDelegado)return;if(state.printAuthorized)preparePrintDocument();else prepareDirectPrintNotice()});window.addEventListener('afterprint',()=>{if(window.__printDelegado)return;state.printAuthorized=false;$('#printPortal').innerHTML=''});window.addEventListener('beforeunload',e=>{if(state.dirty){e.preventDefault();e.returnValue=''}});
     document.addEventListener('keydown',e=>{const editing=e.target.closest?.('input,textarea,select,[contenteditable]');if(e.key==='/'&&state.mode==='hub'&&!editing&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();$('#smartSearch').focus()}if(e.key==='Escape'&&document.body.classList.contains('drawer-open'))closeDrawer();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='p'&&!$('#workspaceView').hidden){e.preventDefault();requestPrint()}});
     /* ═══ F-A · RECEITA COMPOSTA (Montar receita) — brain, 28/08, Anexo A ═══
@@ -1222,5 +1237,8 @@ function backHub(){if(window.OrquestratorDocs)OrquestratorDocs.restaurar();if(wi
   <script src="js/fichas/_indice.js?v=1"></script>
   <script src="js/fichas-painel.js?v=5"></script>
   <script src="js/orquestrator-assist.js?v=12"></script>
+  <!-- LACUNAS (26/09): "___" em campo editável de DOCUMENTO. UM módulo, captura
+       no document, last; por isso no FIM do corpo — nunca atrasa as 6 guardas PWA. -->
+  <script src="js/lacunas.js?v=1"></script>
 </body>
 </html>
