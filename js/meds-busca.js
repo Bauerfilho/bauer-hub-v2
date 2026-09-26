@@ -1,7 +1,7 @@
 /* meds-busca.js — busca inteligente de medicamentos do Receituários Orquestrador.
 
    A regra, cravada por ele em 25/09: "não devia importar qual a posição na lista".
-   Os 2.473 princípios ativos competem em pé de igualdade. Pontua-se a QUALIDADE do
+   Os 3.200 princípios ativos competem em pé de igualdade. Pontua-se a QUALIDADE do
    encontro, ordena-se, e só então corta — nunca o contrário.
 
    Mesmo motor da busca de CID (js/orquestrator-assist.js), estendido para:
@@ -27,7 +27,8 @@
 
   /* farmácia da unidade: sobe o que o paciente consegue pegar hoje */
   function naUnidade(generico) {
-    const farm = global.FARMACIA_UNIDADE;
+    /* js/farmacia.js exporta FARMACIA_CSF = {itens:[{nome,cat,riscado}]} — antes lia um nome que não existia e o selo nunca aparecia */
+    const farm = global.FARMACIA_UNIDADE || (global.FARMACIA_CSF && global.FARMACIA_CSF.itens);
     if (!Array.isArray(farm)) return null;
     const g = fold(generico);
     const achou = farm.find(i => {
