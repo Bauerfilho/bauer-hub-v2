@@ -136,7 +136,12 @@
     }
     function apresentacoesDe(nome) {
       const k = fold(nome), letra = /^[a-z]/.test(k) ? k[0] : '_';
-      return carregarAp(letra).then(m => m[k] || []).catch(() => []);
+      return carregarAp(letra).then(m => {
+        if (!Array.isArray(m.__partes)) return m[k] || [];
+        let alvo = m.__partes[0][1];     /* letra grande = índice [[início da faixa, parte], …] em ordem: vale a última faixa que começa ≤ k */
+        for (const [ini, pid] of m.__partes) if (k >= ini) alvo = pid;
+        return carregarAp(alvo).then(p => p[k] || []);
+      }).catch(() => []);
     }
     function apRender(nome, lista, sobFicha) {
       if (!lista || !lista.length) return '';
