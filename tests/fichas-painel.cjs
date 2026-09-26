@@ -102,8 +102,19 @@ const passa = (nome, ok, det = '') => { res.push({ nome, ok: !!ok }); console.lo
     }));
     passa('sem ficha: apresentações da CMED sob o aviso, com o "só o nome" de reserva', semf.chips > 0 && semf.aviso && semf.nome, JSON.stringify(semf));
     passa('apresentações frias < 150 ms (inclui carregar o pedaço)', semf.ms >= 0 && semf.ms < 150, (semf.ms || -1).toFixed(1) + ' ms');
+    /* o caso "posologia em branco" precisa de um chip SEM esboço aprovado; quando o diazepam real já ganhou esboço (E005,
+       26/09), usa um pedaço sintético só de esqueleto — o molde da seção 2d — e reabre a ficha */
+    const semEsqueleto = await p.evaluate(() => !document.querySelector('[data-orqa-ap-somar]:not(.orqa-ap-pronta)'));
+    if (semEsqueleto) {
+      await p.evaluate(() => {
+        window.ORQ_APRES_PUT('d', { diazepam: [['5 mg · comprimido', 'Diazepam 5 mg, comprimido — ______.\nTomar ______, via oral, de ___ em ___ horas, por ___ dias.', []]] });
+        const btn = [...document.querySelectorAll('[data-orqa-med-pick]')].find(b => /^diazepam$/i.test(b.dataset.orqaMedPick));
+        btn.click(); btn.click(); });
+      await p.waitForFunction(() => !!document.querySelector('[data-orqa-ap-somar]:not(.orqa-ap-pronta)'), null, { timeout: 3000 });
+    }
     const antesAp = await p.evaluate(() => window.__HUB_COMPOSE__.itens());
-    const linhaAp = await p.evaluate(() => { const b = document.querySelector('[data-orqa-ap-somar]'); b.click(); return window.OrqFichas.ap(b.dataset.orqaApSomar).texto; });
+    const linhaAp = await p.evaluate(() => { const b = document.querySelector('[data-orqa-ap-somar]:not(.orqa-ap-pronta)'); b.click(); return window.OrqFichas.ap(b.dataset.orqaApSomar).texto; });
+    if (semEsqueleto) await p.evaluate(async () => { (0, eval)(await (await fetch('js/apresentacoes/d.js')).text()); });   /* devolve o índice REAL da letra d aos testes seguintes */
     const depoisAp = await p.evaluate(() => window.__HUB_COMPOSE__.itens());
     const [cabAp, posAp] = String(linhaAp).split('\n');
     passa('apresentação entra pela bandeja no formato, sem número de dose', depoisAp === antesAp + 1 && /^Diazepam \d/.test(cabAp) && / — ______\.$/.test(cabAp) && /___/.test(posAp) && !/\d/.test(posAp), JSON.stringify(linhaAp));
